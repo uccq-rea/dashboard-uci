@@ -27,19 +27,43 @@
     const { useState, useEffect } = React;
     const PATIENTS = [
   {
+    "id": "rea-1",
+    "numero_cama": "1",
+    "unidad": "REA",
+    "estado": "Sin paciente",
+    "alertas": false,
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "-",
+    "antecedentes": "Sin paciente",
+    "plan": "No aplica",
+    "sistemas": {
+      "neurologico": "Sin paciente",
+      "respiratorio": "Sin paciente",
+      "hemodinamico": "Sin paciente",
+      "renal": "Sin paciente",
+      "infeccioso": "Sin paciente",
+      "digestivo": "Sin paciente"
+    }
+  },
+  {
     "id": "rea-2",
     "numero_cama": "2",
     "unidad": "REA",
     "estado": "Crítico",
     "alertas": true,
-    "plan": "Ajustar sedación, continuar controles gasométricos y balance hídrico. Vigilancia neurológica e infecciosa, valorar NPT/PEG si ingesta insuficiente.",
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "59",
+    "antecedentes": "HTA, DLP, Obesidad, Anemia ferropénica (hernia hiatal gigante, hemorroides, gastritis crónica, angiodisplasias íleon), amnesia global transitoria (2022), Sd. depresivo, SAHS en tratamiento con CPAP, Lumbalgia crónica, Espondilosis lumbar con discopatía degenerativa L5-S1. DX: ENDOCARDITIS SOBRE BIOPROTESIS AÓRTICA (2021). IQX: RECAMBIO DE BIOPRÓTESIS.",
+    "plan": "Ajuste de FAES por actividad epileptógena. Intentar mantener sin sedación IV por la noche. Próximo EEG el 26/01/26. Controles gasométricos. Intentar balance renal neutro o ligeramente negativo. Si ingesta insuficiente valorar NPT/PEG. Si aumentan secreciones respiratorias, tiene fiebre o aumentan los marcadores, iniciar tratamiento con cefta-avibactan + colistina inhalada.",
     "sistemas": {
-      "neurologico": "Encefalopatía moderada, bradipsíquico con periodos de desconexión y actividad epileptiforme intercrítica. Tto con lacosamida 200mg/12h y perampanel 12mg/24h.",
-      "respiratorio": "Cánula de plata, GNAF 30/30 para humidificación, SatO2 100%. Pocas secreciones blanquecinas. En tratamiento broncodilatador.",
-      "hemodinamico": "Sin soporte vasopresor, TA 167/55 mmHg con bisoprolol 5mg y amlodipino 5mg. RS 74 lpm. Hb 9.3 g/dl. Soplo holosistólico.",
-      "renal": "Diuresis forzadas (2465 cc, balance -1437 cc). Función renal conservada. Hiponatremia leve 131 mmol/l, Potasio 3.4 mmol/l.",
-      "infeccioso": "Afebril y RFA negativos. Leucocitos 7260/mm3, PCR 5.03 mg/dl. Sin tratamiento antibiótico.",
-      "digestivo": "Ingesta oral irregular sin atragantamientos. Abdomen globuloso, depresible, peristaltismo conservado. Perfil hepático normal."
+      "neurologico": "Bradipsíquico, periodos de desconexión frecuentes, movimientos estereotipados de flexión y extensión de muñecas. Precisa sedación para agitación nocturna. En tratamiento antiepiléptico (lacosamida, perampanel). EEG con actividad epileptiforme, SIRPID. Encefalopatía moderada. Delirium hiperactivo. Microsangrados bilaterales.",
+      "respiratorio": "Buena evolución del destete tras tratamiento de traqueobronquitis por pseudomona, ha permitido cambio a cánula de plata tapada con GNAF. SatpO2 100%. Pocas secreciones blanquecinas. Tratamiento broncodilatador (Ipatropio). Antecedente de NAVM por P. Aeruginosa VIM y Traqueobronquitis por pseudomona carbapenem resistente. TQT el 10/12.",
+      "hemodinamico": "Sin soporte vasopresor. Tendencia a la hipertensión (167/55 mmHg) a pesar de bisoprolol y amlodipino. RS 74 lpm. Soplo holosistólico. Pulsos periféricos presentes, buena perfusión distal. Hb 9.3 g/dl. Plaquetas y coagulación normales. Tratamiento tromboprofiláctico con enoxaparina y AAS. Rx tórax: cardiomegalia, hilios congestivos.",
+      "renal": "Diuresis forzadas con furosemida 10 mgr/8h iv (2465 cc, Balance -1437 cc). Función renal conservada. Hiponatremia leve (131 mmol/l) en tratamiento con Potasión por SNG.",
+      "infeccioso": "Afebril, RFA negativos. Leucocitos 7260/mm3, PCR 5.03 mg/dl. Sin tratamiento antibiótico desde 20/1. Antecedentes de cultivos positivos para Pseudomona aeruginosa (carbapenem resistente, sensible a cefta-avibactam), Enterobacter hormaechei productora AMPC, Acinetobacter bereziniae. Finalizado tratamiento para endocarditis.",
+      "digestivo": "Ingesta oral en los periodos de mejor nivel de conciencia sin atragantamientos. Abdomen globuloso, depresible, no doloroso. Peristaltismo conservado. Perfil hepático dentro de la normalidad. Hernia hiatal gigante. Se ha arrancado SNG en múltiples ocasiones."
     }
   },
   {
@@ -48,14 +72,18 @@
     "unidad": "REA",
     "estado": "Estable",
     "alertas": false,
-    "plan": "Progresar dieta, reforzar analgesia. Si buena evolución, alta a planta en 24 horas.",
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "3",
+    "antecedentes": "No RAMc, HTA, DLP. IQ: Fibroma espalda, cirugía mandibular con implante de placa en 1989. DX: Epiglotitis con un quiste en la valécula izquierda.",
+    "plan": "Reforzar la analgesia. Progresar dieta. Si continúa la buena evolución, será alta a planta en 24 horas. Iniciar profilaxis antitrombótica hoy.",
     "sistemas": {
-      "neurologico": "Consciente, orientado y colaborador, GCS 15. Sin focalidad neurológica. Se queja de dolor de garganta.",
-      "respiratorio": "Eupneico con VK 50%, SatO2 98-100%. Sin disnea ni sialorrea. En tratamiento corticoideo con metilprednisolona 20mg/8h.",
-      "hemodinamico": "TA 136/78 mmHg, FC RS 60 lpm, sin aminas. Hgb 14.2 g/dl, HCT 43%. Coagulación normal.",
-      "renal": "Urea 60 mg/dl, Creatinina 0.99 mg/dl. Diuresis 1410 cc, balance equilibrado. Ionograma normal.",
-      "infeccioso": "Afebril. Leucocitos 14130/mm3, PCR 9.89 mg/dl. En tratamiento con Augmentine 2g/8h.",
-      "digestivo": "Abdomen blando y depresible, peristaltismo disminuido. En ayunas, inicia tolerancia a líquidos."
+      "neurologico": "Consciente, orientado y colaborador, sin focalidad neurológica. GCS: 15 puntos. Se queja de dolor de garganta.",
+      "respiratorio": "Eupneico con VK al 50%, SatO2: 98-100%. No refiere sensación disneica, no sialorrea. En tratamiento corticoideo (metilprednisolona). Murmullo vesicular conservado, sin estertores patológicos. Extubado sin incidencias tras prueba de fugas positiva.",
+      "hemodinamico": "TA: 136/78 mmHg sin necesidad de aminas. FC: RS a 60 lpm. Tonos rítmicos, sin soplos ni roces.",
+      "renal": "Urea: 60 mg/dl, Creatinina: 0.99 mg/dl. Diuresis ayer de 1410 cc, Balance equilibrado. Ionograma normal, fosfato: 2.9 mg/dl. Sin edemas en zonas declives.",
+      "infeccioso": "Afebril. Leucocitos: 14130/mm3, PCR: 9.89 mg/dl (en descenso). En tratamiento con Augmentine desde 22/01/26. Ayer se drenó quirúrgicamente absceso de valécula izquierda con toma de muestra para microbiología.",
+      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. Actualmente en ayunas, glucemia alrededor de 130 mg/dl. Proteínas totales: 7.3 g/dl. Se iniciará la tolerancia a los líquidos hoy."
     }
   },
   {
@@ -64,14 +92,18 @@
     "unidad": "REA",
     "estado": "Crítico",
     "alertas": true,
-    "plan": "Descender sedación si posible. Progresar destete respiratorio y valorar O2 en T. Reiniciar clexane. Mantener diálisis intermitente.",
+    "edad": "40",
+    "sexo": "Varón",
+    "dias_estancia": "5",
+    "antecedentes": "No RAM, HTA, DM ni DLP. Obesidad, SAOS, Hiperuricemia. DX: TCE grave tras precipitación. Ingreso en UCIQ 19/01/26 tras limpieza y evacuación de herida quirúrgica frontoparietoteporal derecha con dx asociado de cerebritis.",
+    "plan": "Intentar descender propofol si no se agita. Si se puede, se pone en O2 en T. Diálisis intermitente para reducción de concentración de vancomicina y evitar perpetuar la nefrotoxicidad. Reiniciar Clexane.",
     "sistemas": {
-      "neurologico": "Sedado (dexmedetomidina y propofol), con agitación, requiere contenciones mecánicas. Apertura ocular espontánea, no responde a órdenes. En tto antiepiléptico.",
-      "respiratorio": "En CPAP con FIO2 40%, PEEP 6, PS 8. SatO2 98-100%. Buena mecánica ventilatoria, roncus bilaterales.",
-      "hemodinamico": "Necesidad de noradrenalina 2ml/h (0.07mcg/kg/min). TA 130/55, FC RS 75-80lpm. Lácticos normales. Hb 8.8 g/dl.",
-      "renal": "FRA AKI 3, en diálisis intermitente. Urea 195 mg/dl, Creatinina 9 mg/dl. Diuresis forzada 3435cc, BH -2700cc. Hiperfosfatemia.",
-      "infeccioso": "Afebril. Leucocitos 12.690, PCR 8.44 mg/dl. En tratamiento con ceftarolina. Historial de Staphylococcus epidermidis y Proteus mirabilis BLEE.",
-      "digestivo": "Abdomen blando y depresible, peristaltismo disminuido. Nutrición enteral bien tolerada. Glucemia 120mg/dl."
+      "neurologico": "Actualmente sedación con dexmedetomidina y propofol. Necesidad de contenciones mecánicas por agitación. Apertura ocular espontánea. No responde a órdenes. En tratamiento con clonidina, keppra, lacosamida y quetiapina. Morfina. La herida ha dejado de drenar líquido. Antecedente de encefalopatía severa y actividad epileptiforme. Sospecha de cerebritis.",
+      "respiratorio": "Buena mecánica ventilatoria. MVC con roncus de forma bilateral. En CPAP. SatO2 98-100%. Intención de progresar en weaning respiratorio e iniciar O2 en T en función de la agitación. TQT reglada.",
+      "hemodinamico": "Necesidad de NA (0.07mcg/kg/min) para mantener cifras tensionales (TA en torno a 130/55). FC 75-80lpm en ritmo sinusal. Lácticos normales. ECG: RS a 80lpm, sin alteraciones de repolarización. Hb: 8.8 g/dl. Plaquetas 544.000 y coagulación en rango.",
+      "renal": "FRA AKI 3. En diálisis intermitente. Urea: 195 mg/dl, Creatinina: 9 mg/dl. Diuresis forzada con PC de furosemida. BH -2700cc. Posibilidad de Nefropatía inmunoalérgica por Vancomicina. Hipofosfatemia y potasio previamente elevados, ahora normalizados.",
+      "infeccioso": "Afebril. Leucocitos: 12.690/mm3, PCR: 8.44 mg/dl. En tratamiento con Ceftarolina (sustituye vancomicina). Cultivos: SAMS, Staphylococcus epidermidis en herida quirúrgica, Proteus mirabilis BLEE en frotis rectal. Cultivo líquido cerebral intraqx negativo.",
+      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. En tratamiento con enema y micralax, ha realizado deposiciones. Bilirrubina, GOT, GPT normales. Glucemia 120mg/dl. Nutrición enteral bien tolerada."
     }
   },
   {
@@ -80,14 +112,18 @@
     "unidad": "REA",
     "estado": "Crítico",
     "alertas": true,
-    "plan": "Continuar soporte vital avanzado, manejo de la fibrilación auricular y la insuficiencia renal. Vigilancia neurológica y hemodinámica.",
+    "edad": "58",
+    "sexo": "Mujer",
+    "dias_estancia": "2",
+    "antecedentes": "DX: ICTUS M2 izquierda. IQx: Trombectomía mecánica con necesidad de reIOT inmediata.",
+    "plan": "Continuar monitorización y soporte. Se describen las condiciones actuales sin un plan futuro específico en la nota.",
     "sistemas": {
-      "neurologico": "RASS -3, BIS 62, sedada. Hemiparesia derecha. Pupilas puntiformes, isocoria, hiporreactividad. Isquemia aguda establecida en ACM izquierda con extravasación de contraste.",
-      "respiratorio": "FR 17/min, SatO2 98% con CPAP/PS, FIO2 50%. GSA con pH 7.3, pCO2 45 mmHg, pO2 170 mmHg, HCO3 22.1 mmol/l.",
-      "hemodinamico": "TA 114/80 mmHg, FC 74/min en fibrilación auricular. Noradrenalina 0.15 mcg/kg/min. Hgb 11.5 g/dl.",
-      "renal": "Urea 59 mg/dl, Creatinina 2.54 mg/dl. Diuresis 2970 cc, balance -1250 cc. Sin tratamiento diurético.",
-      "infeccioso": "Afebril (máx 36.7ºC). Leucocitos 15610/mm3, PCR 22.6 mg/dl. Tratamiento con piperacilina/tazobactam.",
-      "digestivo": "Abdomen blando y depresible, peristaltismo disminuido. Soporte nutricional con glucosado al 10% y nutrición enteral. Glucemia 164 mg/dl."
+      "neurologico": "RASS: -3, BIS: 62. Sedada con propofol. Hemiparesia derecha. Pupilas puntiformes, isocóricas e hiporreactivas. TC control: área de isquemia aguda establecida en territorio superficial de ACM izquierda con leve efecto masa y obliteración de surcos. Zonas hiperdensas frontotemporales sugestivas de extravasación de contraste yodado.",
+      "respiratorio": "FR: 17/min, SatO2: 98% con CPAP/PS, FIO2 50%. Vt: 450 cc. Murmullo vesicular conservado, sin estertores patológicos. GSA: pH: 7.3, pCO2: 45 mmHg, pO2: 170 mmHg, HCO3: 22.1 mmol/l, EB: -4.3 mmol/l, láctico: 1.3 mmol/l.",
+      "hemodinamico": "TA 114/80 mmHg. FC: 74/min, en FA. Noradrenalina en PC a 0.15 mcg/kg/min. Hgb: 11.5 g/dl. Tonos arrítmicos, sin soplos ni roces.",
+      "renal": "Urea: 59 mg/dl, Creatinina: 2.54 mg/dl. Diuresis: 2970 cc ayer, Balance: -1250 cc ayer. Iones dentro de la normalidad. Sin tratamiento diurético ni edemas en zonas declives.",
+      "infeccioso": "Afebril con temperatura máxima de 36.7ºC. Leucocitos: 15610/mm3, PCR: 22.6 mg/dl. Tratamiento antibiótico con piperacilina/tazobactam.",
+      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. Bilirrubina total: 0.28 mg/dl, GOT: 15 UI/l, GPT: 7 UI/L. Glucemia: 164 mg/dl con necesidad de insulina. Proteínas totales: 5.6 g/dl. Soporte nutricional con glucosado al 10% y nutrición enteral. Coagulación e INR normales, profilaxis de TVP con enoxaparina."
     }
   },
   {
@@ -96,14 +132,18 @@
     "unidad": "REA",
     "estado": "Crítico",
     "alertas": true,
-    "plan": "Progresar destete respiratorio (desconexiones a pieza en T), incentivar ingesta oral y cambio de vías. Monitorizar y manejar fiebre/infección.",
+    "edad": "?",
+    "sexo": "Mujer",
+    "dias_estancia": "61",
+    "antecedentes": "IQx: Sustitución valvular aórtica biológica + tubo de A Asc supracoronario. Reintervención quirúrgica por taponamiento cardíaco. Múltiples complicaciones durante estancia en REA (FRA resuelto, FA rápida, IOT por hemorragia alveolar, traqueotomía, laceración pulmonar y neumotórax por SNG mal posicionada). DX: Miopatía de enfermo crítico.",
+    "plan": "Desconexiones cortas a pieza en T, mantener la PS. Incentivar ingesta oral. Cambio de vías hoy.",
     "sistemas": {
-      "neurologico": "Consciente y orientada, negacionista y apática. Miopatía del paciente crítico. En tto psiquiátrico con quetiapina, escitalopram y mirtazapina.",
-      "respiratorio": "Destete lento. Traqueotomía (cánula plata), en PS (FIO2 45%, Vt 450ml, Ps 12, PEEP 6). GSA con pH 7.45, pCO2 56 mmHg, pO2 65 mmHg, HCO3 38.9. Secreciones abundantes, roncus.",
-      "hemodinamico": "Tendencia a HTA en tto con antiHTA orales. RS 66 lpm. Hb 9.6 g/dl. Soplo sistólico. Pulsos periféricos presentes y simétricos.",
-      "renal": "Diuresis forzadas con furosemida 10 mg/12h iv, >1 ml/kg/h. Función renal conservada. Edemas en codos y MMII. Urea 62 mg/dl, Cr 0.57 mg/dl.",
-      "infeccioso": "Ayer fiebre 38ºC. PCR 22.72 mg/dl, Leucocitos 13530/mm3. En tto ciprofloxacino. Bacteriemia previa, BAS con S. aureus y C. albicans, urocultivo Pseudomonas aeruginosa.",
-      "digestivo": "Abdomen blando y depresible. Ingesta oral escasa, nutrición parenteral complementaria. Buen control glucémico."
+      "neurologico": "Consciente y orientada, negacionista y apática. Empieza a comer y tomar pastillas escasamente. Tratamiento con quetiapina, escitalopram y mirtazapina. RASS 0, PINR. Miopatía del paciente crítico, se niega a mover extremidades. Fisioterapia.",
+      "respiratorio": "Destete respiratorio lento. TQT (cánula de plata) tras 72 h de O2 en T con mala tolerancia, necesidad de cambio a shiley. Tendencia a taquipnea. Actualmente en PS con Vt sobre 450 ml/respiración, Ps: 12 cmH2O, PEEP: 6 cmH2O, FIO2: 45%. GSA con pH 7.45, pCO2 56 mmHg, pO2 65 mmHg. Secreciones abundantes. Tratamiento con budesonida e ipratropio nebulizados, muconeb. Roncus dispersos en hemitórax derecho. Rx tórax: aumento de densidad parahiliar.",
+      "hemodinamico": "Tendencia a la HTA en tratamiento con antiHTA orales (bisoprolol, Captopril, Amlodipino, hidroclorotiazida, doxazosina), pero con episodios de hipotensión que requirieron NA. TA 142/68 mmHg. RS 66 lpm. Ruidos cardiacos regulares, soplo sistólico. Pulsos periféricos presentes. Hb 9.6 g/dl. Coagulación y Plaquetas dentro de la normalidad. Profilaxis antitrombótica con enoxaparina y antiagregación con AAS.",
+      "renal": "Diuresis forzadas con furosemida 10 mg/12 h iv, con ritmo miccional > 1 ml/kg/h. Edemas en codos, en raíz de MMII y pretibiales. Función renal conservada. Urea 62 mg/dl, Cr 0.57 mg/dl. Iones normales.",
+      "infeccioso": "Fiebre de hasta 38 ºC ayer. PCR 22.72 mg/dl, Leucocitos 13530/mm3. En tratamiento con ciprofloxacino. Antecedentes de Bacteriemia por catéter (Staph. epidermidis), C. albicans, C. glabrata en urocultivo, Pseudomonas aeruginosa en urocultivo y S. aureus en broncoaspirado.",
+      "digestivo": "Abdomen blando y depresible, no doloroso, peristaltismo conservado. Defecó escasamente hace 3 días. Ingesta oral escasa, Nutrición parenteral complementaria. Buen control glucémico sin insulina."
     }
   },
   {
@@ -112,14 +152,18 @@
     "unidad": "REA",
     "estado": "Estable",
     "alertas": false,
-    "plan": "Ajustar analgesia, vigilancia de drenajes, iniciar tromboprofilaxis con clexane, y progresar dieta.",
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "1",
+    "antecedentes": "DX: INSUFICIENCIA AÓRTICA. DILATACIÓN DE RAÍZ AÓRTICA. IQx: CIRUGÍA DE BONO-BENTALL CON CONDUCTO VALVULADO BIOLÓGICO 27MM.",
+    "plan": "Ajuste PC de morfina. Vigilancia drenajes. Colocación medias compresivas. Valorar iniciar mañana profilaxis con clexane. Progresar dieta.",
     "sistemas": {
-      "neurologico": "Consciente, orientado y colaborador, GCS 15. Sin focalidad neurológica. Dolor controlado con morfina 1mg/h en PC.",
-      "respiratorio": "Eupneico, SatO2 99% con GN 3lpm. Realiza inspirometría incentivada. GSA con pH 7.40, pCO2 43 mmHg, pO2 79 mmHg, HCO3 26.6 mmol/l.",
-      "hemodinamico": "TA 136/58 mmHg, FC RS 77/min, sin aminas. Troponina I 1297 pg/l. Hb 9.2 g/dl. Drenajes A: 650cc, B: 120cc serohemático.",
-      "renal": "Función renal normal. Urea 30 mg/dl, Creatinina 0.70 mg/dl. Diuresis 1585 cc, balance +947 cc.",
-      "infeccioso": "Afebril. Leucocitos 8.890/mm3, PCR 13.05 mg/dl. En profilaxis con cefazolina.",
-      "digestivo": "Abdomen blando y depresible, no doloroso. Perfil hepático normal. Inicia tolerancia oral a líquidos, inapetente. Glucemia 159 mg/dl con insulina."
+      "neurologico": "Consciente, orientado y colaborador, sin focalidad neurológica. GCS: 15 puntos. Dolor controlado con PC de morfina.",
+      "respiratorio": "Eupneico. SatO2: 99 % con GN 3lpm. Ha empezado a realizar inspirometría incentivada sin dificultad. Murmullo vesicular conservado, sin estertores patológicos. GSA: pH: 7.40, pCO2: 43 mmHg, pO2: 79 mmHg. Rx Tórax 23/01: sin alteraciones.",
+      "hemodinamico": "Necesidad ayer de PC de clevidipino de forma puntual, actualmente suspendida. TA 136/58 mmHg. FC: 77 /min, en RS sin aminas. Troponina I: 1297 pg/l (pico 3924). Tonos rítmicos, sin soplos audibles. Hb 9.2 g/dl. Drenajes A: 650cc, B: 120cc serohemático. Coagulación y plaquetas normales.",
+      "renal": "Función renal normal con Urea: 30 mg/dl, Creatinina: 0.70 mg/dl. Diuresis: 1585 cc ayer, ritmo de 1.2ml/kg/h. Balance: 947 cc ayer. Iones normales.",
+      "infeccioso": "Afebril ayer. Leucocitos: 8.890 /mm3, PCR: 13.05 mg/dl (aumento desde 3.8). En profilaxis con cefazolina.",
+      "digestivo": "Abdomen blando y depresible, no doloroso. Bilirrubina total: 1.44 mg/dl, GOT: 29 UI/l, GPT: 8 UI/L. Glucemia alrededor de 159 mg/dl, controlada con insulina. Proteínas totales: 5.5 g/dl. Ha iniciado tolerancia oral a líquidos, se encuentra inapetente."
     }
   },
   {
@@ -128,14 +172,18 @@
     "unidad": "REA",
     "estado": "Alerta",
     "alertas": true,
-    "plan": "Manejar delirio (ajustar quetiapina, haloperidol). Retirar noradrenalina y pasar amiodarona oral. Mantener clexane. Valorar drenaje pleural y manejo de balance hídrico. Iniciar suplemento nutricional con Fresubin.",
+    "edad": "69",
+    "sexo": "Varón",
+    "dias_estancia": "4",
+    "antecedentes": "DX: ENDOCARDITIS BACTERIANA SOBRE VÁLVULA MITRAL. INSUFICIENCIA MITRAL SEVERA. IQx: SUSTITUCIÓN VALVULAR MITRAL POR BIOPRÓTESIS.",
+    "plan": "Aumentar dosis de quetiapina hasta pauta habitual domiciliaria. Haloperidol si precisa, disminuir dexmedetomidina. Retirada de noradrenalina. Paso amiodarona a oral. Mantener mismas dosis de clexane. Reponer CLK. Evitar balance muy positivo. Pautar fresubin. Valorar mañana según evolución respiratoria el drenaje del derrame izquierdo.",
     "sistemas": {
-      "neurologico": "Delirio hiperactivo, agresividad, requiere haloperidol y dexmedetomidina (en descenso). Pupilas IC y NR. Movilidad espontánea de 4 extremidades.",
-      "respiratorio": "GN 3lpm, SatO2 100%. Hipoventilación base izda. GSA con pH 7.44, pCO2 30 mmHg, pO2 92 mmHg, HCO3 20.4 mmol/l. Rx tórax con signos de sobrecarga de volumen.",
-      "hemodinamico": "Noradrenalina 1ml/h. TA 115/72 mmHg, FC 71 RS. Episodio de FA con RVR previa, ahora en sinusal con amiodarona. Hb 10 g/dl.",
-      "renal": "Leve deterioro de función renal (Urea 94 mg/dl, Creatinina 1.23 mg/dl). Diuresis 1475 cc, balance +127 mL. Hipopotasemia 3.1 meq/l.",
-      "infeccioso": "Afebril. Leucocitos 8.180, PCR 30.37, PCT 3.7. En tto con Cefotaxima. Cultivos previos: Streptococcus mutans en HC, Proteus mirabilis en urocultivo.",
-      "digestivo": "Abdomen blando, depresible, no doloroso. Deposiciones normales. SNG arrancada por delirio. Tolerando dieta oral, proteínas 5.5 g/dl."
+      "neurologico": "Delirio hiperactivo que requiere haloperidol y dexmedetomidina (en descenso), además de mirtazapina, tiaprizal, quetiapina y zolpidem. Agresividad asociada. Pupilas isocóricas y normorreactivas. Movilidad espontánea de las 4 extremidades. Aparentemente no tiene dolor.",
+      "respiratorio": "GN 3lpm, SatO2: 100%. Buena mecánica y auscultación, hipoventilación base izquierda. Iniciada fisioterapia respiratoria. Rx Tórax 24/01: signos de sobrecarga de volumen, infiltrados bilaterales. GSA: pH: 7.44, pCO2: 30 mmHg, pO2: 92 mmHg.",
+      "hemodinamico": "Hace dos días episodio de FA paroxística con RVR sin inestabilidad grave, se inició amiodarona, actualmente en sinusal. Requiere NA a 1ml/h (antes 2ml/h). TA 115/72 mmHg, FC 71 RS. Láctico 1.6. Tonos rítmicos, sin soplos audibles. Drenajes retirados. Hb 10 g/dl. Plaquetas 193.000. Coagulopatía leve tras inicio de anticoagulación, por lo que se descendió dosis de clexane a 40/12.",
+      "renal": "Leve deterioro de la función renal, con diuresis conservada. Fuerzo con furosemida 10 mg/8h. Urea: 94 mg/dl, Creatinina: 1.23 mg/dl. Diuresis: 1475 cc ayer, Balance: +127 mL. Hipokalemia (3.1 meq/l).",
+      "infeccioso": "Afebril ayer. Leucocitos en descenso: 8.180/mm3, PCR: 30.37 mg/dl, PCT 3.7. ATB según UEI desde 29/12/2025 (Cefotaxima). Cultivos: válvula cardíaca negativo, Streptococcus mutans en HC, Proteus mirabilis en urocultivo.",
+      "digestivo": "Abdomen blando, depresible, no doloroso, deposiciones de aspecto normal. Ayer se colocó SNG para nutrición enteral (arrancada hoy por delirio). Transaminasas normales. Glucemia controlada. Tolerando dieta oral."
     }
   },
   {
@@ -144,14 +192,38 @@
     "unidad": "REA",
     "estado": "Crítico",
     "alertas": true,
-    "plan": "Disminuir sedación y progresar destete respiratorio. Continuar diálisis y tto antibiótico (ceftolozano/tazobactam, linezolid, anidulafungina). Mantener HBPM y procinéticos. EcoDoppler MMII pendiente.",
+    "edad": "?",
+    "sexo": "Varón",
+    "dias_estancia": "18",
+    "antecedentes": "RAM a petidina. Fumador. HTA, DLP. AdenoCa Pulmón LSD (2010), bilobectomía pulmonar derecha. AAA infrarrenal + A. Iliaca común izda. (EVAR 2022, Re-EVAR dic 2025). Litiasis renal izda (2021). Pancreatitis aguda (2007). Insuficiencia renal crónica en prediálisis. Estenosis renal severa bilateral. IQx previas: EVAR, apendicectomia, colecistectomia, bilobectomia pulmón derecho, reparación rotura biceps. DX: rotura de saco aneurismático en paciente ya reintervenido de EVAR. IQx: EVAR sobre EVAR.",
+    "plan": "Intentar disminuir dexmedetomidina. Progresar en el destete. A la espera de la realización de EcoDoppler de miembro inferior derecho. Mantenemos dosis HBPM (Tinzaparina 12.000U). Ajustamos parámetros ventilatorios: mantenemos PS 6 + PEEP 6, tratando de progresar en el destete. Mantener Bicarbonato 1/6 M. Mantener Diálisis Intermitente a cargo de Nefrología. Mantenemos CEFTOLOZANO/TAZOBACTAM, Linezolid y Anidulafungina. Mantenemos tratamiento procinético.",
     "sistemas": {
-      "neurologico": "Consciente y orientado. Con dexmedetomidina 8ml/h. Pupilas medias, isocóricas y reactivas. Sin focalidad.",
-      "respiratorio": "Traqueotomía desde 16/1, en PS 6 + PEEP 6, FiO2 35%. Roncus difusas. Condensación en basal derecho + derrame pleural. GA con pH 7.41, pCO2 30, pO2 143.",
-      "hemodinamico": "Ritmo Sinusal 75 lpm. TA 160/75 mmHg sin aminas. Láctico 1.5. Hb 8.8 g/dl. Perfusión en MMII buena.",
-      "renal": "Diálisis intermitente (3 días), diuresis 1630cc, BH neutro. Cr 5.14. Edemas MMII y superiores. Hipopotasemia 3.6, hiponatremia 133.",
-      "infeccioso": "Pico febril nocturno. PCR 13.52, Leucocitos 10.970. En aislamiento (E.Coli BLEE). Tto con Ceftolozano/Tazobactam, Linezolid y Anidulafungina. BAS con Pseudomona Aureginosa.",
-      "digestivo": "Dieta absoluta, nutrición parenteral. Abdomen distendido y timpánico (PIA 15 mmHg), con sonda rectal y procinéticos. Enzimas hepáticas de citolisis en descenso, colestasis alta."
+      "neurologico": "Consciente y orientado. Tranquilo. Apertura ocular espontánea. Responde a órdenes. Con PC Dexmedetomidina. Pupilas medias, isocóricas y reactivas.",
+      "respiratorio": "Paciente con traqueotomía desde el 16/1. Bien adaptado al respirador con PS 6 y PEEP 6. FiO2 0.35%. Murmullo vesicular conservado con roncus difusos en ambos campos pulmonares. GA: pH 7.41, pCO2 30, pO2 143. Rx TORAX 24/01: Persiste la condensación en basal derecho + derrame pleural (ligero empeoramiento). ECO pulmonar: sin presencia de líneas B. Derrame pleural derecho.",
+      "hemodinamico": "Hoy Ritmo Sinusal con 75 lpm. Tendencia a hipertensión arterial (TA 160/75) sin necesidad de aminas. Perfusión en MMII: buena coloración. Láctico 1.5. AC: rítmica sin soplos audibles. Hb 8.8 g/dl. Plaquetas 421.000. Coagulación en rango. Anticoagulado con HBPM (Tinzaparina). Sin signos de sangrado activo.",
+      "renal": "Insuficiencia renal crónica en prediálisis. Anteriormente con TRRC, ahora en diálisis intermitente (desde hace 3 días). Edemas con fóveas en MMII y superiores. Aumento progresivo de la diuresis (1.630cc/24h) con furosemida. BH neutro. Cr 5.14. Iones: K 3.6, Na 133, P 2.8.",
+      "infeccioso": "Paciente en aislamiento por E.Coli BLEE. Ha realizado pico febril durante la noche. RFA elevados. PCR 13.52 mg/dl, Leucocitos 10.970/mm3. Actualmente con Ceftolozano/Tazobactam, Linezolid y Anidulafungina. Cultivos: E.Coli BLEE en FR. Pseudomona Aureginosa, Enterococus Faecium y Cándida Albicans en BAS.",
+      "digestivo": "Dieta absoluta, con nutrición parenteral. Abdomen distendido y timpánico, sin ruidos presentes. Deposiciones regulares y abundantes. Débito claro por la sonda nasogástrica. Enzimas hepáticas de citolisis en descenso, enzimas de colestasis altas. TAC 22/1: No aumento del hematoma retroperitoneal derecho ni del saco aneurismático. Moderada distensión de gran parte del intestino. PIA: 15 mmHg. Sonda rectal."
+    }
+  },
+  {
+    "id": "rea-10",
+    "numero_cama": "10",
+    "unidad": "REA",
+    "estado": "Sin paciente",
+    "alertas": false,
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "-",
+    "antecedentes": "Sin paciente",
+    "plan": "No aplica",
+    "sistemas": {
+      "neurologico": "Sin paciente",
+      "respiratorio": "Sin paciente",
+      "hemodinamico": "Sin paciente",
+      "renal": "Sin paciente",
+      "infeccioso": "Sin paciente",
+      "digestivo": "Sin paciente"
     }
   },
   {
@@ -160,14 +232,58 @@
     "unidad": "REA",
     "estado": "Estable",
     "alertas": false,
-    "plan": "Transfundir 1 CH, vigilancia de plaquetopenia. Incentivar inspirometría y continuar recuperación postoperatoria.",
+    "edad": "64",
+    "sexo": "Mujer",
+    "dias_estancia": "2",
+    "antecedentes": "DX: Carcinomatosis peritoneal secundaria a neoplasia de colon derecho. IQx: Cirugía de citorreducción (Resección Ileo-tranversa, oforectomía bilateral, omentectomía, resección de implantes) + HIPEC (Mitomicina).",
+    "plan": "+ 1CH. Vigilancia plaquetopenia. Insistir en inspirometría incentivadora.",
     "sistemas": {
-      "neurologico": "Consciente, orientada y colaboradora. Dolor controlado con analgesia epidural y primer escalón. Buen estado general.",
-      "respiratorio": "Eupneica, buena mecánica ventilatoria e intercambio gaseoso con GN 2lpm. SatO2 100%. GSA normal.",
-      "hemodinamico": "Estable, TA 145-150/60mmHg en RS 75lpm. Láctico 1. Hb 8.5 g/dl, Plaquetas 87.000. Coagulación en rango.",
-      "renal": "Diuresis conservadas, función renal normal. Cr 0.69. Diuresis 2435ml, balance +259cc.",
-      "infeccioso": "Afebril, sin signos clínicos ni analíticos de infección. PCR 16.56, Leucocitos 6.68. Sin tratamiento antibiótico.",
-      "digestivo": "Dieta absoluta, nutrición parenteral. Abdomen blando y depresible, ligeramente doloroso. RHA audibles. Drenajes con escaso débito. Glucemia 137. Proteínas totales 4.8."
+      "neurologico": "Consciente, orientada y colaboradora. Buen estado general. Dolor controlado con analgesia epidural y de primer escalón.",
+      "respiratorio": "Eupneica con buena mecánica ventilatoria e intercambio gaseoso con GN convencionales a 2lpm. SatO2 100%. Murmullo vesicular conservado, sin ruidos sobreañadidos. RxT: sin hallazgos significativos. GSA normal.",
+      "hemodinamico": "Estable, con TAM > 65-70mmhg (145-150/60mmHg) en RS a 75lpm. Láctico 1. Buena perfusión periférica. AC: rítmica, sin soplos. Hb: 8.5 g/dl. Plaquetas: 87.000. Coagulación convencional en rango.",
+      "renal": "Diuresis conservadas con buena función renal. Cr. 0.69. Diuresis: 2435ml y balance ligeramente positivo +259cc. Iones normales. Sin edemas en zonas declives. Ayer ligera hematuria, hoy orina clara.",
+      "infeccioso": "Afebril, sin signos clínicos ni analíticos sugestivos de infección. PCR 16.56 mg/dl, Leucocitos: 6.68/mm3. Sin tratamiento antibiótico.",
+      "digestivo": "Abdomen blando y depresible, ligeramente doloroso a la palpación profunda, sin signos de peritonitis. RHA audibles. Apósito laparotomía limpio. Glucemias: 137. Proteínas totales: 4.8. Dieta absoluta con fluidoterapia de mantenimiento. Enzimas hepáticas GOT/GPT: 23/36. Escaso débito serohemático por drenajes abdominales. Con nutrición parenteral."
+    }
+  },
+  {
+    "id": "rea-12",
+    "numero_cama": "12",
+    "unidad": "REA",
+    "estado": "Sin paciente",
+    "alertas": false,
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "-",
+    "antecedentes": "Sin paciente",
+    "plan": "No aplica",
+    "sistemas": {
+      "neurologico": "Sin paciente",
+      "respiratorio": "Sin paciente",
+      "hemodinamico": "Sin paciente",
+      "renal": "Sin paciente",
+      "infeccioso": "Sin paciente",
+      "digestivo": "Sin paciente"
+    }
+  },
+  {
+    "id": "ucin-1",
+    "numero_cama": "1",
+    "unidad": "UCIN",
+    "estado": "Sin paciente",
+    "alertas": false,
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "-",
+    "antecedentes": "Sin paciente",
+    "plan": "No aplica",
+    "sistemas": {
+      "neurologico": "Sin paciente",
+      "respiratorio": "Sin paciente",
+      "hemodinamico": "Sin paciente",
+      "renal": "Sin paciente",
+      "infeccioso": "Sin paciente",
+      "digestivo": "Sin paciente"
     }
   },
   {
@@ -176,14 +292,58 @@
     "unidad": "UCIN",
     "estado": "Alerta",
     "alertas": true,
-    "plan": "Inicio ATB con Augmentine, control RFA por la tarde. Si no mejora, valorar cambio de ATB y TAC. Iniciar NPT y vitaminas. Continuar con agua de confort.",
+    "edad": "77",
+    "sexo": "Varón",
+    "dias_estancia": "3",
+    "antecedentes": "DX: ADENOCX PÁNCREAS. IQx: RESECCION PANCREATICA (CUERPO Y COLA) + ESPLENECTOMIA.",
+    "plan": "Mantener ingreso. Iniciar ATB con Augmentine, control RFA por la tarde, si no mejoría posible cambio de ATB y TAC. Agua de confort + NPT (1500 ml + 8 gr N2). Iniciar Vit K, primperan, carga de fosfato monopotásico. Comentado con cirugía, duda sobre TAC hoy o mañana.",
     "sistemas": {
-      "neurologico": "Consciente, orientado y colaborador. Dolor controlado con paracetamol + metamizol. Descanso nocturno con Lorazepam.",
-      "respiratorio": "GN 2 lpm, SatO2 100%. Adecuada mecánica respiratoria, sin expectoración purulenta. GVenosa central con pH 7.40, lactato 3.",
-      "hemodinamico": "Tendencia a HTA sistólica (160/90), RS 70 lpm. Lactato 3. Hb 13 g/dl. Plaquetas 169.000. Coagulopatía leve.",
-      "renal": "Empeoramiento leve función renal. Cr 1.23. Diuresis 2.7 litros, balance +800 ml. Hipopotasemia 3.6, hipofosfatemia 1.9. En tto furosemida + bicarbonato.",
-      "infeccioso": "Afebril. Marcadores de infección en aumento: Leucocitos 12.000, PCR 29 mg/dl, Procalcitonina 8 ng/ml. Inicio ATB con Augmentine.",
-      "digestivo": "Abdomen timpánico con íleo. Dieta líquida. Proteínas 5.8. Sin drenajes."
+      "neurologico": "Consciente, orientado y colaborador, sin focalidad neurológica. Dolor controlado con paracetamol + metamizol. Descanso nocturno con Lorazepam.",
+      "respiratorio": "GN 2 lpm con SatO2 100%. Adecuada mecánica respiratoria. No expectoración purulenta. Murmullo vesicular conservado, sin estertores patológicos. GVenosa central: pH: 7.40, HCO3: 31 mmol/l, EB: 5mmol/l, láctico: 3 mmol/l.",
+      "hemodinamico": "Tendencia a HTA sistólica. RS. Adecuados pulsos pedios. Lactato 3. Hb: 13 g/dl. Plaquetas: 169.000. Coagulopatía leve. Sin tromboprofilaxis ni medias de compresión.",
+      "renal": "Empeoramiento leve función renal. Creatinina: 1.23 mg/dl. Diuresis: 2.7 litros ayer, Balance: 800 ml ayer. Sodio: 141 meq/l, Potasio: 3.6 meq/l, fosfato: 1.9mg/dl. Con tratamiento furosemida + bicarbonato.",
+      "infeccioso": "Afebril. Marcadores de infección en aumento: Leucocitos: 12.000/mm3, PCR: 23 mg/dl (a 29), Procalcitonina: 8 ng/ml. Sin ATB (plan de inicio con Augmentine).",
+      "digestivo": "Abdomen timpánico sin defensa ni peristaltismo. Íleo. No drenajes. No colestasis. Nutrición líquida. Proteínas 5.8."
+    }
+  },
+  {
+    "id": "ucin-3",
+    "numero_cama": "3",
+    "unidad": "UCIN",
+    "estado": "Sin paciente",
+    "alertas": false,
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "-",
+    "antecedentes": "Sin paciente",
+    "plan": "No aplica",
+    "sistemas": {
+      "neurologico": "Sin paciente",
+      "respiratorio": "Sin paciente",
+      "hemodinamico": "Sin paciente",
+      "renal": "Sin paciente",
+      "infeccioso": "Sin paciente",
+      "digestivo": "Sin paciente"
+    }
+  },
+  {
+    "id": "ucin-4",
+    "numero_cama": "4",
+    "unidad": "UCIN",
+    "estado": "Sin paciente",
+    "alertas": false,
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "-",
+    "antecedentes": "Sin paciente",
+    "plan": "No aplica",
+    "sistemas": {
+      "neurologico": "Sin paciente",
+      "respiratorio": "Sin paciente",
+      "hemodinamico": "Sin paciente",
+      "renal": "Sin paciente",
+      "infeccioso": "Sin paciente",
+      "digestivo": "Sin paciente"
     }
   },
   {
@@ -192,17 +352,43 @@
     "unidad": "UCIN",
     "estado": "Alerta",
     "alertas": true,
-    "plan": "Mejorar analgesia con TAP bilateral. Relleno vascular con albuminón y gluconato cálcico. Iniciar Vit K. Control RFA por la tarde. No iniciar NP por ahora.",
+    "edad": "65",
+    "sexo": "Mujer",
+    "dias_estancia": "1",
+    "antecedentes": "DX: Perforación de colon. IQx: Peritonitis purulenta. Liberación de adherencias, resección e invaginación de muñones de íleon y colon. Lavado abdominal.",
+    "plan": "Mantener ingreso. Mejorar analgesia (TAP bilateral con ropivacaína). Agua de confort + medicación VO. No inicio de nutrición parenteral (tampoco tiene VC). Relleno vascular (albuminón + gluconato cálcico). Iniciar Vit K. Control RFA por la tarde.",
     "sistemas": {
-      "neurologico": "Consciente, orientado y colaborador, Ramsey 2. EVA reposo 4-5 (dolor flanco derecho que limita expectoración).",
-      "respiratorio": "Eupneica con GN 2 lpm, SatO2 96%. Hipoventilación leve basal. No expectora por dolor. GVenosa central con pH 7.35, pCO2 45 mmHg, láctico 1mmol/l.",
-      "hemodinamico": "Estable sin aminas, TA 120/80 a 90 lpm en RS. Lactato 0.9. Hb 11.7 g/dl. Coagulopatía leve. ECo cardio normal.",
-      "renal": "Oliguria últimas horas (25-15 ml/h). Cr 0.48. Hiponatremia 133 meq/l, Potasio 3.9 meq/l. Sin edemas.",
-      "infeccioso": "Afebril. Leucocitos 12.000, PCR 14 mg/dl, Procalcitonina 0.4 ng/ml. En tratamiento con Tazocel.",
-      "digestivo": "Abdomen blando y depresible, peristaltismo disminuido. Sin drenaje. En ayunas. Buen control glucémico."
+      "neurologico": "Consciente, orientado y colaboradora, sin focalidad neurológica. Ramsey 2. EVA reposo 4-5 (dolor en flanco derecho que limita expectoración) con paracetamol + metamizol. Medicación VO (escicarbamazepina + lacosamida).",
+      "respiratorio": "Eupneica con GN 2 lpm con SatO2: 96%. Hipoventilación leve basal. No expectora por dolor. Murmullo vesicular conservado, sin estertores patológicos. GVenosa central: pH: 7.35, pCO2: 45 mmHg, pO2: 47 mmHg, HCO3: 25 mmol/l, EB: -1 mmol/l, láctico: 1mmol/l.",
+      "hemodinamico": "Estable hemodinámicamente sin aminas en RS (TA 120/80 a 90 lpm). Tonos rítmicos. Sensación de sed. Pulsos pedios palpables. Lactato 0.9. Eco cardio: adecuada contractilidad biventricular, leve disfunción diastólica e HVI leve. VCI 5 mm, colapsable >50%. Hgb: 11.7g/dl. Coagulopatía leve. Sin tromboprofilaxis, pero con medias compresibles.",
+      "renal": "Creatinina: 0.48 mg/dl. Oliguria en últimas horas (25-15 ml/h). Sodio: 133 meq/l, Potasio: 3.9 meq/l, Calcio-albúmina: 8.4 mg/dl, fosfato: 2.3mg/dl. Sin edemas. Sensación de sed leve.",
+      "infeccioso": "Afebril. Leucocitos: 12.000/mm3 (previo 17.000), PCR: 14 mg/dl (previo 0.8), Procalcitonina: 0.4 ng/ml. En tratamiento con Tazocel desde 23/01/26. Antecedente de peritonitis purulenta.",
+      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. Sin drenaje. No colestasis. Buen control glucémico. En ayunas."
+    }
+  },
+  {
+    "id": "ucin-6",
+    "numero_cama": "6",
+    "unidad": "UCIN",
+    "estado": "Sin paciente",
+    "alertas": false,
+    "edad": "?",
+    "sexo": "?",
+    "dias_estancia": "-",
+    "antecedentes": "Sin paciente",
+    "plan": "No aplica",
+    "sistemas": {
+      "neurologico": "Sin paciente",
+      "respiratorio": "Sin paciente",
+      "hemodinamico": "Sin paciente",
+      "renal": "Sin paciente",
+      "infeccioso": "Sin paciente",
+      "digestivo": "Sin paciente"
     }
   }
 ];
+    
+    // ICONOS
     const Icons = {
       Brain: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>,
       Wind: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>,
@@ -212,9 +398,11 @@
       Stomach: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2Z"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>,
       Bed: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>,
       Alert: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
-      Clipboard: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/></svg>
+      Clipboard: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/></svg>,
+      User: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     };
     const Icon = ({n, c}) => { const I = Icons[n]; return I ? <I className={c} /> : null; };
+
     const BedCard = ({ data, onClick }) => {
       const isUCIN = data.unidad === 'UCIN';
       const colors = { 'Crítico': 'border-l-red-500 bg-red-100 text-red-700', 'Estable': 'border-l-emerald-500 bg-emerald-100 text-emerald-700', 'Alerta': 'border-l-amber-500 bg-amber-100 text-amber-700' };
@@ -222,24 +410,37 @@
       const unitClass = isUCIN ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700';
       return (
         <div onClick={() => onClick(data)} className={`relative glass-card rounded-xl shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all p-5 cursor-pointer border border-slate-200 border-l-4 ${status.split(' ')[0]}`}>
-          <div className="flex justify-between items-start">
+          <div className="flex justify-between items-start mb-2">
              <div className="flex items-center gap-3">
                <div className="bg-slate-50 p-2 rounded-lg text-slate-400"><Icon n="Bed" c="w-6 h-6"/></div>
-               <div><h3 className="text-xl font-black text-slate-800">Cama {data.numero_cama}</h3><span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase ${unitClass}`}>{data.unidad}</span></div>
+               <div>
+                  <h3 className="text-xl font-black text-slate-800 leading-none">Cama {data.numero_cama}</h3>
+                  <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase ${unitClass}`}>{data.unidad}</span>
+               </div>
              </div>
              <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${status.substring(status.indexOf(' ')+1)}`}>{data.estado}</span>
           </div>
-          <div className="mt-4"><p className="text-xs text-slate-400 font-bold uppercase">Paciente</p><p className="text-3xl font-black text-slate-700">{data.paciente_id}</p></div>
-          {data.alertas && <div className="mt-4 flex items-center gap-2 text-red-600 bg-red-50 px-2 py-1 rounded"><Icon n="Alert" c="w-4 h-4 animate-pulse"/><span className="text-xs font-bold">ATENCIÓN</span></div>}
+          
+          {/* NUEVA LÍNEA DEMOGRÁFICA EN TARJETA */}
+          <div className="flex items-center gap-2 text-xs font-bold text-slate-500 mb-3 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+             <span className="flex items-center gap-1"><Icon n="User" c="w-3 h-3"/> {data.edad} años</span>
+             <span className="text-slate-300">|</span>
+             <span>Día {data.dias_estancia}</span>
+          </div>
+
+          <div><p className="text-xs text-slate-400 font-bold uppercase">Paciente</p><p className="text-2xl font-black text-slate-700 truncate">{data.paciente_id}</p></div>
+          {data.alertas && <div className="mt-3 flex items-center gap-2 text-red-600 bg-red-50 px-2 py-1 rounded"><Icon n="Alert" c="w-4 h-4 animate-pulse"/><span className="text-xs font-bold">ATENCIÓN</span></div>}
         </div>
       );
     };
+
     const Section = ({ i, t, txt, col }) => (
       <div className="bg-white/80 p-4 rounded-2xl border border-slate-100 shadow-sm backdrop-blur-sm">
         <div className="flex items-center gap-2 mb-2"><div className={`p-2 rounded-lg ${col}`}><Icon n={i} c="w-5 h-5"/></div><h4 className="text-xs font-bold text-slate-500 uppercase">{t}</h4></div>
-        <p className="text-sm font-medium text-slate-700 pl-10">{txt || "Sin datos."}</p>
+        <p className="text-sm font-medium text-slate-700 pl-10 leading-relaxed">{txt || "Sin datos."}</p>
       </div>
     );
+
     const Modal = ({ p, onClose }) => {
       if(!p) return null;
       const isUCIN = p.unidad === 'UCIN';
@@ -247,18 +448,44 @@
       return (
         <div className="fixed inset-0 modal-backdrop flex items-center justify-center p-4 z-50" onClick={onClose}>
           <div className="bg-slate-50 w-full max-w-6xl max-h-[95vh] overflow-y-auto rounded-3xl shadow-2xl" onClick={e=>e.stopPropagation()}>
-            <div className="bg-white p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 z-10">
+            <div className="bg-white p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 z-10 shadow-sm">
                <div className="flex items-center gap-4">
-                 <div className={`h-12 w-12 ${headCol} rounded-xl flex items-center justify-center text-white font-black text-xl`}>{p.numero_cama}</div>
-                 <div><h2 className="text-3xl font-black text-slate-800">{p.paciente_id}</h2><span className="text-slate-500 font-bold text-sm">{p.unidad}</span></div>
+                 <div className={`h-14 w-14 ${headCol} rounded-xl flex items-center justify-center text-white font-black text-2xl shadow-md`}>{p.numero_cama}</div>
+                 <div>
+                    <h2 className="text-3xl font-black text-slate-800 tracking-tight">{p.paciente_id}</h2>
+                    {/* INFO DEMOGRÁFICA EN HEADER MODAL */}
+                    <div className="flex items-center gap-3 text-slate-500 font-bold text-sm mt-1">
+                        <span className="bg-slate-100 px-2 py-0.5 rounded text-slate-600">{p.sexo}</span>
+                        <span>{p.edad} años</span>
+                        <span className="text-slate-300">•</span>
+                        <span>Estancia: Día {p.dias_estancia}</span>
+                    </div>
+                 </div>
                </div>
-               <button onClick={onClose} className="px-4 py-2 bg-slate-100 rounded-lg font-bold hover:bg-slate-200">Cerrar</button>
+               <button onClick={onClose} className="px-5 py-2.5 bg-slate-100 rounded-xl font-bold text-slate-600 hover:bg-slate-200 transition-colors">Esc Cerrar</button>
             </div>
-            <div className="p-6 space-y-6">
-               <div className={`p-1 rounded-2xl bg-gradient-to-r ${isUCIN ? 'from-purple-500 to-purple-400' : 'from-blue-500 to-blue-400'}`}>
-                 <div className="bg-white p-5 rounded-xl"><div className="flex gap-2 mb-2 items-center text-slate-800"><Icon n="Clipboard" c="w-6 h-6"/><span className="font-black uppercase">Plan Terapéutico</span></div><p className="text-lg font-medium pl-8">{p.plan}</p></div>
+            
+            <div className="p-6 md:p-8 space-y-6">
+               
+               {/* NUEVO BLOQUE ANTECEDENTES */}
+               {p.antecedentes && p.antecedentes !== "?" && (
+                 <div className="bg-slate-100/80 p-5 rounded-2xl border border-slate-200">
+                    <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Antecedentes Personales (AP)</h3>
+                    <p className="text-base font-medium text-slate-700 italic">{p.antecedentes}</p>
+                 </div>
+               )}
+
+               <div className={`p-1 rounded-2xl shadow-sm bg-gradient-to-r ${isUCIN ? 'from-purple-500 to-purple-400' : 'from-blue-500 to-blue-400'}`}>
+                 <div className="bg-white p-5 rounded-xl">
+                    <div className="flex gap-2 mb-2 items-center text-slate-800">
+                        <Icon n="Clipboard" c="w-6 h-6"/>
+                        <span className="font-black uppercase tracking-wide">Plan Terapéutico</span>
+                    </div>
+                    <p className="text-lg font-medium pl-8 leading-relaxed text-slate-800">{p.plan}</p>
+                 </div>
                </div>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                  <Section i="Brain" t="Neurológico" txt={p.sistemas.neurologico} col="bg-indigo-100 text-indigo-600"/>
                  <Section i="Wind" t="Respiratorio" txt={p.sistemas.respiratorio} col="bg-sky-100 text-sky-600"/>
                  <Section i="Heart" t="Hemodinámico" txt={p.sistemas.hemodinamico} col="bg-rose-100 text-rose-600"/>
@@ -277,10 +504,19 @@
       const reas = PATIENTS.filter(p=>p.unidad==='REA');
       const ucins = PATIENTS.filter(p=>p.unidad==='UCIN');
       return (
-        <div className="min-h-screen p-8 max-w-[1920px] mx-auto">
-           <header className="mb-8"><h1 className="text-4xl font-black text-slate-800 tracking-tighter">UCI Quirúrgica <span className="text-blue-600">Dashboard</span></h1><p className="text-slate-500 font-bold">Actualizado: {new Date().toLocaleTimeString()}</p></header>
-           {reas.length>0 && <div className="mb-8"><h2 className="text-2xl font-black text-blue-800 mb-4">REA</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">{reas.map(p=><BedCard key={p.id} data={p} onClick={setSel}/>)}</div></div>}
-           {ucins.length>0 && <div><h2 className="text-2xl font-black text-purple-800 mb-4">UCIN</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">{ucins.map(p=><BedCard key={p.id} data={p} onClick={setSel}/>)}</div></div>}
+        <div className="min-h-screen p-6 md:p-10 max-w-[1920px] mx-auto">
+           <header className="mb-10 flex flex-col md:flex-row justify-between items-end gap-4">
+              <div>
+                <h1 className="text-5xl font-black text-slate-800 tracking-tighter mb-2">UCI Quirúrgica <span className="text-blue-600">Dashboard</span></h1>
+                <p className="text-slate-500 font-medium">Vista clínica en tiempo real • REA + UCIN</p>
+              </div>
+              <div className="bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-100 text-sm font-bold text-slate-400">
+                Act: {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+              </div>
+           </header>
+           
+           {reas.length>0 && <div className="mb-12"><h2 className="text-2xl font-black text-blue-900 mb-6 flex items-center gap-2"><span className="w-2 h-8 bg-blue-500 rounded-full"></span>REA</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">{reas.map(p=><BedCard key={p.id} data={p} onClick={setSel}/>)}</div></div>}
+           {ucins.length>0 && <div><h2 className="text-2xl font-black text-purple-900 mb-6 flex items-center gap-2"><span className="w-2 h-8 bg-purple-500 rounded-full"></span>UCIN</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">{ucins.map(p=><BedCard key={p.id} data={p} onClick={setSel}/>)}</div></div>}
            {sel && <Modal p={sel} onClose={()=>setSel(null)}/>}
         </div>
       );
