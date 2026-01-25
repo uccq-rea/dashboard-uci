@@ -27,43 +27,23 @@
     const { useState, useEffect } = React;
     const PATIENTS = [
   {
-    "id": "rea-1",
-    "numero_cama": "1",
-    "unidad": "REA",
-    "estado": "Sin paciente",
-    "alertas": false,
-    "edad": "?",
-    "sexo": "?",
-    "dias_estancia": "-",
-    "antecedentes": "Sin paciente",
-    "plan": "No aplica",
-    "sistemas": {
-      "neurologico": "Sin paciente",
-      "respiratorio": "Sin paciente",
-      "hemodinamico": "Sin paciente",
-      "renal": "Sin paciente",
-      "infeccioso": "Sin paciente",
-      "digestivo": "Sin paciente"
-    }
-  },
-  {
     "id": "rea-2",
     "numero_cama": "2",
     "unidad": "REA",
     "estado": "Crítico",
     "alertas": true,
-    "edad": "?",
-    "sexo": "?",
+    "edad": "72",
+    "sexo": "Varón",
     "dias_estancia": "59",
-    "antecedentes": "HTA, DLP, Obesidad, Anemia ferropénica (hernia hiatal gigante, hemorroides, gastritis crónica, angiodisplasias íleon), amnesia global transitoria (2022), Sd. depresivo, SAHS en tratamiento con CPAP, Lumbalgia crónica, Espondilosis lumbar con discopatía degenerativa L5-S1. DX: ENDOCARDITIS SOBRE BIOPROTESIS AÓRTICA (2021). IQX: RECAMBIO DE BIOPRÓTESIS.",
-    "plan": "Ajuste de FAES por actividad epileptógena. Intentar mantener sin sedación IV por la noche. Próximo EEG el 26/01/26. Controles gasométricos. Intentar balance renal neutro o ligeramente negativo. Si ingesta insuficiente valorar NPT/PEG. Si aumentan secreciones respiratorias, tiene fiebre o aumentan los marcadores, iniciar tratamiento con cefta-avibactan + colistina inhalada.",
+    "antecedentes": "Endocarditis sobre bioprótesis aórtica (2021) con recambio. HTA, DLP, Obesidad. Anemia ferropénica por pérdidas digestivas (Hernia hiatal gigante, hemorroides, gastritis crónica, angiodisplasias íleon). Episodio único de amnesia global transitoria (2022). Síndrome depresivo (sin seguimiento/tratamiento desde 2013). SAHS en tratamiento con CPAP. Lumbalgia crónica con espondilosis lumbar y discopatía degenerativa L5-S1 (2015).",
+    "plan": "Intentar mantener sin sedación IV por la noche. Próximo EEG el 26/01/26. Controles gasométricos. Intentar balance neutro o ligeramente negativo. Si ingesta insuficiente, valorar NPT/PEG. Si durante el fin de semana aumentan secreciones respiratorias, fiebre o marcadores, iniciar tratamiento con cefta-avibactan + colistina inhalada.",
     "sistemas": {
-      "neurologico": "Bradipsíquico, periodos de desconexión frecuentes, movimientos estereotipados de flexión y extensión de muñecas. Precisa sedación para agitación nocturna. En tratamiento antiepiléptico (lacosamida, perampanel). EEG con actividad epileptiforme, SIRPID. Encefalopatía moderada. Delirium hiperactivo. Microsangrados bilaterales.",
-      "respiratorio": "Buena evolución del destete tras tratamiento de traqueobronquitis por pseudomona, ha permitido cambio a cánula de plata tapada con GNAF. SatpO2 100%. Pocas secreciones blanquecinas. Tratamiento broncodilatador (Ipatropio). Antecedente de NAVM por P. Aeruginosa VIM y Traqueobronquitis por pseudomona carbapenem resistente. TQT el 10/12.",
-      "hemodinamico": "Sin soporte vasopresor. Tendencia a la hipertensión (167/55 mmHg) a pesar de bisoprolol y amlodipino. RS 74 lpm. Soplo holosistólico. Pulsos periféricos presentes, buena perfusión distal. Hb 9.3 g/dl. Plaquetas y coagulación normales. Tratamiento tromboprofiláctico con enoxaparina y AAS. Rx tórax: cardiomegalia, hilios congestivos.",
-      "renal": "Diuresis forzadas con furosemida 10 mgr/8h iv (2465 cc, Balance -1437 cc). Función renal conservada. Hiponatremia leve (131 mmol/l) en tratamiento con Potasión por SNG.",
-      "infeccioso": "Afebril, RFA negativos. Leucocitos 7260/mm3, PCR 5.03 mg/dl. Sin tratamiento antibiótico desde 20/1. Antecedentes de cultivos positivos para Pseudomona aeruginosa (carbapenem resistente, sensible a cefta-avibactam), Enterobacter hormaechei productora AMPC, Acinetobacter bereziniae. Finalizado tratamiento para endocarditis.",
-      "digestivo": "Ingesta oral en los periodos de mejor nivel de conciencia sin atragantamientos. Abdomen globuloso, depresible, no doloroso. Peristaltismo conservado. Perfil hepático dentro de la normalidad. Hernia hiatal gigante. Se ha arrancado SNG en múltiples ocasiones."
+      "neurologico": "Bradipsíquico sin deterioro del lenguaje. Periodos de desconexión frecuentes y movimientos estereotipados de flexión/extensión de muñecas. Precisa sedación para agitación nocturna. Tratamiento antiepiléptico con lacosamida y Perampanel. EEG con actividad paroxística patológica (SIRPID) y epileptiforme ocasional sobre área temporal izquierda. Encefalopatía moderada.",
+      "respiratorio": "Buena evolución del destete tras tratamiento de traqueobronquitis por pseudomona, permitiendo cambio a cánula de plata tapada. En GNAF 30/30 para humidificación. SatO2 100%. Buena mecánica respiratoria y buen intercambio gaseoso. Pocas secreciones blanquecinas. Tratamiento broncodilatador con Ipatropio. Auscultación: murmullo vesicular conservado, sin ruidos patológicos. Rx tórax: cardiomegalia, hilios congestivos.",
+      "hemodinamico": "Sin soporte vasopresor, tendencia a la hipertensión (167/55 mmHg) pese a bisoprolol y amlodipino. Ritmo Sinusal 74 lpm. Hb 9.3 g/dl. Ruidos cardiacos regulares, auscultación de soplo holosistólico. Pulsos periféricos presentes y simétricos, buena perfusión distal.",
+      "renal": "Diuresis forzadas con furosemida 10 mg/8h IV (2465 cc, balance -1437 cc). Función renal conservada. Hiponatremia leve (131 mmol/l) en tratamiento con Potasión por SNG. Potasio: 3.4 mmol/l. Peso 109kg.",
+      "infeccioso": "Afebril, RFA negativos. Leucocitos 7260/mm3, PCR 5.03 mg/dl. Sin tratamiento antibiótico. Previamente NAVM por P. Aeruginosa VIM y traqueobronquitis por pseudomona carbapenem resistente. Cultivos: Pseudomona aeruginosa (carbapenem resistente, S cefta-avibactam), Enterobacter hormaechei (productora AMPC), Acinetobacter bereziniae. Vías: Midline MSI (20 días), A. Radial derecha (3 días).",
+      "digestivo": "Ingesta oral en los periodos de mejor nivel de conciencia sin atragantamientos. Abdomen globuloso pero depresible, no doloroso a la palpación, sin signos de peritonismo, peristaltismo conservado. Perfil hepático dentro de la normalidad. Hernia hiatal gigante."
     }
   },
   {
@@ -72,18 +52,18 @@
     "unidad": "REA",
     "estado": "Estable",
     "alertas": false,
-    "edad": "?",
-    "sexo": "?",
+    "edad": "55",
+    "sexo": "Varón",
     "dias_estancia": "3",
-    "antecedentes": "No RAMc, HTA, DLP. IQ: Fibroma espalda, cirugía mandibular con implante de placa en 1989. DX: Epiglotitis con un quiste en la valécula izquierda.",
-    "plan": "Reforzar la analgesia. Progresar dieta. Si continúa la buena evolución, será alta a planta en 24 horas. Iniciar profilaxis antitrombótica hoy.",
+    "antecedentes": "HTA, DLP. Cirugía de fibroma de espalda. Cirugía mandibular con implante de placa en 1989. Ingreso actual por epiglotitis con quiste en valécula izquierda.",
+    "plan": "Reforzar la analgesia. Progresar dieta. Si continua la buena evolución, alta a planta en 24 horas.",
     "sistemas": {
       "neurologico": "Consciente, orientado y colaborador, sin focalidad neurológica. GCS: 15 puntos. Se queja de dolor de garganta.",
-      "respiratorio": "Eupneico con VK al 50%, SatO2: 98-100%. No refiere sensación disneica, no sialorrea. En tratamiento corticoideo (metilprednisolona). Murmullo vesicular conservado, sin estertores patológicos. Extubado sin incidencias tras prueba de fugas positiva.",
-      "hemodinamico": "TA: 136/78 mmHg sin necesidad de aminas. FC: RS a 60 lpm. Tonos rítmicos, sin soplos ni roces.",
-      "renal": "Urea: 60 mg/dl, Creatinina: 0.99 mg/dl. Diuresis ayer de 1410 cc, Balance equilibrado. Ionograma normal, fosfato: 2.9 mg/dl. Sin edemas en zonas declives.",
-      "infeccioso": "Afebril. Leucocitos: 14130/mm3, PCR: 9.89 mg/dl (en descenso). En tratamiento con Augmentine desde 22/01/26. Ayer se drenó quirúrgicamente absceso de valécula izquierda con toma de muestra para microbiología.",
-      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. Actualmente en ayunas, glucemia alrededor de 130 mg/dl. Proteínas totales: 7.3 g/dl. Se iniciará la tolerancia a los líquidos hoy."
+      "respiratorio": "Eupneico con Ventimask al 50%, SatO2: 98-100%. No refiere sensación disneica, no sialorrea. Extubado sin incidencias tras prueba de fugas positiva. En tratamiento corticoideo con metilprednisolona 20mg/8h. Auscultación pulmonar: murmullo vesicular conservado, sin estertores patológicos.",
+      "hemodinamico": "TA: 136/78 mmHg sin necesidad de aminas. FC: Ritmo Sinusal a 60 lpm. Auscultación cardiaca: tonos rítmicos, sin soplos ni roces.",
+      "renal": "Urea: 60 mg/dl, Creatinina: 0.99 mg/dl. Diuresis de 1410 cc ayer, balance equilibrado. Ionograma normal, fosfato: 2.9 mg/dl. Sin edemas en zonas declives.",
+      "infeccioso": "Afebril. Leucocitos: 14130/mm3, PCR: 9.89 mg/dl (en descenso desde 22.4). En tratamiento con Augmentine 2g/8h desde 22/01/26. Ayer se drenó quirúrgicamente el absceso de valécula izquierda con toma de muestra para microbiología.",
+      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. Actualmente en ayunas, glucemia alrededor de 130 mg/dl. Se inicia tolerancia a líquidos hoy."
     }
   },
   {
@@ -95,15 +75,15 @@
     "edad": "40",
     "sexo": "Varón",
     "dias_estancia": "5",
-    "antecedentes": "No RAM, HTA, DM ni DLP. Obesidad, SAOS, Hiperuricemia. DX: TCE grave tras precipitación. Ingreso en UCIQ 19/01/26 tras limpieza y evacuación de herida quirúrgica frontoparietoteporal derecha con dx asociado de cerebritis.",
-    "plan": "Intentar descender propofol si no se agita. Si se puede, se pone en O2 en T. Diálisis intermitente para reducción de concentración de vancomicina y evitar perpetuar la nefrotoxicidad. Reiniciar Clexane.",
+    "antecedentes": "Obesidad, SAOS, Hiperuricemia. Ingreso por TCE grave (precipitación) el 30/12/25. Dx asociado de cerebritis.",
+    "plan": "Intentar descender propofol si no se agita. Si se puede, poner en O2 T. Diálisis intermitente para reducción de concentración de vancomicina y evitar nefrotoxicidad. Reiniciar clexane. Intención de progresar en weaning respiratorio e iniciar O2 en T en función de la agitación.",
     "sistemas": {
-      "neurologico": "Actualmente sedación con dexmedetomidina y propofol. Necesidad de contenciones mecánicas por agitación. Apertura ocular espontánea. No responde a órdenes. En tratamiento con clonidina, keppra, lacosamida y quetiapina. Morfina. La herida ha dejado de drenar líquido. Antecedente de encefalopatía severa y actividad epileptiforme. Sospecha de cerebritis.",
-      "respiratorio": "Buena mecánica ventilatoria. MVC con roncus de forma bilateral. En CPAP. SatO2 98-100%. Intención de progresar en weaning respiratorio e iniciar O2 en T en función de la agitación. TQT reglada.",
-      "hemodinamico": "Necesidad de NA (0.07mcg/kg/min) para mantener cifras tensionales (TA en torno a 130/55). FC 75-80lpm en ritmo sinusal. Lácticos normales. ECG: RS a 80lpm, sin alteraciones de repolarización. Hb: 8.8 g/dl. Plaquetas 544.000 y coagulación en rango.",
-      "renal": "FRA AKI 3. En diálisis intermitente. Urea: 195 mg/dl, Creatinina: 9 mg/dl. Diuresis forzada con PC de furosemida. BH -2700cc. Posibilidad de Nefropatía inmunoalérgica por Vancomicina. Hipofosfatemia y potasio previamente elevados, ahora normalizados.",
-      "infeccioso": "Afebril. Leucocitos: 12.690/mm3, PCR: 8.44 mg/dl. En tratamiento con Ceftarolina (sustituye vancomicina). Cultivos: SAMS, Staphylococcus epidermidis en herida quirúrgica, Proteus mirabilis BLEE en frotis rectal. Cultivo líquido cerebral intraqx negativo.",
-      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. En tratamiento con enema y micralax, ha realizado deposiciones. Bilirrubina, GOT, GPT normales. Glucemia 120mg/dl. Nutrición enteral bien tolerada."
+      "neurologico": "Actualmente sedación con dexmedetomidina y propofol. Necesidad de contenciones mecánicas. Apertura ocular espontánea, no responde a órdenes. En tratamiento con clonidina, keppra, lacosamida y quetiapina. Morfina. Desde nueva sutura ayer, la herida frontoparietotemporal derecha ha dejado de drenar líquido. Encefalopatía severa y actividad epileptiforme.",
+      "respiratorio": "Buena mecánica ventilatoria. Murmullo vesicular conservado con roncus bilaterales. En CPAP con FIO2 40%, FR 14, PEEP: 6, PS: 8mbar. Volumen Tidal: >500, Volumen minuto 8.5lpm. Mantiene SatO2 98-100%.",
+      "hemodinamico": "Necesidad de noradrenalina 2ml/h (0.07mcg/kg/min) para mantener cifras tensionales (TA en torno a 130/55). FC 75-80lpm en ritmo sinusal. Lactatos normales. Auscultación cardiaca: tonos rítmicos. ECG: RS a 80lpm, sin alteraciones de repolarización.",
+      "renal": "Insuficiencia renal aguda AKI 3. Ayer realizó diálisis, pautado por nefrología. Urea: 195 mg/dl, Creatinina: 9 mg/dl. Diuresis: forzada con PC de furosemida a 2ml/h (3435cc en 24h, BH -2700cc, disminuida a 1ml/h). Sodio: 141 meq/l, Potasio: 4.2 meq/l, Fosfato: 12.9 mg/dl. Sin edemas. Posible nefropatía inmunoalérgica por Vancomicina.",
+      "infeccioso": "Afebril. Leucocitos: 12.690/mm3, PCR: 8.44 mg/dl. El 22/01 se sustituyó vancomicina por ceftarolina. Cultivos: SAMS, S. epidermidis (herida quirúrgica), Proteus mirabilis BLEE (frotis rectal). Cultivos de líquido cerebral y herida actuales negativos.",
+      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. En tratamiento con enema y micralax, ha realizado deposiciones. Bilirrubina total, GOT, GPT normales. Glucemia alrededor de 120mg/dl. Nutrición enteral Atempero a 60ml/h con descanso nocturno, bien tolerada."
     }
   },
   {
@@ -115,15 +95,15 @@
     "edad": "58",
     "sexo": "Mujer",
     "dias_estancia": "2",
-    "antecedentes": "DX: ICTUS M2 izquierda. IQx: Trombectomía mecánica con necesidad de reIOT inmediata.",
-    "plan": "Continuar monitorización y soporte. Se describen las condiciones actuales sin un plan futuro específico en la nota.",
+    "antecedentes": "Ictus M2 izquierda con necesidad de reIOT. Sin antecedentes relevantes explícitos en la nota.",
+    "plan": "No se especifica un plan inmediato en la nota, pero se infiere la continuidad de manejo de la sedación, soporte hemodinámico y vigilancia neurológica y de complicaciones.",
     "sistemas": {
-      "neurologico": "RASS: -3, BIS: 62. Sedada con propofol. Hemiparesia derecha. Pupilas puntiformes, isocóricas e hiporreactivas. TC control: área de isquemia aguda establecida en territorio superficial de ACM izquierda con leve efecto masa y obliteración de surcos. Zonas hiperdensas frontotemporales sugestivas de extravasación de contraste yodado.",
-      "respiratorio": "FR: 17/min, SatO2: 98% con CPAP/PS, FIO2 50%. Vt: 450 cc. Murmullo vesicular conservado, sin estertores patológicos. GSA: pH: 7.3, pCO2: 45 mmHg, pO2: 170 mmHg, HCO3: 22.1 mmol/l, EB: -4.3 mmol/l, láctico: 1.3 mmol/l.",
-      "hemodinamico": "TA 114/80 mmHg. FC: 74/min, en FA. Noradrenalina en PC a 0.15 mcg/kg/min. Hgb: 11.5 g/dl. Tonos arrítmicos, sin soplos ni roces.",
-      "renal": "Urea: 59 mg/dl, Creatinina: 2.54 mg/dl. Diuresis: 2970 cc ayer, Balance: -1250 cc ayer. Iones dentro de la normalidad. Sin tratamiento diurético ni edemas en zonas declives.",
-      "infeccioso": "Afebril con temperatura máxima de 36.7ºC. Leucocitos: 15610/mm3, PCR: 22.6 mg/dl. Tratamiento antibiótico con piperacilina/tazobactam.",
-      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. Bilirrubina total: 0.28 mg/dl, GOT: 15 UI/l, GPT: 7 UI/L. Glucemia: 164 mg/dl con necesidad de insulina. Proteínas totales: 5.6 g/dl. Soporte nutricional con glucosado al 10% y nutrición enteral. Coagulación e INR normales, profilaxis de TVP con enoxaparina."
+      "neurologico": "RASS: -3, BIS: 62, sedación con propofol. Hemiparesia derecha constatada en ventana de sedación. Pupilas puntiformes, isocóricas e hiporreactivas. TC de control muestra área hipodensa fronto-parieto-temporal izquierda (isquemia aguda establecida), con leve efecto masa y obliteración de surcos. Áreas hiperdensas frontotemporales sugestivas de extravasación de contraste yodado.",
+      "respiratorio": "FR: 17/min, SatO2: 98% con CPAP/PS, FIO2 50%, Volumen Tidal: 450 cc, PEEP: 6 cmH2O, PS: 11 cmH2O. GSA: pH 7.3, pCO2 45, pO2 170, HCO3 22.1, EB -4.3, láctico 1.3. Auscultación pulmonar: murmullo vesicular conservado, sin estertores patológicos.",
+      "hemodinamico": "TA 114/80 mmHg. FC: 74/min en FA. Noradrenalina en PC a 0.15 mcg/kg/min (8 ml/h). Hb: 11.5 g/dl. Auscultación cardiaca: tonos arrítmicos, sin soplos ni roces.",
+      "renal": "Urea: 59 mg/dl, Creatinina: 2.54 mg/dl. Diuresis: 2970 cc ayer, balance: -1250 cc ayer. Sodio: 139 meq/l, Potasio: 4.1 meq/l, Cloro: 111 meq/l, Calcio corregido: 9.9 mg/dl, Fosfato: 4.6 mg/dl, Magnesio: 2.64 mg/dl. Sin tratamiento diurético ni edemas en zonas declives.",
+      "infeccioso": "Afebril ayer (máxima 36.7ºC). Leucocitos: 15610/mm3, PCR: 22.6 mg/dl. Tratamiento antibiótico con piperacilina/tazobactam.",
+      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. Bilirrubina total: 0.28 mg/dl, GOT: 15 UI/l, GPT: 7 UI/L. GGT: 23 UI/l, FA: 75 UI/l. Coagulación: Quick 83%, INR 1.12, TTPAr 0.85. Plaquetas: 277.000/mm3. Glucemia: 164 mg/dl, con necesidad de 4 U de insulina regular ayer. Soporte nutricional con glucosado al 10% y N. enteral a 20 ml/h."
     }
   },
   {
@@ -132,18 +112,18 @@
     "unidad": "REA",
     "estado": "Crítico",
     "alertas": true,
-    "edad": "?",
+    "edad": "75",
     "sexo": "Mujer",
     "dias_estancia": "61",
-    "antecedentes": "IQx: Sustitución valvular aórtica biológica + tubo de A Asc supracoronario. Reintervención quirúrgica por taponamiento cardíaco. Múltiples complicaciones durante estancia en REA (FRA resuelto, FA rápida, IOT por hemorragia alveolar, traqueotomía, laceración pulmonar y neumotórax por SNG mal posicionada). DX: Miopatía de enfermo crítico.",
-    "plan": "Desconexiones cortas a pieza en T, mantener la PS. Incentivar ingesta oral. Cambio de vías hoy.",
+    "antecedentes": "Sustitución valvular aórtica biológica + tubo de aorta ascendente supracoronario. Reintervención por taponamiento cardíaco postoperatorio. Antecedentes de FA rápida. Miopatía de enfermo crítico. Depresión, apatía.",
+    "plan": "Fisioterapia continuada. Desconexiones cortas a pieza en T, manteniendo PS. Incentivar ingesta oral. Cambio de vías hoy.",
     "sistemas": {
-      "neurologico": "Consciente y orientada, negacionista y apática. Empieza a comer y tomar pastillas escasamente. Tratamiento con quetiapina, escitalopram y mirtazapina. RASS 0, PINR. Miopatía del paciente crítico, se niega a mover extremidades. Fisioterapia.",
-      "respiratorio": "Destete respiratorio lento. TQT (cánula de plata) tras 72 h de O2 en T con mala tolerancia, necesidad de cambio a shiley. Tendencia a taquipnea. Actualmente en PS con Vt sobre 450 ml/respiración, Ps: 12 cmH2O, PEEP: 6 cmH2O, FIO2: 45%. GSA con pH 7.45, pCO2 56 mmHg, pO2 65 mmHg. Secreciones abundantes. Tratamiento con budesonida e ipratropio nebulizados, muconeb. Roncus dispersos en hemitórax derecho. Rx tórax: aumento de densidad parahiliar.",
-      "hemodinamico": "Tendencia a la HTA en tratamiento con antiHTA orales (bisoprolol, Captopril, Amlodipino, hidroclorotiazida, doxazosina), pero con episodios de hipotensión que requirieron NA. TA 142/68 mmHg. RS 66 lpm. Ruidos cardiacos regulares, soplo sistólico. Pulsos periféricos presentes. Hb 9.6 g/dl. Coagulación y Plaquetas dentro de la normalidad. Profilaxis antitrombótica con enoxaparina y antiagregación con AAS.",
-      "renal": "Diuresis forzadas con furosemida 10 mg/12 h iv, con ritmo miccional > 1 ml/kg/h. Edemas en codos, en raíz de MMII y pretibiales. Función renal conservada. Urea 62 mg/dl, Cr 0.57 mg/dl. Iones normales.",
-      "infeccioso": "Fiebre de hasta 38 ºC ayer. PCR 22.72 mg/dl, Leucocitos 13530/mm3. En tratamiento con ciprofloxacino. Antecedentes de Bacteriemia por catéter (Staph. epidermidis), C. albicans, C. glabrata en urocultivo, Pseudomonas aeruginosa en urocultivo y S. aureus en broncoaspirado.",
-      "digestivo": "Abdomen blando y depresible, no doloroso, peristaltismo conservado. Defecó escasamente hace 3 días. Ingesta oral escasa, Nutrición parenteral complementaria. Buen control glucémico sin insulina."
+      "neurologico": "Consciente y orientada, negacionista y apática, parece empezar a comer (escasamente) y tomar pastillas. Valorada por psiquiatría, en tratamiento con quetiapina, escitalopram y mirtazapina. RASS 0. PINR. Miopatía del paciente crítico. Se niega a mover extremidades.",
+      "respiratorio": "Destete respiratorio lento. Traqueotomía (cánula cambiada el 21/01), ahora en PS con Vt sobre 450 ml/respiración, Ps: 12 cmH2O, PEEP: 6 cmH2O, FIO2: 45%. GSA: pH 7.45, pCO2 56 mmHg, pO2 65 mmHg, HCO3 38.9. Secreciones abundantes. Tratamiento con budesonida e ipratropio nebulizados, pautado muconeb. Auscultación: murmullo vesicular conservado, roncus dispersos en hemitórax derecho. Rx tórax: aumento de densidad parahiliar.",
+      "hemodinamico": "Tendencia a la HTA en tratamiento con antiHTA orales (bisoprolol, captopril, amlodipino, hidroclorotiazida, doxazosina). TA 142/68 mmHg. Ritmo Sinusal 66 lpm (episodios previos de FA rápida). Ruidos cardiacos regulares, soplo sistólico. Pulsos periféricos presentes y simétricos con buena perfusión distal.",
+      "renal": "Diuresis forzadas con furosemida 10 mg/12 h IV (ritmo miccional > 1 ml/kg/h). Edemas en codos, raíz de MMII y pretibiales menos marcados. Función renal conservada. Urea 62 mg/dl, Cr 0.57 mg/dl, FG >90. Sodio 141 mmol/l, Potasio 3.8 mmol/l.",
+      "infeccioso": "Ayer tuvo fiebre de hasta 38 ºC. PCR 22.72 mg/dl (ligero aumento), Leucocitos 13530/mm3. En tratamiento con ciprofloxacino 400 mg/8 horas. Bacteriemia por catéter previa (Staph. epidermidis resistente a Linezolid). Cultivos: C. albicans, C. glabrata (urocultivo), Pseudomonas aeruginosa (urocultivo), S. aureus (broncoaspirado).",
+      "digestivo": "Abdomen blando y depresible, no doloroso a la palpación, sin signos de peritonismo, peristaltismo conservado. Hizo deposiciones escasamente hace 3 días. Ingesta oral escasa, nutrición parenteral complementaria. Buen control glucémico sin insulina."
     }
   },
   {
@@ -152,18 +132,18 @@
     "unidad": "REA",
     "estado": "Estable",
     "alertas": false,
-    "edad": "?",
-    "sexo": "?",
+    "edad": "75",
+    "sexo": "Varón",
     "dias_estancia": "1",
-    "antecedentes": "DX: INSUFICIENCIA AÓRTICA. DILATACIÓN DE RAÍZ AÓRTICA. IQx: CIRUGÍA DE BONO-BENTALL CON CONDUCTO VALVULADO BIOLÓGICO 27MM.",
-    "plan": "Ajuste PC de morfina. Vigilancia drenajes. Colocación medias compresivas. Valorar iniciar mañana profilaxis con clexane. Progresar dieta.",
+    "antecedentes": "Insuficiencia aórtica, dilatación de raíz aórtica. IQx: Cirugía de Bono-Bentall con conducto valvulado biológico 27mm.",
+    "plan": "Ajuste PC de morfina. Vigilancia drenajes. Colocación de medias compresivas, valorar iniciar mañana profilaxis con clexane. Progresar dieta.",
     "sistemas": {
-      "neurologico": "Consciente, orientado y colaborador, sin focalidad neurológica. GCS: 15 puntos. Dolor controlado con PC de morfina.",
-      "respiratorio": "Eupneico. SatO2: 99 % con GN 3lpm. Ha empezado a realizar inspirometría incentivada sin dificultad. Murmullo vesicular conservado, sin estertores patológicos. GSA: pH: 7.40, pCO2: 43 mmHg, pO2: 79 mmHg. Rx Tórax 23/01: sin alteraciones.",
-      "hemodinamico": "Necesidad ayer de PC de clevidipino de forma puntual, actualmente suspendida. TA 136/58 mmHg. FC: 77 /min, en RS sin aminas. Troponina I: 1297 pg/l (pico 3924). Tonos rítmicos, sin soplos audibles. Hb 9.2 g/dl. Drenajes A: 650cc, B: 120cc serohemático. Coagulación y plaquetas normales.",
-      "renal": "Función renal normal con Urea: 30 mg/dl, Creatinina: 0.70 mg/dl. Diuresis: 1585 cc ayer, ritmo de 1.2ml/kg/h. Balance: 947 cc ayer. Iones normales.",
-      "infeccioso": "Afebril ayer. Leucocitos: 8.890 /mm3, PCR: 13.05 mg/dl (aumento desde 3.8). En profilaxis con cefazolina.",
-      "digestivo": "Abdomen blando y depresible, no doloroso. Bilirrubina total: 1.44 mg/dl, GOT: 29 UI/l, GPT: 8 UI/L. Glucemia alrededor de 159 mg/dl, controlada con insulina. Proteínas totales: 5.5 g/dl. Ha iniciado tolerancia oral a líquidos, se encuentra inapetente."
+      "neurologico": "Consciente, orientado y colaborador, sin focalidad neurológica. GCS: 15 puntos. Dolor controlado con PC de morfina 1mg/h.",
+      "respiratorio": "Eupneico, SatO2: 99 % con gafas nasales 3lpm. Ha empezado a realizar inspirometría incentivada sin dificultad. GSA: pH 7.40, pCO2 43 mmHg, pO2 79 mmHg. Auscultación pulmonar: murmullo vesicular conservado, sin estertores patológicos. Rx Tórax 23/01: sin alteraciones. Pendiente RX de hoy.",
+      "hemodinamico": "Necesidad ayer de PC de clevidipino de forma puntual, actualmente perfusión suspendida. TA 136/58 (81) mmHg. FC: 77 /min, en Ritmo Sinusal sin aminas. Troponina I: 1297 (3924) pg/l. Auscultación cardiaca: tonos rítmicos, sin soplos audibles. Drenajes A: 650cc, B: 120cc serohemático.",
+      "renal": "Función renal normal con Urea: 30 mg/dl, Creatinina: 0.70 mg/dl. Diuresis: 1585 cc ayer, ritmo de 1.2ml/kg/h, espontáneas. Balance: 947 cc ayer. Sodio: 134 meq/l, Potasio: 4.1 meq/l, Magnesio: 2.28 mg/dl.",
+      "infeccioso": "Afebril ayer. Leucocitos: 8.890 /mm3, PCR: 13.05 mg/dl (con aumento desde 3.8). En profilaxis con cefazolina.",
+      "digestivo": "Abdomen blando y depresible, no doloroso. Bilirrubina total: 1.44 mg/dl, GOT: 29 UI/l, GPT: 8 UI/L. Glucemia alrededor de 159 mg/dl, controlada con aporte de 4-6-4 U de insulina regular. Ha iniciado tolerancia oral a líquidos, se encuentra inapetente."
     }
   },
   {
@@ -175,15 +155,15 @@
     "edad": "69",
     "sexo": "Varón",
     "dias_estancia": "4",
-    "antecedentes": "DX: ENDOCARDITIS BACTERIANA SOBRE VÁLVULA MITRAL. INSUFICIENCIA MITRAL SEVERA. IQx: SUSTITUCIÓN VALVULAR MITRAL POR BIOPRÓTESIS.",
-    "plan": "Aumentar dosis de quetiapina hasta pauta habitual domiciliaria. Haloperidol si precisa, disminuir dexmedetomidina. Retirada de noradrenalina. Paso amiodarona a oral. Mantener mismas dosis de clexane. Reponer CLK. Evitar balance muy positivo. Pautar fresubin. Valorar mañana según evolución respiratoria el drenaje del derrame izquierdo.",
+    "antecedentes": "Endocarditis bacteriana sobre válvula mitral con insuficiencia mitral severa. IQx: Sustitución valvular mitral por bioprótesis. Delirio hiperactivo (complicación). Episodios previos de FA paroxística con RVR.",
+    "plan": "Aumentar dosis de quetiapina hasta pauta habitual domiciliaria. Haloperidol si precisa, disminuir dexdor. Retirada de noradrenalina. Paso amiodarona a oral. Mantener mismas dosis de clexane. Valorar mañana según evolución respiratoria drenaje derrame izquierdo. Reponer CLK. Evitar balance muy positivo. Pautar Fresubin.",
     "sistemas": {
-      "neurologico": "Delirio hiperactivo que requiere haloperidol y dexmedetomidina (en descenso), además de mirtazapina, tiaprizal, quetiapina y zolpidem. Agresividad asociada. Pupilas isocóricas y normorreactivas. Movilidad espontánea de las 4 extremidades. Aparentemente no tiene dolor.",
-      "respiratorio": "GN 3lpm, SatO2: 100%. Buena mecánica y auscultación, hipoventilación base izquierda. Iniciada fisioterapia respiratoria. Rx Tórax 24/01: signos de sobrecarga de volumen, infiltrados bilaterales. GSA: pH: 7.44, pCO2: 30 mmHg, pO2: 92 mmHg.",
-      "hemodinamico": "Hace dos días episodio de FA paroxística con RVR sin inestabilidad grave, se inició amiodarona, actualmente en sinusal. Requiere NA a 1ml/h (antes 2ml/h). TA 115/72 mmHg, FC 71 RS. Láctico 1.6. Tonos rítmicos, sin soplos audibles. Drenajes retirados. Hb 10 g/dl. Plaquetas 193.000. Coagulopatía leve tras inicio de anticoagulación, por lo que se descendió dosis de clexane a 40/12.",
-      "renal": "Leve deterioro de la función renal, con diuresis conservada. Fuerzo con furosemida 10 mg/8h. Urea: 94 mg/dl, Creatinina: 1.23 mg/dl. Diuresis: 1475 cc ayer, Balance: +127 mL. Hipokalemia (3.1 meq/l).",
-      "infeccioso": "Afebril ayer. Leucocitos en descenso: 8.180/mm3, PCR: 30.37 mg/dl, PCT 3.7. ATB según UEI desde 29/12/2025 (Cefotaxima). Cultivos: válvula cardíaca negativo, Streptococcus mutans en HC, Proteus mirabilis en urocultivo.",
-      "digestivo": "Abdomen blando, depresible, no doloroso, deposiciones de aspecto normal. Ayer se colocó SNG para nutrición enteral (arrancada hoy por delirio). Transaminasas normales. Glucemia controlada. Tolerando dieta oral."
+      "neurologico": "Delirio hiperactivo que requiere haloperidol y dexmedetomidina (actualmente en descenso), mirtazapina y tiaprizal, quetiapina y zolpidem. Agresividad asociada. Pupilas isocóricas y normoreactivas. Movilidad espontánea de las 4 extremidades. Aparentemente sin dolor con analgesia IV de primer nivel.",
+      "respiratorio": "Gafas nasales 3lpm, SatO2: 100%. Buena mecánica y auscultación, hipoventilación base izquierda. Fisioterapia respiratoria iniciada. GSA: pH 7.44, pCO2 30 mmHg, pO2 92 mmHg. Rx Tórax 24/01: signos de sobrecarga de volumen, infiltrados bilaterales.",
+      "hemodinamico": "Noradrenalina a dosis bajas (1ml/h). TA 115/72 (88) mmHg, FC 71 en Ritmo Sinusal. Lactato 1.6. Auscultación cardiaca: tonos rítmicos, sin soplos audibles. Drenajes retirados. Previamente episodio de FA paroxística con RVR, actualmente en sinusal.",
+      "renal": "Leve deterioro de la función renal con diuresis conservada. Diuresis forzadas con furosemida 10 mg/8h. Urea: 94 mg/dl, Creatinina: 1.23 mg/dl. Diuresis: 1475 cc ayer, Balance: +127 mL. Sodio: 135 meq/l, Potasio: 3.1 meq/l (bajo).",
+      "infeccioso": "Afebril ayer. Leucocitos en descenso: 8.180/mm3, PCR: 30.37 mg/dl, PCT 3.7. Tratamiento antibiótico según UEI con Cefotaxima. Cultivos: Streptococcus mutans (Hemocultivos), Proteus mirabilis (Urocultivo). Válvula cardíaca negativa.",
+      "digestivo": "Abdomen blando, depresible, no doloroso a la palpación, deposiciones de aspecto normal. Ayer se colocó SNG para nutrición enteral (alto riesgo de desnutrición), hoy se ha arrancado por delirio. Transaminasas normales. Glucemia controlada (190-120 mg/dl), sin requerir insulina. Proteínas totales: 5.5. Tolerando dieta oral."
     }
   },
   {
@@ -192,38 +172,18 @@
     "unidad": "REA",
     "estado": "Crítico",
     "alertas": true,
-    "edad": "?",
+    "edad": "67",
     "sexo": "Varón",
     "dias_estancia": "18",
-    "antecedentes": "RAM a petidina. Fumador. HTA, DLP. AdenoCa Pulmón LSD (2010), bilobectomía pulmonar derecha. AAA infrarrenal + A. Iliaca común izda. (EVAR 2022, Re-EVAR dic 2025). Litiasis renal izda (2021). Pancreatitis aguda (2007). Insuficiencia renal crónica en prediálisis. Estenosis renal severa bilateral. IQx previas: EVAR, apendicectomia, colecistectomia, bilobectomia pulmón derecho, reparación rotura biceps. DX: rotura de saco aneurismático en paciente ya reintervenido de EVAR. IQx: EVAR sobre EVAR.",
-    "plan": "Intentar disminuir dexmedetomidina. Progresar en el destete. A la espera de la realización de EcoDoppler de miembro inferior derecho. Mantenemos dosis HBPM (Tinzaparina 12.000U). Ajustamos parámetros ventilatorios: mantenemos PS 6 + PEEP 6, tratando de progresar en el destete. Mantener Bicarbonato 1/6 M. Mantener Diálisis Intermitente a cargo de Nefrología. Mantenemos CEFTOLOZANO/TAZOBACTAM, Linezolid y Anidulafungina. Mantenemos tratamiento procinético.",
+    "antecedentes": "RAM a petidina. Fumador 1paq/día. HTA, DLP. Adenocarcinoma de pulmón LSD (2010), bilobectomía. AAA infrarrenal + A. Iliaca común izquierda, intervenido de EVAR (2022) y reintervención por extensión (2025). Litiasis renal izquierda (2021). Pancreatitis aguda (2007). Insuficiencia renal crónica en prediálisis. Estenosis renal severa bilateral. IQx previas: EVAR, apendicectomía, colecistectomía, bilobectomía pulmón derecho, reparación rotura bíceps. Ingreso actual por rotura de saco aneurismático en paciente reintervenido de EVAR.",
+    "plan": "Intentar disminuir dexmedetomidina y progresar en el destete. A la espera de la realización de EcoDoppler de miembro inferior derecho. Mantener dosis HBPM (Tinzaparina 12.000U). Ajustar parámetros ventilatorios, mantener PS 6 + PEEP 6, tratando de progresar en el destete. Mantener Bicarbonato 1/6 M en PC. Mantener Diálisis Intermitente a cargo de Nefrología. Mantener CEFTOLOZANO/TAZOBACTAM, Linezolid y Anidulafungina. Mantener tratamiento procinético.",
     "sistemas": {
-      "neurologico": "Consciente y orientado. Tranquilo. Apertura ocular espontánea. Responde a órdenes. Con PC Dexmedetomidina. Pupilas medias, isocóricas y reactivas.",
-      "respiratorio": "Paciente con traqueotomía desde el 16/1. Bien adaptado al respirador con PS 6 y PEEP 6. FiO2 0.35%. Murmullo vesicular conservado con roncus difusos en ambos campos pulmonares. GA: pH 7.41, pCO2 30, pO2 143. Rx TORAX 24/01: Persiste la condensación en basal derecho + derrame pleural (ligero empeoramiento). ECO pulmonar: sin presencia de líneas B. Derrame pleural derecho.",
-      "hemodinamico": "Hoy Ritmo Sinusal con 75 lpm. Tendencia a hipertensión arterial (TA 160/75) sin necesidad de aminas. Perfusión en MMII: buena coloración. Láctico 1.5. AC: rítmica sin soplos audibles. Hb 8.8 g/dl. Plaquetas 421.000. Coagulación en rango. Anticoagulado con HBPM (Tinzaparina). Sin signos de sangrado activo.",
-      "renal": "Insuficiencia renal crónica en prediálisis. Anteriormente con TRRC, ahora en diálisis intermitente (desde hace 3 días). Edemas con fóveas en MMII y superiores. Aumento progresivo de la diuresis (1.630cc/24h) con furosemida. BH neutro. Cr 5.14. Iones: K 3.6, Na 133, P 2.8.",
-      "infeccioso": "Paciente en aislamiento por E.Coli BLEE. Ha realizado pico febril durante la noche. RFA elevados. PCR 13.52 mg/dl, Leucocitos 10.970/mm3. Actualmente con Ceftolozano/Tazobactam, Linezolid y Anidulafungina. Cultivos: E.Coli BLEE en FR. Pseudomona Aureginosa, Enterococus Faecium y Cándida Albicans en BAS.",
-      "digestivo": "Dieta absoluta, con nutrición parenteral. Abdomen distendido y timpánico, sin ruidos presentes. Deposiciones regulares y abundantes. Débito claro por la sonda nasogástrica. Enzimas hepáticas de citolisis en descenso, enzimas de colestasis altas. TAC 22/1: No aumento del hematoma retroperitoneal derecho ni del saco aneurismático. Moderada distensión de gran parte del intestino. PIA: 15 mmHg. Sonda rectal."
-    }
-  },
-  {
-    "id": "rea-10",
-    "numero_cama": "10",
-    "unidad": "REA",
-    "estado": "Sin paciente",
-    "alertas": false,
-    "edad": "?",
-    "sexo": "?",
-    "dias_estancia": "-",
-    "antecedentes": "Sin paciente",
-    "plan": "No aplica",
-    "sistemas": {
-      "neurologico": "Sin paciente",
-      "respiratorio": "Sin paciente",
-      "hemodinamico": "Sin paciente",
-      "renal": "Sin paciente",
-      "infeccioso": "Sin paciente",
-      "digestivo": "Sin paciente"
+      "neurologico": "Consciente y orientado. Tranquilo. Apertura ocular espontánea. Responde a órdenes. Sedación con Dexmedetomidina 8ml/h. Pupilas medias, isocóricas y reactivas.",
+      "respiratorio": "Paciente con traqueotomía desde el 16/1. Bien adaptado al respirador con PS 6 y PEEP 6. FiO2 0.35%. Auscultación pulmonar: murmullo vesicular conservado con roncus difusos en ambos campos pulmonares. GSA: pH 7.41, pCO2 30, pO2 143, HCO3 19. Rx TORAX 24/01: persiste condensación en basal derecho + derrame pleural, con ligero empeoramiento. ECO pulmonar: sin líneas B, derrame pleural derecho.",
+      "hemodinamico": "Hoy Ritmo Sinusal con 75 lpm. Tendencia a hipertensión arterial TA 160/75 sin necesidad de aminas. Perfusión en MMII: buena coloración. Láctico 1.5. Auscultación cardiaca: rítmica sin soplos audibles.",
+      "renal": "Anteriormente con TRRC con Prismaflex sin anticoagulación. Desde hace 3 días, en diálisis intermitente. Edemas con foveas en MMII y superiores. Peso 88 Kg. Aumento progresivo de la diuresis, actualmente con furosemida 20mg/8h (1.630cc últimas 24h y BH neutro). Cr 5.14, FG 11. Iones: K 3.6, Na 133, P 2.8.",
+      "infeccioso": "Paciente en aislamiento por E.Coli BLEE. Ha realizado pico febril durante la noche. RFA elevados. PCR 13.52, Leucocitos 10.970. Actualmente con Ceftolozano/Tazobactam, Linezolid y Anidulafungina. Cultivos: E.Coli BLEE (FR), Pseudomona Aureginosa, Enterococus Faecium, Candida Albicans (BAS).",
+      "digestivo": "Dieta absoluta, con nutrición parenteral. Abdomen distendido y timpánico (menos que días previos), sin ruidos. Deposiciones regulares y abundantes. Débito claro por la sonda nasogástrica. Enzimas hepáticas de citolisis en descenso (GOT 58, GPT 11); enzimas de colestasis altas (GGT 229, FA 303, BilT 1.5). TAC 22/1: No aumento del hematoma retroperitoneal derecho ni del saco aneurismático. Moderada distensión de intestino. PIA: 15 mmHg."
     }
   },
   {
@@ -231,159 +191,59 @@
     "numero_cama": "11",
     "unidad": "REA",
     "estado": "Estable",
-    "alertas": false,
+    "alertas": true,
     "edad": "64",
     "sexo": "Mujer",
     "dias_estancia": "2",
-    "antecedentes": "DX: Carcinomatosis peritoneal secundaria a neoplasia de colon derecho. IQx: Cirugía de citorreducción (Resección Ileo-tranversa, oforectomía bilateral, omentectomía, resección de implantes) + HIPEC (Mitomicina).",
-    "plan": "+ 1CH. Vigilancia plaquetopenia. Insistir en inspirometría incentivadora.",
+    "antecedentes": "Carcinomatosis peritoneal secundaria a neoplasia de colon derecho. IQx: Cirugía de citorreducción + HIPEC (Mitomicina).",
+    "plan": "+ 1 Concentrado de Hematíes. Vigilancia plaquetopenia. Insistir en inspirometría incentivadora.",
     "sistemas": {
-      "neurologico": "Consciente, orientada y colaboradora. Buen estado general. Dolor controlado con analgesia epidural y de primer escalón.",
-      "respiratorio": "Eupneica con buena mecánica ventilatoria e intercambio gaseoso con GN convencionales a 2lpm. SatO2 100%. Murmullo vesicular conservado, sin ruidos sobreañadidos. RxT: sin hallazgos significativos. GSA normal.",
-      "hemodinamico": "Estable, con TAM > 65-70mmhg (145-150/60mmHg) en RS a 75lpm. Láctico 1. Buena perfusión periférica. AC: rítmica, sin soplos. Hb: 8.5 g/dl. Plaquetas: 87.000. Coagulación convencional en rango.",
-      "renal": "Diuresis conservadas con buena función renal. Cr. 0.69. Diuresis: 2435ml y balance ligeramente positivo +259cc. Iones normales. Sin edemas en zonas declives. Ayer ligera hematuria, hoy orina clara.",
-      "infeccioso": "Afebril, sin signos clínicos ni analíticos sugestivos de infección. PCR 16.56 mg/dl, Leucocitos: 6.68/mm3. Sin tratamiento antibiótico.",
-      "digestivo": "Abdomen blando y depresible, ligeramente doloroso a la palpación profunda, sin signos de peritonitis. RHA audibles. Apósito laparotomía limpio. Glucemias: 137. Proteínas totales: 4.8. Dieta absoluta con fluidoterapia de mantenimiento. Enzimas hepáticas GOT/GPT: 23/36. Escaso débito serohemático por drenajes abdominales. Con nutrición parenteral."
-    }
-  },
-  {
-    "id": "rea-12",
-    "numero_cama": "12",
-    "unidad": "REA",
-    "estado": "Sin paciente",
-    "alertas": false,
-    "edad": "?",
-    "sexo": "?",
-    "dias_estancia": "-",
-    "antecedentes": "Sin paciente",
-    "plan": "No aplica",
-    "sistemas": {
-      "neurologico": "Sin paciente",
-      "respiratorio": "Sin paciente",
-      "hemodinamico": "Sin paciente",
-      "renal": "Sin paciente",
-      "infeccioso": "Sin paciente",
-      "digestivo": "Sin paciente"
-    }
-  },
-  {
-    "id": "ucin-1",
-    "numero_cama": "1",
-    "unidad": "UCIN",
-    "estado": "Sin paciente",
-    "alertas": false,
-    "edad": "?",
-    "sexo": "?",
-    "dias_estancia": "-",
-    "antecedentes": "Sin paciente",
-    "plan": "No aplica",
-    "sistemas": {
-      "neurologico": "Sin paciente",
-      "respiratorio": "Sin paciente",
-      "hemodinamico": "Sin paciente",
-      "renal": "Sin paciente",
-      "infeccioso": "Sin paciente",
-      "digestivo": "Sin paciente"
+      "neurologico": "Consciente, orientada y colaboradora. Buen estado general. Subjetivamente bien. Dolor controlado con analgesia epidural con ropivacaína 0.2% y analgesia de primer escalón.",
+      "respiratorio": "Eupneica con buena mecánica ventilatoria e intercambio gaseoso con gafas nasales a 2lpm. SatO2 100%. Auscultación pulmonar: murmullo vesicular conservado, sin ruidos sobreañadidos. RxT: sin hallazgos significativos. GSA: pH 7.44, pCO2 41, pO2 122, HCO3 27.8, lactato 1.",
+      "hemodinamico": "Estable, con TAM > 65-70mmHg (145-150/60mmHg) en Ritmo Sinusal a 75lpm. Láctico 1. Buena perfusión periférica. Auscultación cardiaca: rítmica, sin soplos.",
+      "renal": "Diuresis conservadas con buena función renal. Cr. 0.69. Diuresis: 2435ml y balance ligeramente positivo +259cc. Iones: Na 140, K 4.3, Cl 109. Ca 8.4 (corregido 9.3). P 3.1. Mg 3.09. Sin edemas en zonas declives. Ayer ligera hematuria, hoy orina clara.",
+      "infeccioso": "Afebril, sin signos clínicos ni analíticos sugestivos de infección. PCR 16.56 mg/dl (con aumento desde 14.90). Leucocitos: 6.68 (en descenso desde 11.89). Sin tratamiento antibiótico. Vías: VVC yugular derecha (2 día), Arteria radial derecha (2 día).",
+      "digestivo": "Abdomen blando y depresible, ligeramente doloroso a la palpación profunda (no peritonitis). Ruidos hidroaéreos audibles. Apósito de laparotomía limpio. Glucemias: 137. Proteínas totales: 4.8. En dieta absoluta con fluidoterapia de mantenimiento. Enzimas hepáticas: GOT/GPT: 23/36. Escaso débito serohemático por drenajes abdominales. Con nutrición parenteral."
     }
   },
   {
     "id": "ucin-2",
-    "numero_cama": "2",
+    "numero_cama": "14",
     "unidad": "UCIN",
     "estado": "Alerta",
     "alertas": true,
     "edad": "77",
     "sexo": "Varón",
     "dias_estancia": "3",
-    "antecedentes": "DX: ADENOCX PÁNCREAS. IQx: RESECCION PANCREATICA (CUERPO Y COLA) + ESPLENECTOMIA.",
-    "plan": "Mantener ingreso. Iniciar ATB con Augmentine, control RFA por la tarde, si no mejoría posible cambio de ATB y TAC. Agua de confort + NPT (1500 ml + 8 gr N2). Iniciar Vit K, primperan, carga de fosfato monopotásico. Comentado con cirugía, duda sobre TAC hoy o mañana.",
+    "antecedentes": "Adenocarcinoma de páncreas. IQx: Resección pancreática (cuerpo y cola) + esplenectomía. No refiere HTA, pero tendencia a HTA sistólica.",
+    "plan": "Mantener ingreso. Iniciar ATB con Augmentine, control de reactantes de fase aguda por la tarde, si no mejora, cambio de antibiótico y posibilidad de TAC próximamente. Agua de confort + NPT (1500 ml + 8 gr N2). Iniciar Vitamina K, Primperan, carga de fosfato monopotásico. Comentado con cirugía, se mantiene Augmentine por ahora, duda sobre TAC hoy o mañana.",
     "sistemas": {
       "neurologico": "Consciente, orientado y colaborador, sin focalidad neurológica. Dolor controlado con paracetamol + metamizol. Descanso nocturno con Lorazepam.",
-      "respiratorio": "GN 2 lpm con SatO2 100%. Adecuada mecánica respiratoria. No expectoración purulenta. Murmullo vesicular conservado, sin estertores patológicos. GVenosa central: pH: 7.40, HCO3: 31 mmol/l, EB: 5mmol/l, láctico: 3 mmol/l.",
-      "hemodinamico": "Tendencia a HTA sistólica. RS. Adecuados pulsos pedios. Lactato 3. Hb: 13 g/dl. Plaquetas: 169.000. Coagulopatía leve. Sin tromboprofilaxis ni medias de compresión.",
-      "renal": "Empeoramiento leve función renal. Creatinina: 1.23 mg/dl. Diuresis: 2.7 litros ayer, Balance: 800 ml ayer. Sodio: 141 meq/l, Potasio: 3.6 meq/l, fosfato: 1.9mg/dl. Con tratamiento furosemida + bicarbonato.",
-      "infeccioso": "Afebril. Marcadores de infección en aumento: Leucocitos: 12.000/mm3, PCR: 23 mg/dl (a 29), Procalcitonina: 8 ng/ml. Sin ATB (plan de inicio con Augmentine).",
-      "digestivo": "Abdomen timpánico sin defensa ni peristaltismo. Íleo. No drenajes. No colestasis. Nutrición líquida. Proteínas 5.8."
-    }
-  },
-  {
-    "id": "ucin-3",
-    "numero_cama": "3",
-    "unidad": "UCIN",
-    "estado": "Sin paciente",
-    "alertas": false,
-    "edad": "?",
-    "sexo": "?",
-    "dias_estancia": "-",
-    "antecedentes": "Sin paciente",
-    "plan": "No aplica",
-    "sistemas": {
-      "neurologico": "Sin paciente",
-      "respiratorio": "Sin paciente",
-      "hemodinamico": "Sin paciente",
-      "renal": "Sin paciente",
-      "infeccioso": "Sin paciente",
-      "digestivo": "Sin paciente"
-    }
-  },
-  {
-    "id": "ucin-4",
-    "numero_cama": "4",
-    "unidad": "UCIN",
-    "estado": "Sin paciente",
-    "alertas": false,
-    "edad": "?",
-    "sexo": "?",
-    "dias_estancia": "-",
-    "antecedentes": "Sin paciente",
-    "plan": "No aplica",
-    "sistemas": {
-      "neurologico": "Sin paciente",
-      "respiratorio": "Sin paciente",
-      "hemodinamico": "Sin paciente",
-      "renal": "Sin paciente",
-      "infeccioso": "Sin paciente",
-      "digestivo": "Sin paciente"
+      "respiratorio": "Gafas nasales 2 lpm con SatO2 100%. Adecuada mecánica respiratoria. No expectoración purulenta. GVenosa central: pH 7.40, EB 5, láctico: 3 mmol/l. Auscultación pulmonar: murmullo vesicular conservado, sin estertores patológicos.",
+      "hemodinamico": "Tendencia a HTA sistólica. Ritmo Sinusal a 70 lpm. Adecuados pulsos pedios. Lactato 3.",
+      "renal": "Empeoramiento leve de la función renal. Creatinina: 1.23 mg/dl (en aumento desde 1). Diuresis: 2.7 litros ayer, Balance: 800 ml ayer. Sodio: 141 meq/l, Potasio: 3.6 meq/l, Fosfato: 1.9 mg/dl. En tratamiento con furosemida + bicarbonato.",
+      "infeccioso": "Afebril. Marcadores de infección en aumento: Leucocitos: 12.000/mm3, PCR: 23 mg/dl (aumenta a 29), Procalcitonina: 8 ng/ml. Inicio de ATB con Augmentine. Vías: VVC yugular interna derecha (desde 21/01/26), Sonda vesical (desde 21/01/26).",
+      "digestivo": "Abdomen timpánico sin defensa ni peristaltismo. Íleo. Sin drenajes. Nutrición líquida. Proteínas totales: 5.8."
     }
   },
   {
     "id": "ucin-5",
-    "numero_cama": "5",
+    "numero_cama": "17",
     "unidad": "UCIN",
-    "estado": "Alerta",
+    "estado": "Crítico",
     "alertas": true,
     "edad": "65",
     "sexo": "Mujer",
     "dias_estancia": "1",
-    "antecedentes": "DX: Perforación de colon. IQx: Peritonitis purulenta. Liberación de adherencias, resección e invaginación de muñones de íleon y colon. Lavado abdominal.",
-    "plan": "Mantener ingreso. Mejorar analgesia (TAP bilateral con ropivacaína). Agua de confort + medicación VO. No inicio de nutrición parenteral (tampoco tiene VC). Relleno vascular (albuminón + gluconato cálcico). Iniciar Vit K. Control RFA por la tarde.",
+    "antecedentes": "Perforación de colon. IQx: Resección de muñones de asa de íleon y colon, invaginación de muñones. Peritonitis purulenta. HVI leve (inferido de HTA).",
+    "plan": "Mantener ingreso. Mejorar analgesia (TAP bilateral con ropivacaína ecoguiada). Agua de confort + medicación oral (escicarbamazepina + lacosamida). No iniciar Nutrición Parenteral. Relleno vascular (Albuminón + gluconato cálcico). Iniciar Vitamina K. Control de reactantes de fase aguda por la tarde.",
     "sistemas": {
-      "neurologico": "Consciente, orientado y colaboradora, sin focalidad neurológica. Ramsey 2. EVA reposo 4-5 (dolor en flanco derecho que limita expectoración) con paracetamol + metamizol. Medicación VO (escicarbamazepina + lacosamida).",
-      "respiratorio": "Eupneica con GN 2 lpm con SatO2: 96%. Hipoventilación leve basal. No expectora por dolor. Murmullo vesicular conservado, sin estertores patológicos. GVenosa central: pH: 7.35, pCO2: 45 mmHg, pO2: 47 mmHg, HCO3: 25 mmol/l, EB: -1 mmol/l, láctico: 1mmol/l.",
-      "hemodinamico": "Estable hemodinámicamente sin aminas en RS (TA 120/80 a 90 lpm). Tonos rítmicos. Sensación de sed. Pulsos pedios palpables. Lactato 0.9. Eco cardio: adecuada contractilidad biventricular, leve disfunción diastólica e HVI leve. VCI 5 mm, colapsable >50%. Hgb: 11.7g/dl. Coagulopatía leve. Sin tromboprofilaxis, pero con medias compresibles.",
-      "renal": "Creatinina: 0.48 mg/dl. Oliguria en últimas horas (25-15 ml/h). Sodio: 133 meq/l, Potasio: 3.9 meq/l, Calcio-albúmina: 8.4 mg/dl, fosfato: 2.3mg/dl. Sin edemas. Sensación de sed leve.",
-      "infeccioso": "Afebril. Leucocitos: 12.000/mm3 (previo 17.000), PCR: 14 mg/dl (previo 0.8), Procalcitonina: 0.4 ng/ml. En tratamiento con Tazocel desde 23/01/26. Antecedente de peritonitis purulenta.",
-      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo disminuido. Sin drenaje. No colestasis. Buen control glucémico. En ayunas."
-    }
-  },
-  {
-    "id": "ucin-6",
-    "numero_cama": "6",
-    "unidad": "UCIN",
-    "estado": "Sin paciente",
-    "alertas": false,
-    "edad": "?",
-    "sexo": "?",
-    "dias_estancia": "-",
-    "antecedentes": "Sin paciente",
-    "plan": "No aplica",
-    "sistemas": {
-      "neurologico": "Sin paciente",
-      "respiratorio": "Sin paciente",
-      "hemodinamico": "Sin paciente",
-      "renal": "Sin paciente",
-      "infeccioso": "Sin paciente",
-      "digestivo": "Sin paciente"
+      "neurologico": "Consciente, orientado y colaboradora, sin focalidad neurológica. Ramsey 2. EVA reposo 4-5 (dolor en flanco derecho que limita expectoración). Analgesia con paracetamol + metamizol.",
+      "respiratorio": "Eupneica con gafas nasales 2 lpm, SatO2: 96%. Hipoventilación leve basal. No expectora por dolor. GVenosa central: pH 7.35, pCO2 45 mmHg, pO2 47 mmHg, HCO3 25 mmol/l, EB -1 mmol/l, láctico 1 mmol/l. Auscultación pulmonar: murmullo vesicular conservado, sin estertores patológicos.",
+      "hemodinamico": "Estable hemodinámicamente sin aminas en Ritmo Sinusal (TA 120/80 a 90 lpm). Auscultación cardiaca: tonos rítmicos. Sensación de sed. Pulsos pedios palpables. Lactato 0.9. Ecocardiograma: Adecuada contractilidad biventricular, leve disfunción diastólica, HVI leve. VCI 5mm, colapsable >50%.",
+      "renal": "Creatinina: 0.48 mg/dl. Diuresis: oliguria últimas horas (25-15 ml/h). Sodio: 133 meq/l, Potasio: 3.9 meq/l, Calcio-albúmina: 8.4 mg/dl, Fosfato: 2.3 mg/dl. Sin edemas. Sensación de sed leve.",
+      "infeccioso": "Afebril. Leucocitos: 12.000/mm3 (en descenso desde 17.000), PCR: 14 mg/dl (en aumento desde 0.8), Procalcitonina: 0.4 ng/ml. En tratamiento con Tazocel (desde 23/01/26).",
+      "digestivo": "Abdomen blando y depresible, peristaltismo disminuido. Sin drenaje. Buen control glucémico. Ayunas."
     }
   }
 ];
