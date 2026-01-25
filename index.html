@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UCI Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { background-color: #f0f4f8; background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 24px 24px; font-family: system-ui, sans-serif; }
+    .glass-card { background: linear-gradient(145deg, #ffffff, #f8fafc); }
+    .modal-backdrop { background-color: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); }
+    ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+  </style>
+  <script> tailwind.config = { theme: { extend: { colors: { lime: { 100: '#ecfccb', 600: '#65a30d' } } } } } </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const PATIENTS = [
+  {
+    "id": "rea-2",
+    "numero_cama": "2",
+    "unidad": "REA",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Encefalopat?a severa post-endocarditis, bradips?quico con periodos de desconexi?n y actividad epileptiforme. Requiere ajuste de FAES y sedaci?n nocturna.",
+      "hemodinamico": "Hemodin?micamente estable sin vasopresores, con tendencia a hipertensi?n arterial. Soplo holosist?lico, anemia con Hb 9.3 g/dl.",
+      "respiratorio": "Traqueostomizado con c?nula de plata tapada, en destete respiratorio lento con GNAF. Pocas secreciones blanquecinas.",
+      "renal": "Funci?n renal conservada, diuresis forzadas, con hiponatremia leve y potasio bajo. Balance negativo. Peso 109kg.",
+      "digestivo": "Ingesta oral en periodos de mejor conciencia sin atragantamientos. Abdomen globuloso pero depresible. Historia de hernia hiatal gigante. Se valora NPT/PEG.",
+      "infeccioso": "Afebril, RFA negativos. Sin ATB actual. Historial de infecciones por Pseudomona VIM/carbapenem resistente y Enterobacter hormaechei."
+    }
+  },
+  {
+    "id": "rea-3",
+    "numero_cama": "3",
+    "unidad": "REA",
+    "estado": "Estable",
+    "sistemas": {
+      "neurologico": "Consciente, orientado y colaborador (GCS 15), sin focalidad. Refiere dolor de garganta. Requiere refuerzo de analgesia.",
+      "hemodinamico": "Hemodin?micamente estable, sin necesidad de aminas, en ritmo sinusal. TA y FC dentro de rangos normales.",
+      "respiratorio": "Eupneico, extubado con VK al 50%, buena saturaci?n. Murmullo vesicular conservado. En tratamiento corticoideo.",
+      "renal": "Funci?n renal conservada, diuresis y balance h?drico equilibrados. Ionograma normal, sin edemas.",
+      "digestivo": "Abdomen blando y depresible, peristaltismo disminuido. Actualmente en ayunas, iniciando tolerancia a l?quidos. Perfil hep?tico normal.",
+      "infeccioso": "Afebril, marcadores inflamatorios en descenso. En tratamiento con Augmentine. Buena evoluci?n general, alta a planta en 24h."
+    }
+  },
+  {
+    "id": "rea-4",
+    "numero_cama": "4",
+    "unidad": "REA",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Sedado con dexmedetomidina y propofol, contenciones mec?nicas. Apertura ocular espont?nea, sin respuesta a ?rdenes. AKI 3 en di?lisis.",
+      "hemodinamico": "Requiere noradrenalina a dosis bajas para mantener cifras tensionales. FC 75-80 lpm en ritmo sinusal. L?cticos normales.",
+      "respiratorio": "En CPAP con buena mec?nica ventilatoria y saturaci?n. Intenci?n de progresar en el destete a O2 en T.",
+      "renal": "Insuficiencia renal aguda (AKI 3) en di?lisis intermitente. Sospecha de nefrotoxicidad por vancomicina. Balance negativo.",
+      "digestivo": "Abdomen blando y depresible, peristaltismo disminuido. Nutrici?n enteral bien tolerada. Glucemia controlada. Perfil hep?tico normal.",
+      "infeccioso": "Afebril, PCR y leucocitos estables. En tratamiento con ceftarolina. Historial de infecciones por SAMS, S. epidermidis y Proteus mirabilis BLEE."
+    }
+  },
+  {
+    "id": "rea-5",
+    "numero_cama": "5",
+    "unidad": "REA",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Sedada (RASS -3), con hemiparesia derecha. Isquemia aguda extensa en ACM izquierda con efecto masa y extravasaci?n de contraste.",
+      "hemodinamico": "Requiere noradrenalina a dosis medias. En fibrilaci?n auricular con FC 74/min. TA estable en soporte.",
+      "respiratorio": "En CPAP/PS, con buena oxigenaci?n y saturaci?n. GSA muestra acidosis leve compensada. Murmullo vesicular conservado.",
+      "renal": "Disfunci?n renal aguda (Cr 2.54), con buen ritmo diur?tico y balance negativo. Electrolitos monitorizados.",
+      "digestivo": "Abdomen blando y depresible, peristaltismo disminuido. Glucemia alta con necesidad de insulina. Nutrici?n enteral suplementada. Perfil hep?tico normal.",
+      "infeccioso": "Afebril, leucocitosis y PCR elevadas. En tratamiento con piperacilina/tazobactam. Sin cultivos positivos recientes."
+    }
+  },
+  {
+    "id": "rea-6",
+    "numero_cama": "6",
+    "unidad": "REA",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Consciente, orientada pero negacionista y ap?tica, con miopat?a del enfermo cr?tico. En tratamiento psiqui?trico. RASS 0.",
+      "hemodinamico": "Tendencia a hipertensi?n arterial. Ritmo sinusal, soplo sist?lico. Hb 9.6 g/dl. Enoxaparina y AAS para profilaxis.",
+      "respiratorio": "En destete respiratorio lento con traqueotom?a (Shiley), en PS. Abundantes secreciones y roncus dispersos. Presenta hipoxemia leve y acidosis respiratoria compensada.",
+      "renal": "Funci?n renal conservada con diuresis forzadas. Edemas perif?ricos. Electrolitos estables. Balance h?drico controlado.",
+      "digestivo": "Abdomen blando, peristaltismo conservado. Ingesta oral insuficiente complementada con nutrici?n parenteral. Buen control gluc?mico. Historia de SNG en tr?quea.",
+      "infeccioso": "Febril (38?C), PCR y leucocitos elevados. En tratamiento con ciprofloxacino. Cultivos positivos para S. aureus (BAS), P. aeruginosa (orina) y S. epidermidis (CVC)."
+    }
+  },
+  {
+    "id": "rea-7",
+    "numero_cama": "7",
+    "unidad": "REA",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Consciente, orientado y colaborador (GCS 15), con dolor controlado por PCA de morfina. Sin focalidad neurol?gica.",
+      "hemodinamico": "Hemodin?micamente estable, sin vasopresores. En ritmo sinusal. Troponina elevada post-quir?rgica. Drenajes con d?bito serohem?tico.",
+      "respiratorio": "Eupneico, con ox?geno por gafas nasales, buena saturaci?n. Realizando inspirometr?a incentivada. Murmullo vesicular conservado.",
+      "renal": "Funci?n renal normal, con diuresis conservadas y balance positivo. Electrolitos estables, sin edemas.",
+      "digestivo": "Abdomen blando y depresible. Perfil hep?tico normal. Inapetente, iniciando tolerancia a l?quidos. Glucemia controlada con insulina.",
+      "infeccioso": "Afebril, leucocitosis leve y PCR elevada (post-quir?rgica). En profilaxis con cefazolina. Sin signos de infecci?n activa."
+    }
+  },
+  {
+    "id": "rea-8",
+    "numero_cama": "8",
+    "unidad": "REA",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Delirio hiperactivo con agresividad que requiere haloperidol y dexmedetomidina en descenso. Present? episodio de FA resuelto. Sin focalidad.",
+      "hemodinamico": "En ritmo sinusal, requiere noradrenalina a dosis m?nimas. TA y FC estables. Lactato normal. Drenajes retirados.",
+      "respiratorio": "Buena mec?nica ventilatoria con ox?geno por gafas nasales, saturaci?n al 100%. Hipoventilaci?n basal izquierda. Rx t?rax con signos de sobrecarga.",
+      "renal": "Deterioro leve de la funci?n renal con diuresis conservadas forzadas. Hipopotasemia (3.1 mmol/l). Intentando evitar balance positivo.",
+      "digestivo": "Abdomen blando y depresible, peristaltismo conservado. Ingesta oral dificultada por delirio; SNG arrancada. Tolerando dieta oral, pautado Fresubin.",
+      "infeccioso": "Afebril, marcadores inflamatorios en descenso. En tratamiento con Cefotaxima. Cultivos de v?lvula negativos, previos positivos para Streptococcus mutans."
+    }
+  },
+  {
+    "id": "rea-9",
+    "numero_cama": "9",
+    "unidad": "REA",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Consciente, orientado, con sedaci?n leve para confort. Sin focalidad neurol?gica. Pupilas isoc?ricas y reactivas.",
+      "hemodinamico": "Hemodin?micamente estable sin aminas, con tendencia a hipertensi?n. Ritmo sinusal. L?ctico normal. A la espera de EcoDoppler MMII.",
+      "respiratorio": "Traqueostomizado, en destete ventilatorio con PS. Roncus difusos. Persiste condensaci?n y derrame pleural derecho. GSA: pCO2 30, pO2 143.",
+      "renal": "Insuficiencia renal cr?nica terminal, en di?lisis intermitente. Edemas perif?ricos. Diuresis con furosemida, balance neutro. Cr 5.14.",
+      "digestivo": "Abdomen distendido y timp?nico (mejorando). Nutrici?n parenteral. Enzimas hep?ticas de citolisis en descenso, colestasis alta. Tratamiento procin?tico. PIA 15 mmHg.",
+      "infeccioso": "Aislamiento por E. Coli BLEE. Pico febril, cultivos pendientes. En tratamiento con Ceftolozano/Tazobactam, Linezolid, Anidulafungina. Cultivos previos con P. Aeruginosa y C. Albicans."
+    }
+  },
+  {
+    "id": "rea-11",
+    "numero_cama": "11",
+    "unidad": "REA",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Consciente, orientada y colaboradora. Dolor post-quir?rgico bien controlado con analgesia epidural y oral.",
+      "hemodinamico": "Hemodin?micamente estable, con tensi?n arterial y frecuencia card?aca en rangos normales. Buena perfusi?n perif?rica. Lactato 1.",
+      "respiratorio": "Eupneica, con ox?geno suplementario por gafas nasales, buena mec?nica ventilatoria e intercambio gaseoso. Murmullo vesicular conservado.",
+      "renal": "Funci?n renal conservada, diuresis adecuadas y balance ligeramente positivo. Electrolitos dentro de la normalidad, sin edemas.",
+      "digestivo": "Abdomen blando, depresible, levemente doloroso. RHA audibles. En dieta absoluta con nutrici?n parenteral. Anemia y plaquetopenia post-quir?rgica. Perfil hep?tico normal.",
+      "infeccioso": "Afebril, sin signos cl?nicos ni anal?ticos de infecci?n. Sin tratamiento antibi?tico. PCR 16.56, Leucocitos 6.68."
+    }
+  },
+  {
+    "id": "ucin-2",
+    "numero_cama": "2",
+    "unidad": "UCIN",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Consciente, orientado y colaborador. Dolor controlado. Descanso nocturno con Lorazepam. Sin focalidad.",
+      "hemodinamico": "Tendencia a hipertensi?n sist?lica. Ritmo sinusal. Lactato 3. Pulsos perif?ricos adecuados.",
+      "respiratorio": "Buena mec?nica respiratoria con ox?geno suplementario, saturaci?n al 100%. Leve acidosis metab?lica compensada.",
+      "renal": "Leve empeoramiento de la funci?n renal (Cr 1.23). Diuresis conservadas, balance positivo. En tratamiento con furosemida y bicarbonato.",
+      "digestivo": "Abdomen timp?nico, sin defensa ni peristaltismo (?leo). En dieta l?quida. Se inicia nutrici?n parenteral. Perfil hep?tico normal.",
+      "infeccioso": "Afebril. Marcadores de infecci?n en aumento (PCR 23, Procalcitonina 8). Inicio de antibi?tico (Augmentine)."
+    }
+  },
+  {
+    "id": "ucin-5",
+    "numero_cama": "5",
+    "unidad": "UCIN",
+    "estado": "Cr?tico",
+    "sistemas": {
+      "neurologico": "Consciente, orientado y colaborador (Ramsey 2). Dolor en flanco derecho que limita la expectoraci?n. Requiere refuerzo analg?sico.",
+      "hemodinamico": "Hemodin?micamente estable sin aminas. Ritmo sinusal. Lactato 0.9. Sensaci?n de sed. Disfunci?n diast?lica leve. VCI colapsable.",
+      "respiratorio": "Eupneica con ox?geno suplementario, saturaci?n l?mite. Hipoventilaci?n basal por dolor. Leve acidosis respiratoria (pCO2 45).",
+      "renal": "Oliguria en las ?ltimas horas con funci?n renal conservada. Hiponatremia leve. En tratamiento con relleno vascular.",
+      "digestivo": "Abdomen blando y depresible, peristaltismo disminuido. En ayunas. Buen control gluc?mico. Coagulopat?a leve. Sin drenajes.",
+      "infeccioso": "Afebril, leucocitos elevados (12.000) y PCR en aumento (14). En tratamiento con Tazocel desde el ingreso."
+    }
+  }
+];
+    const Icons = {
+      Brain: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>,
+      Wind: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>,
+      Heart: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>,
+      Droplet: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-2-3-4-3l-3-3-3 3c-2 0-4 1-4 3a7 7 0 0 0 7 7z"/></svg>,
+      Thermometer: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>,
+      Stomach: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2Z"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>,
+      Bed: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>,
+      Alert: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
+      Clipboard: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/></svg>
+    };
+    const Icon = ({n, c}) => { const I = Icons[n]; return I ? <I className={c} /> : null; };
+    const BedCard = ({ data, onClick }) => {
+      const isUCIN = data.unidad === 'UCIN';
+      const colors = { 'Cr?tico': 'border-l-red-500 bg-red-100 text-red-700', 'Estable': 'border-l-emerald-500 bg-emerald-100 text-emerald-700', 'Alerta': 'border-l-amber-500 bg-amber-100 text-amber-700' };
+      const status = colors[data.estado] || colors['Alerta'];
+      const unitClass = isUCIN ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700';
+      return (
+        <div onClick={() => onClick(data)} className={`relative glass-card rounded-xl shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all p-5 cursor-pointer border border-slate-200 border-l-4 ${status.split(' ')[0]}`}>
+          <div className="flex justify-between items-start">
+             <div className="flex items-center gap-3">
+               <div className="bg-slate-50 p-2 rounded-lg text-slate-400"><Icon n="Bed" c="w-6 h-6"/></div>
+               <div><h3 className="text-xl font-black text-slate-800">Cama {data.numero_cama}</h3><span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase ${unitClass}`}>{data.unidad}</span></div>
+             </div>
+             <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${status.substring(status.indexOf(' ')+1)}`}>{data.estado}</span>
+          </div>
+          <div className="mt-4"><p className="text-xs text-slate-400 font-bold uppercase">Paciente</p><p className="text-3xl font-black text-slate-700">{data.paciente_id}</p></div>
+          {data.alertas && <div className="mt-4 flex items-center gap-2 text-red-600 bg-red-50 px-2 py-1 rounded"><Icon n="Alert" c="w-4 h-4 animate-pulse"/><span className="text-xs font-bold">ATENCI?N</span></div>}
+        </div>
+      );
+    };
+    const Section = ({ i, t, txt, col }) => (
+      <div className="bg-white/80 p-4 rounded-2xl border border-slate-100 shadow-sm backdrop-blur-sm">
+        <div className="flex items-center gap-2 mb-2"><div className={`p-2 rounded-lg ${col}`}><Icon n={i} c="w-5 h-5"/></div><h4 className="text-xs font-bold text-slate-500 uppercase">{t}</h4></div>
+        <p className="text-sm font-medium text-slate-700 pl-10">{txt || "Sin datos."}</p>
+      </div>
+    );
+    const Modal = ({ p, onClose }) => {
+      if(!p) return null;
+      const isUCIN = p.unidad === 'UCIN';
+      const headCol = isUCIN ? 'bg-purple-600' : 'bg-blue-600';
+      return (
+        <div className="fixed inset-0 modal-backdrop flex items-center justify-center p-4 z-50" onClick={onClose}>
+          <div className="bg-slate-50 w-full max-w-6xl max-h-[95vh] overflow-y-auto rounded-3xl shadow-2xl" onClick={e=>e.stopPropagation()}>
+            <div className="bg-white p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 z-10">
+               <div className="flex items-center gap-4">
+                 <div className={`h-12 w-12 ${headCol} rounded-xl flex items-center justify-center text-white font-black text-xl`}>{p.numero_cama}</div>
+                 <div><h2 className="text-3xl font-black text-slate-800">{p.paciente_id}</h2><span className="text-slate-500 font-bold text-sm">{p.unidad}</span></div>
+               </div>
+               <button onClick={onClose} className="px-4 py-2 bg-slate-100 rounded-lg font-bold hover:bg-slate-200">Cerrar</button>
+            </div>
+            <div className="p-6 space-y-6">
+               <div className={`p-1 rounded-2xl bg-gradient-to-r ${isUCIN ? 'from-purple-500 to-purple-400' : 'from-blue-500 to-blue-400'}`}>
+                 <div className="bg-white p-5 rounded-xl"><div className="flex gap-2 mb-2 items-center text-slate-800"><Icon n="Clipboard" c="w-6 h-6"/><span className="font-black uppercase">Plan Terap?utico</span></div><p className="text-lg font-medium pl-8">{p.plan}</p></div>
+               </div>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                 <Section i="Brain" t="Neurol?gico" txt={p.sistemas.neurologico} col="bg-indigo-100 text-indigo-600"/>
+                 <Section i="Wind" t="Respiratorio" txt={p.sistemas.respiratorio} col="bg-sky-100 text-sky-600"/>
+                 <Section i="Heart" t="Hemodin?mico" txt={p.sistemas.hemodinamico} col="bg-rose-100 text-rose-600"/>
+                 <Section i="Droplet" t="Renal" txt={p.sistemas.renal} col="bg-amber-100 text-amber-600"/>
+                 <Section i="Thermometer" t="Infeccioso" txt={p.sistemas.infeccioso} col="bg-purple-100 text-purple-600"/>
+                 <Section i="Stomach" t="Digestivo" txt={p.sistemas.digestivo} col="bg-lime-100 text-lime-600"/>
+               </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+    const App = () => {
+      const [sel, setSel] = useState(null);
+      useEffect(()=>{ const h=(e)=>e.key==='Escape'&&setSel(null); window.addEventListener('keydown',h); return ()=>window.removeEventListener('keydown',h);},[]);
+      const reas = PATIENTS.filter(p=>p.unidad==='REA');
+      const ucins = PATIENTS.filter(p=>p.unidad==='UCIN');
+      return (
+        <div className="min-h-screen p-8 max-w-[1920px] mx-auto">
+           <header className="mb-8"><h1 className="text-4xl font-black text-slate-800 tracking-tighter">UCI Quir?rgica <span className="text-blue-600">Dashboard</span></h1><p className="text-slate-500 font-bold">Actualizado: {new Date().toLocaleTimeString()}</p></header>
+           {reas.length>0 && <div className="mb-8"><h2 className="text-2xl font-black text-blue-800 mb-4">REA</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">{reas.map(p=><BedCard key={p.id} data={p} onClick={setSel}/>)}</div></div>}
+           {ucins.length>0 && <div><h2 className="text-2xl font-black text-purple-800 mb-4">UCIN</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">{ucins.map(p=><BedCard key={p.id} data={p} onClick={setSel}/>)}</div></div>}
+           {sel && <Modal p={sel} onClose={()=>setSel(null)}/>}
+        </div>
+      );
+    };
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
