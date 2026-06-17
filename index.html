@@ -1,207 +1,648 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  
-  <title>Acceso UCI</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <style>
-    body { background-color: #f0f4f8; background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 24px 24px; font-family: system-ui, sans-serif; }
-    .glass-card { background: linear-gradient(145deg, #ffffff, #f8fafc); }
-    .modal-backdrop { background-color: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); }
-    .login-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.5); }
-    ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
-  </style>
-  <script> tailwind.config = { theme: { extend: { colors: { lime: { 100: '#ecfccb', 600: '#65a30d' } } } } } </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Dashboard UCI Quirúrgica</title>
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --rea: #2563eb;
+    --rea-light: #eff6ff;
+    --ucin: #7c3aed;
+    --ucin-light: #f5f3ff;
+    --critico: #dc2626;
+    --critico-bg: #fef2f2;
+    --critico-border: #fecaca;
+    --estable: #059669;
+    --estable-bg: #f0fdf4;
+    --estable-border: #a7f3d0;
+    --alerta: #d97706;
+    --alerta-bg: #fffbeb;
+    --alerta-border: #fde68a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* LOGIN */
+  #login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .login-card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+    padding: 2.5rem;
+    width: 100%; max-width: 380px;
+    text-align: center;
+  }
+  .login-icon {
+    display: inline-flex; padding: 1rem;
+    background: var(--rea); border-radius: 16px; color: white;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.35);
+  }
+  .login-card h1 { font-size: 1.4rem; font-weight: 900; margin-bottom: .35rem; }
+  .login-card p { color: var(--text-secondary); font-size: .85rem; margin-bottom: 1.75rem; }
+  .login-card input {
+    width: 100%; padding: .75rem 1.25rem;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: 1rem; font-weight: 700; text-align: center;
+    outline: none; background: rgba(255,255,255,.6);
+    color: var(--text-primary); transition: border-color .2s;
+    margin-bottom: .75rem;
+  }
+  .login-card input:focus { border-color: var(--rea); }
+  .login-card button {
+    width: 100%; padding: .75rem;
+    background: var(--rea); color: white;
+    font-weight: 700; font-size: 1rem;
+    border: none; border-radius: 10px; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    transition: background .2s;
+  }
+  .login-card button:hover { background: #1d4ed8; }
+  .login-error { margin-top: .75rem; color: var(--critico); font-size: .8rem; font-weight: 700; }
+
+  /* DASHBOARD */
+  #dashboard { display: none; padding: 2rem 2.5rem; max-width: 1800px; margin: 0 auto; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; gap: 1rem; flex-wrap: wrap; }
+  header h1 { font-size: 2.6rem; font-weight: 900; letter-spacing: -1px; line-height: 1.1; }
+  header h1 span { color: var(--rea); }
+  header p { color: var(--text-secondary); margin-top: .35rem; font-size: .9rem; }
+  .header-right { display: flex; align-items: center; gap: .75rem; }
+  .time-badge {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: .5rem 1rem;
+    font-size: .85rem; font-weight: 700; color: var(--text-muted);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .logout-btn {
+    background: #fef2f2; border: 1px solid #fecaca;
+    color: var(--critico); border-radius: 10px;
+    padding: .5rem .75rem; cursor: pointer; display: flex; align-items: center;
+    transition: background .2s;
+  }
+  .logout-btn:hover { background: #fee2e2; }
+
+  .unit-section { margin-bottom: 3rem; }
+  .unit-title { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.25rem; font-size: 1.35rem; font-weight: 900; }
+  .unit-bar { width: 4px; height: 2rem; border-radius: 4px; }
+  .unit-bar.rea { background: var(--rea); }
+  .unit-bar.ucin { background: var(--ucin); }
+  .unit-title.rea { color: #1e3a8a; }
+  .unit-title.ucin { color: #4c1d95; }
+
+  .beds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 1.25rem; }
+
+  .bed-card {
+    background: linear-gradient(145deg, #fff, #f8fafc);
+    border: 1px solid var(--border); border-left: 4px solid;
+    border-radius: 14px; padding: 1.25rem;
+    cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .bed-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.14); transform: translateY(-3px); }
+  .bed-card.critico { border-left-color: var(--critico); }
+  .bed-card.estable  { border-left-color: var(--estable); }
+  .bed-card.alerta   { border-left-color: var(--alerta); }
+
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .6rem; }
+  .card-bed { display: flex; align-items: center; gap: .65rem; }
+  .bed-icon { background: #f1f5f9; padding: .45rem; border-radius: 8px; color: var(--text-muted); display: flex; }
+  .bed-num { font-size: 1.2rem; font-weight: 900; line-height: 1; }
+  .unit-tag {
+    font-size: .62rem; font-weight: 900; text-transform: uppercase;
+    padding: .18rem .45rem; border-radius: 4px; letter-spacing: .05em;
+    margin-top: .2rem; display: inline-block;
+  }
+  .unit-tag.rea  { background: var(--rea-light);  color: var(--rea); }
+  .unit-tag.ucin { background: var(--ucin-light); color: var(--ucin); }
+
+  .status-badge {
+    font-size: .68rem; font-weight: 700; text-transform: uppercase;
+    padding: .22rem .55rem; border-radius: 6px; letter-spacing: .04em; white-space: nowrap;
+  }
+  .status-badge.critico { background: var(--critico-bg); color: var(--critico); border: 1px solid var(--critico-border); }
+  .status-badge.estable { background: var(--estable-bg); color: var(--estable); border: 1px solid var(--estable-border); }
+  .status-badge.alerta  { background: var(--alerta-bg);  color: var(--alerta);  border: 1px solid var(--alerta-border); }
+
+  .card-meta {
+    display: flex; gap: .65rem; font-size: .73rem; font-weight: 700;
+    color: var(--text-secondary); background: #f8fafc;
+    padding: .38rem .7rem; border-radius: 8px; border: 1px solid var(--border);
+    margin-bottom: .75rem; align-items: center; flex-wrap: wrap;
+  }
+  .meta-sep { color: #cbd5e1; }
+  .card-id-label { font-size: .68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+  .card-id { font-size: 1rem; font-weight: 900; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(15,23,42,.82); backdrop-filter: blur(8px);
+    z-index: 100; align-items: center; justify-content: center; padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: #f8fafc; border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+    width: 100%; max-width: 1000px; max-height: 93vh; overflow-y: auto;
+  }
+  .modal-header {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 10;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .modal-header-left { display: flex; align-items: center; gap: 1rem; }
+  .modal-num {
+    width: 56px; height: 56px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1.5rem; font-weight: 900; flex-shrink: 0;
+  }
+  .modal-num.rea  { background: var(--rea); }
+  .modal-num.ucin { background: var(--ucin); }
+  .modal-title { font-size: 1.5rem; font-weight: 900; letter-spacing: -.4px; }
+  .modal-subtitle { display: flex; gap: .65rem; font-size: .84rem; font-weight: 700; color: var(--text-secondary); margin-top: .25rem; align-items: center; flex-wrap: wrap; }
+  .modal-subtitle .tag { background: #f1f5f9; color: var(--text-primary); padding: .12rem .45rem; border-radius: 5px; }
+  .modal-subtitle .sep { color: #cbd5e1; }
+  .close-btn {
+    background: #f1f5f9; border: none; border-radius: 10px;
+    padding: .55rem 1rem; font-weight: 700; color: var(--text-secondary);
+    cursor: pointer; font-size: .88rem; white-space: nowrap; transition: background .2s;
+  }
+  .close-btn:hover { background: #e2e8f0; }
+
+  .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .ap-box { background: #f1f5f9; border: 1px solid var(--border); border-radius: 14px; padding: 1.1rem 1.25rem; }
+  .ap-box h3 { font-size: .68rem; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted); margin-bottom: .5rem; }
+  .ap-box p { font-size: .88rem; color: var(--text-primary); line-height: 1.65; font-style: italic; }
+
+  .plan-box { border-radius: 14px; padding: 3px; }
+  .plan-box.rea  { background: linear-gradient(135deg, var(--rea), #60a5fa); }
+  .plan-box.ucin { background: linear-gradient(135deg, var(--ucin), #a78bfa); }
+  .plan-inner { background: var(--surface); border-radius: 11px; padding: 1.1rem 1.25rem; }
+  .plan-inner h3 { font-size: .78rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: var(--text-primary); margin-bottom: .5rem; display: flex; align-items: center; gap: .5rem; }
+  .plan-inner p { font-size: .95rem; color: var(--text-primary); line-height: 1.7; padding-left: 1.5rem; }
+
+  .sistemas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 1rem; }
+  .sistema-card { background: rgba(255,255,255,.88); border: 1px solid var(--border); border-radius: 14px; padding: 1rem 1.1rem; }
+  .sistema-card-top { display: flex; align-items: center; gap: .6rem; margin-bottom: .55rem; }
+  .sistema-icon { padding: .42rem; border-radius: 8px; display: flex; }
+  .sistema-icon.neuro { background: #eef2ff; color: #4f46e5; }
+  .sistema-icon.resp  { background: #f0f9ff; color: #0284c7; }
+  .sistema-icon.hemo  { background: #fff1f2; color: #e11d48; }
+  .sistema-icon.renal { background: #fffbeb; color: #d97706; }
+  .sistema-icon.infec { background: #f5f3ff; color: #7c3aed; }
+  .sistema-icon.dig   { background: #f7fee7; color: #65a30d; }
+  .sistema-label { font-size: .68rem; font-weight: 900; text-transform: uppercase; color: var(--text-muted); letter-spacing: .06em; }
+  .sistema-text { font-size: .84rem; color: var(--text-primary); line-height: 1.6; padding-left: 2.3rem; }
+
+  ::-webkit-scrollbar { width: 7px; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
+
+  @media (max-width: 640px) {
+    #dashboard { padding: 1rem; }
+    header h1 { font-size: 1.8rem; }
+    .beds-grid { grid-template-columns: 1fr 1fr; }
+    .sistemas-grid { grid-template-columns: 1fr; }
+    .modal-title { font-size: 1.15rem; }
+  }
+</style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="text/babel">
-    const { useState, useEffect } = React;
-    const PATIENTS = [{"id":"rea-1","numero_cama":"1","unidad":"REA","paciente_id":"Cama 1","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"rea-2","numero_cama":"2","unidad":"REA","paciente_id":"Cama 2","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"rea-3","numero_cama":"3","unidad":"REA","paciente_id":"Cama 3","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"rea-4","numero_cama":"4","unidad":"REA","paciente_id":"Cama 4","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"rea-9","numero_cama":"9","unidad":"REA","paciente_id":"Cama 9","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"rea-10","numero_cama":"10","unidad":"REA","paciente_id":"Cama 10","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"rea-11","numero_cama":"11","unidad":"REA","paciente_id":"Cama 11","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"rea-12","numero_cama":"12","unidad":"REA","paciente_id":"Cama 12","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"ucin-1","numero_cama":"1","unidad":"UCIN","paciente_id":"Cama 1","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"ucin-2","numero_cama":"2","unidad":"UCIN","paciente_id":"Cama 2","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"ucin-3","numero_cama":"3","unidad":"UCIN","paciente_id":"Cama 3","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"ucin-4","numero_cama":"4","unidad":"UCIN","paciente_id":"Cama 4","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"ucin-5","numero_cama":"5","unidad":"UCIN","paciente_id":"Cama 5","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}},{"id":"ucin-6","numero_cama":"6","unidad":"UCIN","paciente_id":"Cama 6","estado":"Vacía, pendiente de asignación","edad":"?","sexo":"?","dias_estancia":"?","antecedentes":"Sin datos disponibles","plan":"Pendiente de ingreso de paciente","sistemas":{"neurologico":"Sin datos","respiratorio":"Sin datos","hemodinamico":"Sin datos","renal":"Sin datos","infeccioso":"Sin datos","digestivo":"Sin datos"}}];
-    const PASSWORD_CORRECTA = "misbalare2720";
 
-    // --- COMPONENTE DE LOGIN ---
-    const LoginScreen = ({ onLogin }) => {
-      const [input, setInput] = useState("");
-      const [error, setError] = useState(false);
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <h1>Acceso Restringido</h1>
+    <p>Dashboard Clínico UCI Quirúrgica &middot; Dr. Balmis</p>
+    <input type="password" id="pass-input" placeholder="Introduce la clave..." autocomplete="off">
+    <button onclick="checkLogin()">Entrar</button>
+    <div class="login-error" id="login-error" style="display:none">&#9940; Clave incorrecta</div>
+  </div>
+</div>
 
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        if (input === PASSWORD_CORRECTA) {
-          onLogin();
-        } else {
-          setError(true);
-          setInput("");
-        }
-      };
+<div id="dashboard">
+  <header>
+    <div>
+      <h1>UCI Quir&uacute;rgica <span>Dashboard</span></h1>
+      <p>Vista cl&iacute;nica &middot; REA + UCIN &middot; Hospital General Universitario Dr. Balmis</p>
+    </div>
+    <div class="header-right">
+      <div class="time-badge" id="clock"></div>
+      <button class="logout-btn" onclick="logout()" title="Cerrar sesi&oacute;n">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </header>
+  <div class="unit-section">
+    <div class="unit-title rea"><div class="unit-bar rea"></div>REA</div>
+    <div class="beds-grid" id="rea-grid"></div>
+  </div>
+  <div class="unit-section">
+    <div class="unit-title ucin"><div class="unit-bar ucin"></div>UCIN</div>
+    <div class="beds-grid" id="ucin-grid"></div>
+  </div>
+</div>
 
-      return (
-        <div className="min-h-screen flex items-center justify-center p-4">
-          <div className="login-glass p-10 rounded-3xl shadow-2xl max-w-sm w-full text-center">
-            <div className="mb-6 inline-flex p-4 bg-blue-600 rounded-2xl text-white shadow-lg shadow-blue-500/30">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            </div>
-            <h1 className="text-2xl font-black text-slate-800 mb-2">Acceso Restringido</h1>
-            <p className="text-slate-500 text-sm mb-8 font-medium">Dashboard Clínico UCI Quirúrgica</p>
-            
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input 
-                type="password" 
-                value={input}
-                onChange={(e) => {setInput(e.target.value); setError(false);}}
-                placeholder="Introduce la clave..."
-                className="w-full px-5 py-3 rounded-xl bg-white/50 border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all font-bold text-center text-slate-700 placeholder-slate-400"
-                autoFocus
-              />
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-600/30 transition-all active:scale-95">
-                Entrar
-              </button>
-            </form>
-            {error && <p className="mt-4 text-red-500 text-xs font-bold animate-pulse">⛔ Clave incorrecta</p>}
-          </div>
-        </div>
-      );
-    };
+<div class="modal-overlay" id="modal" onclick="closeModalOverlay(event)">
+  <div class="modal-box" id="modal-box"></div>
+</div>
 
-    // --- ICONOS ---
-    const Icons = {
-      Brain: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>,
-      Wind: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>,
-      Heart: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>,
-      Droplet: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-2-3-4-3l-3-3-3 3c-2 0-4 1-4 3a7 7 0 0 0 7 7z"/></svg>,
-      Thermometer: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>,
-      Stomach: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2Z"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>,
-      Bed: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>,
-      Alert: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
-      Clipboard: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/></svg>,
-      User: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
-      Logout: (p)=><svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-    };
-    const Icon = ({n, c}) => { const I = Icons[n]; return I ? <I className={c} /> : null; };
+<script>
+var PASS = "misbalare2720";
 
-    // --- COMPONENTES UI DASHBOARD ---
-    const BedCard = ({ data, onClick }) => {
-      const isUCIN = data.unidad === 'UCIN';
-      const colors = { 'Crítico': 'border-l-red-500 bg-red-100 text-red-700', 'Estable': 'border-l-emerald-500 bg-emerald-100 text-emerald-700', 'Alerta': 'border-l-amber-500 bg-amber-100 text-amber-700' };
-      const status = colors[data.estado] || colors['Alerta'];
-      const unitClass = isUCIN ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700';
-      return (
-        <div onClick={() => onClick(data)} className={`relative glass-card rounded-xl shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all p-5 cursor-pointer border border-slate-200 border-l-4 ${status.split(' ')[0]}`}>
-          <div className="flex justify-between items-start mb-2">
-             <div className="flex items-center gap-3">
-               <div className="bg-slate-50 p-2 rounded-lg text-slate-400"><Icon n="Bed" c="w-6 h-6"/></div>
-               <div><h3 className="text-xl font-black text-slate-800 leading-none">Cama {data.numero_cama}</h3><span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase ${unitClass}`}>{data.unidad}</span></div>
-             </div>
-             <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${status.substring(status.indexOf(' ')+1)}`}>{data.estado}</span>
-          </div>
-          <div className="flex items-center gap-2 text-xs font-bold text-slate-500 mb-3 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
-             <span className="flex items-center gap-1"><Icon n="User" c="w-3 h-3"/> {data.edad} años</span><span className="text-slate-300">|</span><span>Día {data.dias_estancia}</span>
-          </div>
-          <div><p className="text-xs text-slate-400 font-bold uppercase">Paciente</p><p className="text-2xl font-black text-slate-700 truncate">{data.paciente_id || 'Cama ' + data.numero_cama}</p></div>
-          {data.alertas && <div className="mt-3 flex items-center gap-2 text-red-600 bg-red-50 px-2 py-1 rounded"><Icon n="Alert" c="w-4 h-4 animate-pulse"/><span className="text-xs font-bold">ATENCIÓN</span></div>}
-        </div>
-      );
-    };
+var PATIENTS = [
+  {
+    id:"rea-1", numero_cama:"1", unidad:"REA",
+    paciente_id:"Gastrectom\u00eda total / Fuga anastom\u00f3tica",
+    estado:"Alerta", edad:"57", sexo:"H", dias_estancia:"11",
+    antecedentes:"RAMc a betalact\u00e1micos y contraste yodado. HTA, DLP. IRC (FAV humerocef\u00e1lica trombosada). Hiperuricemia. SAOS con CPAP. IC con disfunci\u00f3n sist\u00f3lica moderada, valvulopat\u00eda a\u00f3rtica bic\u00fasp\u00edde, aneurisma de aorta ascendente, BRIHH, miocardiopat\u00eda no compactada. DAI-TRC. Cirug\u00eda bari\u00e1trica previa. Exfumador.",
+    plan:"Azul de metileno sin fuga: inicio tolerancia oral manteniendo NE a 80 ml/h por SNY. Destete de soporte vasopresor. Shaldon femoral derecho preventivo. Seguimiento renal por Nefrolog\u00eda. Trombectom\u00eda percut\u00e1nea FAV diferida.",
+    sistemas:{
+      neurologico:"Consciente, orientado y colaborador. Sin focalidad neurol\u00f3gica. Dolor controlado con analgesia pautada.",
+      respiratorio:"FR 16 rpm. SatO2 98% con GN 3 l/min. GSA: pH 7,41 / pCO2 32 / pO2 104 / HCO3 20,3 / EB -4,3. RxTx: p\u00e9rdida de volumen bibasal con probable derrame pleural ligero. Fisioterapia respiratoria.",
+      hemodinamico:"TA 105/54 mmHg. FC 88 lpm, RS. Retirada NA. IC 3,46 l/min/m2 (PiCCO). Hgb 8,8 g/dl. Lactato 1,7 mmol/l. DAI-TRC activo. Transfusi\u00f3n 1CH ayer.",
+      renal:"Urea 192, Cr 3,23, FG 20 ml/min. Diuresis 3890 cc. BH -228 cc. IRC conocida. Bicarbonato oral, sevelamero, lokelma, paricalcitol. Furosemida PRN. Sin indicaci\u00f3n de HD.",
+      infeccioso:"Afebril. Leuco 33.290, PCR 14,13, PCT 2,66. Meropenem 1g/12h + anidulafungina 100mg/d\u00eda. Cultivos negativos.",
+      digestivo:"Tolerancia oral iniciada. NE 80 ml/h por SNY. Drenaje M-P izquierdo sin d\u00e9bito. Blake retirado. Bilirrubina 0,43. GOT 40, GPT 6, GGT 177, FA 201, Amilasa 204. IQ 78%."
+    }
+  },
+  {
+    id:"rea-2", numero_cama:"2", unidad:"REA",
+    paciente_id:"Neurectom\u00eda vestibular / Enf. M\u00e9ni\u00e8re",
+    estado:"Estable", edad:"78", sexo:"H", dias_estancia:"1",
+    antecedentes:"No RAMc. DM2, HTA, DLP. Flutter auricular (ablaci\u00f3n oct 2025). Linfoma Hodgkin en remisi\u00f3n 40 a\u00f1os. Hipotiroidismo subclínico. Hiperuricemia. Crisis vertiginosas + hipoacusia neurosensorial bilateral (S. M\u00e9ni\u00e8re). Hiperactividad vesical. Temblor esencial MSI.",
+    plan:"Postoperatorio de neurectom\u00eda vestibular + MIO. Extubado en quir\u00f3fano sin incidencias. Control postoperatorio en REA.",
+    sistemas:{
+      neurologico:"Consciente y orientado. GCS 15. Sin focalidad neurol\u00f3gica. Monitorizaci\u00f3n neurofisiol\u00f3gica intraoperatoria sin incidencias.",
+      respiratorio:"SatO2 99% con aire ambiente. IOT sin incidencias (McGrath, POGO 80%). Extubado en quir\u00f3fano.",
+      hemodinamico:"Estable hemodin\u00e1micamente. TA 150/80 mmHg al ingreso. FC 65 lpm en RS. Sin soporte inotr\u00f3pico ni vasopresor.",
+      renal:"Diuresis conservada 0,5-1 ml/kg/h intraoperatorio.",
+      infeccioso:"Profilaxis ATB con cefazolina 2g. Afebril.",
+      digestivo:"Sin incidencias. Fluidos 750cc de cristaloides intraoperatorios."
+    }
+  },
+  {
+    id:"rea-3", numero_cama:"3", unidad:"REA",
+    paciente_id:"Recambio valvular a\u00f3rtico + Bypass",
+    estado:"Alerta", edad:"73", sexo:"H", dias_estancia:"4",
+    antecedentes:"Doble lesi\u00f3n a\u00f3rtica (DLAo) + enfermedad de la coronaria derecha (CD). HTA controlada con bisoprolol, losart\u00e1n y doxazosina.",
+    plan:"Reducci\u00f3n de noradrenalina. Reposici\u00f3n de volumen con alb\u00famina y cristaloides. Amiodarona en perfusi\u00f3n para cardioversi\u00f3n a RS.",
+    sistemas:{
+      neurologico:"Consciente, orientado y colaborador. RASS 0. GCS 15. Dolor controlado con paracetamol sin rescates.",
+      respiratorio:"SatO2 97% con GNAF 30 l/30%. GSA: pH 7,46 / pCO2 37 / pO2 82 / HCO3 26,3 / lactato 1,1. Tubos tor\u00e1cicos: 30ml serohem\u00e1tico ayer. Fisioterapia respiratoria.",
+      hemodinamico:"TA 132/62 mmHg. FC 97 lpm en FA. NA 4 ml/h (0,08 mcg/kg/min). Hgb 10,3 g/dl. Troponina I 485,6 pg/mL. Amiodarona: 2 bolos 300mg + perfusi\u00f3n 600mg/24h. AAS + enoxaparina 40mg/24h.",
+      renal:"Urea 78, Cr 1,31 (mejorando). FG 53 ml/min. Diuresis 2820 cc. BH -1129 cc. Furosemida 20mg/8h.",
+      infeccioso:"Afebril. Leuco 9.210, PCR 12,62. Sin antibi\u00f3tico.",
+      digestivo:"Abdomen blando. Peristaltismo audible. IQ 89%. Tolerando dieta oral. Glucemia 143 mg/dl."
+    }
+  },
+  {
+    id:"rea-4", numero_cama:"4", unidad:"REA",
+    paciente_id:"LOE cerebelosa izquierda",
+    estado:"Estable", edad:"40", sexo:"M", dias_estancia:"2",
+    antecedentes:"Sin antecedentes de inter\u00e9s previos al ingreso actual.",
+    plan:"TAC craneal de control pendiente de informe. Inicio de dieta oral cuando est\u00e9 informado el TAC. Dexametasona 4mg/6h. Compresi\u00f3n neum\u00e1tica antitromb\u00f3tica.",
+    sistemas:{
+      neurologico:"Consciente, orientada y colaboradora. Sin focalidad. RASS 0. GCS 15. Ligero dolor cervical controlado. Edema en comisura labial derecha por dec\u00fabito de TET. Dexametasona 4mg/6h.",
+      respiratorio:"Eupneica con c\u00e1nulas nasales 3 lpm. SatO2 100%. GSA: pH 7,42 / pCO2 29 / pO2 202 / HCO3 18,8 / EB -4,6. RxTx sin alteraciones.",
+      hemodinamico:"Estable sin aminas. TA 115/70 mmHg. FC 60 lpm en RS. Hgb 10,7 g/dl. IQ 67%. Medias de compresi\u00f3n neum\u00e1tica.",
+      renal:"Funci\u00f3n renal normal. Urea 27, Cr 0,58. Na 140, K 4. Buenas diuresis.",
+      infeccioso:"Afebril. Leuco 18.380, PCR 1,3. Sin antibi\u00f3tico.",
+      digestivo:"Abdomen blando. Peristaltismo audible. Glucemia ~100 mg/dl. Prote\u00ednas totales 6,5 g/dl. Dieta oral pendiente de informe TAC."
+    }
+  },
+  {
+    id:"rea-5", numero_cama:"5", unidad:"REA",
+    paciente_id:"Ictus vertebrobasilar / Trombectom\u00eda + Stent",
+    estado:"Cr\u00edtico", edad:"56", sexo:"H", dias_estancia:"1",
+    antecedentes:"No RAMc. Bebedor habitual (1,5-2 botellas vino/d\u00eda). Depresi\u00f3n de reciente diagn\u00f3stico. DLP. Tratamiento: alprazolam, escitalopram, estatina.",
+    plan:"Protocolo ictus isqu\u00e9mico tratado <24h. Tirofib\u00e1n iv. TC cerebral + angioTC TSA + perfusi\u00f3n ma\u00f1ana 17/06 a las 11h. Pendiente informe de trombectom\u00eda + stent intracraneal.",
+    sistemas:{
+      neurologico:"IOT a su llegada. Pupilas mi\u00f3ticas. Exploraci\u00f3n neurol\u00f3gica no valorable. Previo: estuporoso, exotropia bilateral, WEBINO, hemiparesia izquierda.",
+      respiratorio:"IOT. Pendiente de evaluaci\u00f3n respiratoria post-procedimiento.",
+      hemodinamico:"Trombectom\u00eda mec\u00e1nica con estenosis intracraneal vertebrobasilar. Stent intracraneal colocado. Tirofib\u00e1n iv por tendencia a oclusi\u00f3n.",
+      renal:"Pendiente de evaluaci\u00f3n.",
+      infeccioso:"Sin datos de infecci\u00f3n activa al ingreso.",
+      digestivo:"Sin datos. Ingreso urgente desde traslado interhospitalario."
+    }
+  },
+  {
+    id:"rea-6", numero_cama:"6", unidad:"REA",
+    paciente_id:"Doble bypass Ao-Co / FEVI deprimida",
+    estado:"Cr\u00edtico", edad:"63", sexo:"H", dias_estancia:"2",
+    antecedentes:"DM2, DLP. Enfermedad de 3 vasos con FEVI severamente deprimida. Cirug\u00eda bari\u00e1trica hace 4 a\u00f1os. Fumador. IT 43 paquetes/a\u00f1o. Tratamiento: empagliflozina, pentoxifilina, sitagliptina/metformina, AAS, rosuvastatina, anoro ellipta, zolpidem, clonazepam.",
+    plan:"Reinicio dobutamina para mejorar IC y diuresis. Transfusi\u00f3n 1CH. Inicio enoxaparina. Destete progresivo de aminas. Bajar perfusi\u00f3n de m\u00f3rfico a 0,5 ml/h.",
+    sistemas:{
+      neurologico:"Somnoliento pero orientado y colaborador. RASS 0. GCS 14. Sin dolor. Perfusi\u00f3n de cloruro m\u00f3rfico bajando a 0,5 ml/h.",
+      respiratorio:"Extubado ayer. Eupneico con GN 3 lpm. SatO2 100%. GSA: pH 7,31 / pCO2 47 / pO2 119 / HCO3 23,7. RxTx: borramiento base izquierda. Drenaje tor\u00e1cico moderado (530ml desde ingreso).",
+      hemodinamico:"NA 10 ml/h + vasopresina 1,25 ml/h. Reinicio dobutamina indicado. IC 3. TA 125/50 mmHg. FC 90 lpm RS con extras\u00edstoles ventriculares frecuentes. Troponina I 2317 pg/l (pico 6300).",
+      renal:"Diuresis justas, respondieron a furosemida. Urea 50, Cr 1,05. Glucemias altas con perfusi\u00f3n insulina ya parada.",
+      infeccioso:"Afebril. Leuco 11.000, PCR 11,8. Sin antibi\u00f3tico.",
+      digestivo:"Abdomen blando. Peristaltismo audible. Prote\u00ednas totales 5,2 g/dl. Tolera l\u00edquidos y yogures."
+    }
+  },
+  {
+    id:"rea-7", numero_cama:"7", unidad:"REA",
+    paciente_id:"Esofaguectom\u00eda / Adenocarcinoma UGE",
+    estado:"Estable", edad:"50", sexo:"H", dias_estancia:"1",
+    antecedentes:"No RAMc. Hipercolesterolemia. SAOS con CPAP. Litiasis renales bilaterales. Protrusi\u00f3n discal. Adenocarcinoma de uni\u00f3n gastroesof\u00e1gica uT3N1M0 MSS. Acondicionamiento g\u00e1strico previo con embolizaci\u00f3n arterial.",
+    plan:"Inicio NPT personalizada. Retirada de fluidos. Sentar al sill\u00f3n. Fisioterapia inspiratoria. Vigilar perfil hep\u00e1tico y amilasa. Mantener amoxicilina-clav\u00fal\u00e1nico 1g/8h.",
+    sistemas:{
+      neurologico:"Consciente, orientado y colaborador. GCS 15. Sin focalidad. Cat\u00e9ter epidural en PC 10 ml/h + paracetamol + nolotil. Dolor abdominal con mejora tras bolo epidural.",
+      respiratorio:"SatO2 99% con GN 4 lpm. GSA: pH 7,35 / pCO2 47 / pO2 78 / HCO3 25,9. RxTx: l\u00ednea neumomediastino en silueta card\u00edaca. Tubo t\u00f3rax derecho -20cmH2O: 150ml serohemático.",
+      hemodinamico:"TA 110/55 mmHg. FC 72 lpm, RS. Sin aminas. Hgb 12 g/dl. Enoxaparina 40mg/24h.",
+      renal:"Urea 30, Cr 0,80. Diuresis adecuada. BH -113cc. Sin diur\u00e9ticos.",
+      infeccioso:"Afebril. Leuco 7.340, PCR 5,98. Amoxicilina-clav\u00fal\u00e1nico 1g/8h.",
+      digestivo:"Abdomen blando sin RHA. GOT 39, Amilasa 346. NPT personalizada iniciada. Sin nutrici\u00f3n enteral por el momento."
+    }
+  },
+  {
+    id:"rea-8", numero_cama:"8", unidad:"REA",
+    paciente_id:"Doble bypass Ao-Co / FA con RVR",
+    estado:"Alerta", edad:"71", sexo:"H", dias_estancia:"8",
+    antecedentes:"No RAMc. Exfumador (hace 4 a\u00f1os). Prostatitis bacteriana e HBP. Episodios previos de impactaci\u00f3n alimentaria. N\u00f3dulo pulmonar estable.",
+    plan:"Destete de NA. Optimizar bisoprolol para retirar landiolol. No retirar tubo C (fuga persistente). Mantener clexane profiláctico. Ferinyect 1g administrado. Macrogol suspendido temporalmente.",
+    sistemas:{
+      neurologico:"Consciente y orientado, colaborador. Analgesia primer escal\u00f3n sin rescates. Menos molestias con la tos. Sin focalidad neurol\u00f3gica.",
+      respiratorio:"Eupneico GN 3 l/min. SatO2 98%. GSA: pH 7,39 / pCO2 37 / pO2 125 / HCO3 22,4 / lactato 1,7. Roncus dispersos hemit\u00f3rax derecho. RxTx: derrame pleural izquierdo moderado.",
+      hemodinamico:"TA 110/51 mmHg con NA 14 ml/h. Landiolol 8 ml/h por FA con RVR. En RS a 65 lpm a exploraci\u00f3n. Amiodarona 200mg/12h v.o. + bisoprolol 2,5/12h. Hgb 8,9. Lactato 1,7.",
+      renal:"Funci\u00f3n renal conservada. Diuresis 1152 ml. BH +225 ml. Furosemida puntual. Ionograma en rango.",
+      infeccioso:"Afebril. RFA en aumento: Leuco 13.040, PCR 15,82. Sin antibi\u00f3tico. Vigilar.",
+      digestivo:"Abdomen blando. RHA presentes. 4 deposiciones ayer. Tolerancia oral completa."
+    }
+  },
+  {
+    id:"rea-10", numero_cama:"10", unidad:"REA",
+    paciente_id:"Neumonitis broncoaspiraci\u00f3n / Trasplante renal",
+    estado:"Cr\u00edtico", edad:"78", sexo:"M", dias_estancia:"18",
+    antecedentes:"RAMc a metamizol (angioedema), olmesart\u00e1n (rash) e intolerancia a tramadol. HTA (4 f\u00e1rmacos). Dislipemia. ERC por poliquistosis, HD desde 2013, nefrectom\u00eda previa, trasplante renal 02/2014. Hipotiroidismo. Osteoporosis. Glaucoma.",
+    plan:"Transfusi\u00f3n 1CH + 1 pool plaquetas. Aspirado m\u00e9dula \u00f3sea esternal. IC a endoscopias (gastroscopia +/- colonoscopia). Continuar CPAP 7 FiO2 70%. BH negativo ~-500. Tinzaparina suspendida. Advagraf 3mg/d\u00eda en ayunas. Velocidad correcci\u00f3n Na m\u00e1ximo +8mmol/L/24h.",
+    sistemas:{
+      neurologico:"Anciana fr\u00e1gil. Consciente, orientada y colaboradora. Miopat\u00eda leve en seguimiento fisioterapia. Hiponatremia cr\u00f3nica estable: Na 130. Riesgo mielinolisis si correcci\u00f3n r\u00e1pida.",
+      respiratorio:"CPAP 7cmH2O FiO2 70%. Nebulizaciones budesonida + atrovent. GSA: pH 7,38 / pCO2 45 / pO2 72 / HCO3 26,6 / lactato 1,5. Hipoventilaci\u00f3n bibasal y crepitantes dispersos. Drenes pig-tail: 700ml dcho + 500ml izdo drenados ayer.",
+      hemodinamico:"Estable sin vasopresor. TA 110/52 mmHg. FC 56 lpm RS. Lactato 1,5. ProBNP 2400. Ecocardiograf\u00eda 16/06 pendiente informe. Furosemida pc 4 ml/h.",
+      renal:"Trasplante renal (FG 33 ml/min). Urea 126, Cr 1,51, Na 130, K 3,8, P 4,6, Mg 1,48. Diuresis 2050 ml. BH -207 cc. Hipocalcemia. Inmunosupresi\u00f3n: metilprednisolona + micofenolato + Advagraf.",
+      infeccioso:"Afebril. Leuco 7.300, PCR 6,14. Ceftarolina 600mg/8h + Tedizolid 200mg/24h (linezolid suspendido por plaquetopenia). PICC solicitado.",
+      digestivo:"Abdomen distendido y gimp\u00e1nico, no doloroso. Melenas en d\u00edas previos (gastroscopia normal). Glucemia 158. Prote\u00ednas totales 4,2 g/dl. Plaquetopenia progresiva (26.000 tras transfusi\u00f3n)."
+    }
+  },
+  {
+    id:"rea-11", numero_cama:"11", unidad:"REA",
+    paciente_id:"Lesi\u00f3n vascular femoral post-TAVI",
+    estado:"Estable", edad:"78", sexo:"M", dias_estancia:"1",
+    antecedentes:"FA (anticoagulada en domicilio, en RS desde el ingreso). Desgarro en vena femoral com\u00fan y defecto en arteria femoral com\u00fan reparados en quir\u00f3fano.",
+    plan:"Apoyo diur\u00e9tico por tendencia a oliguria. Vigilar funci\u00f3n renal y coagulaci\u00f3n. Cefazolina profiláctico. Control de glucemia.",
+    sistemas:{
+      neurologico:"Consciente, orientada y colaboradora. Sin focalidad neurol\u00f3gica. RASS 0. GCS 15.",
+      respiratorio:"Eupneica con GN 3 lpm. SatO2 99%. GSA: pH 7,33 / pCO2 39 / pO2 103 / HCO3 20,6. MV conservado. RxTx: cardiomegalia, sin derrames.",
+      hemodinamico:"Estable sin aminas. TA 110/60 mmHg. FC 60 lpm RS. 2CH transfundidos anoche. Hgb 11,7 g/dl. IQ 54%, INR 1,63. Sin profilaxis antitromb\u00f3tica actualmente.",
+      renal:"Funci\u00f3n renal conservada. Urea 42, Cr 1,01. Na 132, K 4. Tendencia a oliguria.",
+      infeccioso:"Afebril. Leuco 12.900, PCR 6,7. Cefazolina en curso.",
+      digestivo:"Abdomen blando. Peristaltismo audible. Bilirrubina 2,03 con enzimas hep\u00e1ticas normales. Glucemia ~160 mg/dl. Prote\u00ednas totales 5,2 g/dl."
+    }
+  },
+  {
+    id:"rea-12", numero_cama:"12", unidad:"REA",
+    paciente_id:"Bono-Bentall / IA + Anuloectasia a\u00f3rtica",
+    estado:"Cr\u00edtico", edad:"71", sexo:"H", dias_estancia:"1",
+    antecedentes:"No RAM. Exfumador. HTA. HBP con sonda urinaria permanente. FA cr\u00f3nica. Resecci\u00f3n Ca. epidermoide sie\u00e9n derecha. Hernia inguinal izda. recidivante.",
+    plan:"Control postoperatorio de Bono-Bentall. Soporte hemodin\u00e1mico con NA + dobutamina + vasopresina. Mantener VM. Control de troponinas y lactato. Vigilar funci\u00f3n renal.",
+    sistemas:{
+      neurologico:"Pendiente de evaluaci\u00f3n. Ventilaci\u00f3n mec\u00e1nica, sedoanalgesia.",
+      respiratorio:"VMI SIMV: FR 18/min, Vt 600cc, FiO2 50%, PEEP 6 cmH2O.",
+      hemodinamico:"Tendencia a hipotensi\u00f3n postoperatoria. NA hasta 20 ml/h. Dobutamina 8 ml/h. Vasopresina 1,5 ml/h. Troponina I 40.000 pg/ml. Lactato 3,5 mmol/l. FA lenta, MCP VVI 80 lpm.",
+      renal:"Creatinina 1,5 mg/dl. Vigilar evoluci\u00f3n.",
+      infeccioso:"Sin datos de infecci\u00f3n activa. Profilaxis perioperatoria.",
+      digestivo:"Postoperatorio inmediato. Pendiente de valoraci\u00f3n."
+    }
+  },
+  {
+    id:"ucin-1", numero_cama:"1", unidad:"UCIN",
+    paciente_id:"Lobectom\u00eda LSD por VATS / Adenoca. pulm\u00f3n",
+    estado:"Estable", edad:"59", sexo:"M", dias_estancia:"1",
+    antecedentes:"No RAMc. No FRCV. Exfumadora desde hace 10 a\u00f1os. Proteinuria en tratamiento con empagliflozina. Adenocarcinoma pulm\u00f3n LSD G3 cT4N1M0 (estadio IIIA) PDL1 0%. QT-IT neoadyuvante completada.",
+    plan:"Postoperatorio de LSD por VATS. Extubada en quir\u00f3fano. Cat\u00e9ter epidural T5-T activo con ropivacaína 0,2%. Analgesia multimodal.",
+    sistemas:{
+      neurologico:"Consciente, orientada y colaboradora. Extubada en quir\u00f3fano sin incidencias. Analgesia con cat\u00e9ter epidural + paracetamol + naproxeno.",
+      respiratorio:"Extubada en quir\u00f3fano. Buena tolerancia a ventilaci\u00f3n unipulmonar (VUP) intraoperatoria. SatO2 98% ambiente preoperatorio.",
+      hemodinamico:"Estable durante la intervenci\u00f3n. Sin soporte vasopresor. Diuresis 0,5-1 ml/kg/h.",
+      renal:"Diuresis conservada intraoperatorio. Proteinuria en seguimiento.",
+      infeccioso:"Sin datos de infecci\u00f3n activa.",
+      digestivo:"Sin incidencias."
+    }
+  },
+  {
+    id:"ucin-5", numero_cama:"5", unidad:"UCIN",
+    paciente_id:"Gran meningioma parafalciano / Embolizaci\u00f3n prequir\u00fargica",
+    estado:"Estable", edad:"37", sexo:"?", dias_estancia:"1",
+    antecedentes:"Gran meningioma parafalciano parieto-occipital derecho con aportes piales desde ACA y ACP derechas, y durales desde ramas occipitales, men\u00edngeas medias y temporales superficiales bilaterales.",
+    plan:"Post-procedimiento de embolizaci\u00f3n prequir\u00fargica con onyx y glue. Sin complicaciones inmediatas. Vigilancia neurol\u00f3gica estricta. Pendiente intervenci\u00f3n quir\u00fargica.",
+    sistemas:{
+      neurologico:"Sin complicaciones neurol\u00f3gicas inmediatas post-embolizaci\u00f3n. Vigilancia de nuevos d\u00e9ficits focales.",
+      respiratorio:"Sin incidencias respiratorias.",
+      hemodinamico:"Sin incidencias hemodin\u00e1micas durante el procedimiento arteriogr\u00e1fico.",
+      renal:"Sin datos relevantes.",
+      infeccioso:"Sin datos de infecci\u00f3n activa.",
+      digestivo:"Sin incidencias."
+    }
+  }
+];
 
-    const Section = ({ i, t, txt, col }) => (
-      <div className="bg-white/80 p-4 rounded-2xl border border-slate-100 shadow-sm backdrop-blur-sm">
-        <div className="flex items-center gap-2 mb-2"><div className={`p-2 rounded-lg ${col}`}><Icon n={i} c="w-5 h-5"/></div><h4 className="text-xs font-bold text-slate-500 uppercase">{t}</h4></div>
-        <p className="text-sm font-medium text-slate-700 pl-10 leading-relaxed">{txt || "Sin datos."}</p>
-      </div>
-    );
+function checkLogin() {
+  var input = document.getElementById('pass-input').value;
+  var err = document.getElementById('login-error');
+  if (input === PASS) {
+    sessionStorage.setItem('uci_auth', 'true');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    renderDashboard();
+  } else {
+    err.style.display = 'block';
+    document.getElementById('pass-input').value = '';
+    setTimeout(function() { err.style.display = 'none'; }, 3000);
+  }
+}
 
-    const Modal = ({ p, onClose }) => {
-      if(!p) return null;
-      const isUCIN = p.unidad === 'UCIN';
-      const headCol = isUCIN ? 'bg-purple-600' : 'bg-blue-600';
-      return (
-        <div className="fixed inset-0 modal-backdrop flex items-center justify-center p-4 z-50" onClick={onClose}>
-          <div className="bg-slate-50 w-full max-w-6xl max-h-[95vh] overflow-y-auto rounded-3xl shadow-2xl" onClick={e=>e.stopPropagation()}>
-            <div className="bg-white p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 z-10 shadow-sm">
-               <div className="flex items-center gap-4">
-                 <div className={`h-14 w-14 ${headCol} rounded-xl flex items-center justify-center text-white font-black text-2xl shadow-md`}>{p.numero_cama}</div>
-                 <div>
-                    <h2 className="text-3xl font-black text-slate-800 tracking-tight">{p.paciente_id || 'Cama ' + p.numero_cama}</h2>
-                    <div className="flex items-center gap-3 text-slate-500 font-bold text-sm mt-1">
-                        <span className="bg-slate-100 px-2 py-0.5 rounded text-slate-600">{p.sexo}</span>
-                        <span>{p.edad} años</span><span className="text-slate-300">•</span><span>Estancia: Día {p.dias_estancia}</span>
-                    </div>
-                 </div>
-               </div>
-               <button onClick={onClose} className="px-5 py-2.5 bg-slate-100 rounded-xl font-bold text-slate-600 hover:bg-slate-200 transition-colors">Esc Cerrar</button>
-            </div>
-            <div className="p-6 md:p-8 space-y-6">
-               {p.antecedentes && p.antecedentes !== "?" && <div className="bg-slate-100/80 p-5 rounded-2xl border border-slate-200"><h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Antecedentes Personales (AP)</h3><p className="text-base font-medium text-slate-700 italic">{p.antecedentes}</p></div>}
-               <div className={`p-1 rounded-2xl shadow-sm bg-gradient-to-r ${isUCIN ? 'from-purple-500 to-purple-400' : 'from-blue-500 to-blue-400'}`}><div className="bg-white p-5 rounded-xl"><div className="flex gap-2 mb-2 items-center text-slate-800"><Icon n="Clipboard" c="w-6 h-6"/><span className="font-black uppercase tracking-wide">Plan Terapéutico</span></div><p className="text-lg font-medium pl-8 leading-relaxed text-slate-800">{p.plan}</p></div></div>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                 <Section i="Brain" t="Neurológico" txt={p.sistemas?.neurologico} col="bg-indigo-100 text-indigo-600"/>
-                 <Section i="Wind" t="Respiratorio" txt={p.sistemas?.respiratorio} col="bg-sky-100 text-sky-600"/>
-                 <Section i="Heart" t="Hemodinámico" txt={p.sistemas?.hemodinamico} col="bg-rose-100 text-rose-600"/>
-                 <Section i="Droplet" t="Renal" txt={p.sistemas?.renal} col="bg-amber-100 text-amber-600"/>
-                 <Section i="Thermometer" t="Infeccioso" txt={p.sistemas?.infeccioso} col="bg-purple-100 text-purple-600"/>
-                 <Section i="Stomach" t="Digestivo" txt={p.sistemas?.digestivo} col="bg-lime-100 text-lime-600"/>
-               </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
+document.getElementById('pass-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkLogin();
+});
 
-    // --- COMPONENTE PRINCIPAL (GESTIÓN DE SESIÓN) ---
-    const App = () => {
-      const [isLoggedIn, setIsLoggedIn] = useState(false);
-      const [sel, setSel] = useState(null);
+function logout() {
+  sessionStorage.removeItem('uci_auth');
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pass-input').value = '';
+}
 
-      useEffect(() => {
-        const session = sessionStorage.getItem("uci_auth");
-        if (session === "true") setIsLoggedIn(true);
-      }, []);
+function updateClock() {
+  document.getElementById('clock').textContent =
+    'Act: ' + new Date().toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
+}
+setInterval(updateClock, 30000);
+updateClock();
 
-      const handleLoginSuccess = () => {
-        setIsLoggedIn(true);
-        sessionStorage.setItem("uci_auth", "true");
-      };
+function statusClass(estado) {
+  if (!estado) return 'alerta';
+  var e = estado.toLowerCase();
+  if (e === 'cr\u00edtico' || e === 'critico') return 'critico';
+  if (e === 'estable') return 'estable';
+  return 'alerta';
+}
 
-      const handleLogout = () => {
-        setIsLoggedIn(false);
-        setSel(null);
-        sessionStorage.removeItem("uci_auth");
-      };
+function unitClass(unidad) {
+  return unidad === 'UCIN' ? 'ucin' : 'rea';
+}
 
-      if (!isLoggedIn) {
-        return <LoginScreen onLogin={handleLoginSuccess} />;
-      }
+var ICONS = {
+  bed: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>',
+  user: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  clipboard: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/></svg>',
+  brain: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>',
+  wind: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>',
+  heart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+  droplet: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-2-3-4-3l-3-3-3 3c-2 0-4 1-4 3a7 7 0 0 0 7 7z"/></svg>',
+  thermo: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>',
+  stomach: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2Z"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>'
+};
 
-      const reas = PATIENTS.filter(p=>p.unidad==='REA');
-      const ucins = PATIENTS.filter(p=>p.unidad==='UCIN');
+function bedCardHTML(p) {
+  var sc = statusClass(p.estado);
+  var uc = unitClass(p.unidad);
+  return '<div class="bed-card ' + sc + '" onclick="openModal(\'' + p.id + '\')">' +
+    '<div class="card-top">' +
+      '<div class="card-bed">' +
+        '<div class="bed-icon">' + ICONS.bed + '</div>' +
+        '<div>' +
+          '<div class="bed-num">Cama ' + p.numero_cama + '</div>' +
+          '<span class="unit-tag ' + uc + '">' + p.unidad + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<span class="status-badge ' + sc + '">' + (p.estado || 'Alerta') + '</span>' +
+    '</div>' +
+    '<div class="card-meta">' +
+      '<span>' + ICONS.user + ' ' + p.edad + ' a&ntilde;os</span>' +
+      '<span class="meta-sep">|</span>' +
+      '<span>D&iacute;a ' + p.dias_estancia + '</span>' +
+      '<span class="meta-sep">|</span>' +
+      '<span>' + p.sexo + '</span>' +
+    '</div>' +
+    '<div class="card-id-label">Diagn&oacute;stico</div>' +
+    '<div class="card-id">' + (p.paciente_id || 'Cama ' + p.numero_cama) + '</div>' +
+  '</div>';
+}
 
-      return (
-        <div className="min-h-screen p-6 md:p-10 max-w-[1920px] mx-auto">
-           <header className="mb-10 flex flex-col md:flex-row justify-between items-end gap-4">
-              <div><h1 className="text-5xl font-black text-slate-800 tracking-tighter mb-2">UCI Quirúrgica <span className="text-blue-600">Dashboard</span></h1><p className="text-slate-500 font-medium">Vista clínica en tiempo real • REA + UCIN</p></div>
-              <div className="flex gap-4 items-center">
-                <div className="bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-100 text-sm font-bold text-slate-400">Act: {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
-                <button onClick={handleLogout} className="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-xl transition-colors" title="Cerrar sesión"><Icon n="Logout" c="w-6 h-6"/></button>
-              </div>
-           </header>
-           {reas.length>0 && <div className="mb-12"><h2 className="text-2xl font-black text-blue-900 mb-6 flex items-center gap-2"><span className="w-2 h-8 bg-blue-500 rounded-full"></span>REA</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">{reas.map(p=><BedCard key={p.id} data={p} onClick={setSel}/>)}</div></div>}
-           {ucins.length>0 && <div><h2 className="text-2xl font-black text-purple-900 mb-6 flex items-center gap-2"><span className="w-2 h-8 bg-purple-500 rounded-full"></span>UCIN</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">{ucins.map(p=><BedCard key={p.id} data={p} onClick={setSel}/>)}</div></div>}
-           {sel && <Modal p={sel} onClose={()=>setSel(null)}/>}
-        </div>
-      );
-    };
+function renderDashboard() {
+  var reaGrid = document.getElementById('rea-grid');
+  var ucinGrid = document.getElementById('ucin-grid');
+  reaGrid.innerHTML = '';
+  ucinGrid.innerHTML = '';
+  PATIENTS.forEach(function(p) {
+    if (p.unidad === 'REA') reaGrid.innerHTML += bedCardHTML(p);
+    else ucinGrid.innerHTML += bedCardHTML(p);
+  });
+}
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
+var SISTEMAS_CFG = [
+  { key:'neurologico',  label:'Neurol&oacute;gico', icon:'brain',   cls:'neuro' },
+  { key:'respiratorio', label:'Respiratorio',        icon:'wind',    cls:'resp'  },
+  { key:'hemodinamico', label:'Hemodin&aacute;mico', icon:'heart',   cls:'hemo'  },
+  { key:'renal',        label:'Renal',               icon:'droplet', cls:'renal' },
+  { key:'infeccioso',   label:'Infeccioso',          icon:'thermo',  cls:'infec' },
+  { key:'digestivo',    label:'Digestivo',           icon:'stomach', cls:'dig'   }
+];
+
+function openModal(id) {
+  var p = null;
+  PATIENTS.forEach(function(x) { if (x.id === id) p = x; });
+  if (!p) return;
+  var uc = unitClass(p.unidad);
+  var sc = statusClass(p.estado);
+
+  var sistemasHTML = SISTEMAS_CFG.map(function(s) {
+    var txt = (p.sistemas && p.sistemas[s.key]) ? p.sistemas[s.key] : 'Sin datos.';
+    return '<div class="sistema-card">' +
+      '<div class="sistema-card-top">' +
+        '<div class="sistema-icon ' + s.cls + '">' + ICONS[s.icon] + '</div>' +
+        '<div class="sistema-label">' + s.label + '</div>' +
+      '</div>' +
+      '<div class="sistema-text">' + txt + '</div>' +
+    '</div>';
+  }).join('');
+
+  var apHTML = (p.antecedentes && p.antecedentes !== '?') ?
+    '<div class="ap-box"><h3>Antecedentes Personales</h3><p>' + p.antecedentes + '</p></div>' : '';
+
+  document.getElementById('modal-box').innerHTML =
+    '<div class="modal-header">' +
+      '<div class="modal-header-left">' +
+        '<div class="modal-num ' + uc + '">' + p.numero_cama + '</div>' +
+        '<div>' +
+          '<div class="modal-title">' + (p.paciente_id || 'Cama ' + p.numero_cama) + '</div>' +
+          '<div class="modal-subtitle">' +
+            '<span class="tag">' + p.sexo + '</span>' +
+            '<span>' + p.edad + ' a&ntilde;os</span>' +
+            '<span class="sep">&bull;</span>' +
+            '<span>D&iacute;a ' + p.dias_estancia + '</span>' +
+            '<span class="sep">&bull;</span>' +
+            '<span class="status-badge ' + sc + '">' + p.estado + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<button class="close-btn" onclick="closeModal()">&times; Cerrar</button>' +
+    '</div>' +
+    '<div class="modal-body">' +
+      apHTML +
+      '<div class="plan-box ' + uc + '"><div class="plan-inner">' +
+        '<h3>' + ICONS.clipboard + ' Plan Terap&eacute;utico</h3>' +
+        '<p>' + p.plan + '</p>' +
+      '</div></div>' +
+      '<div class="sistemas-grid">' + sistemasHTML + '</div>' +
+    '</div>';
+
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOverlay(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+if (sessionStorage.getItem('uci_auth') === 'true') {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  renderDashboard();
+}
+</script>
 </body>
 </html>
