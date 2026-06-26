@@ -6,51 +6,65 @@
   <title>Acceso UCI</title>
   <style>
     :root{
-      --slate-50:#f8fafc; --slate-100:#f1f5f9; --slate-200:#e2e8f0; --slate-300:#cbd5e1;
-      --slate-400:#94a3b8; --slate-500:#64748b; --slate-600:#475569; --slate-700:#334155; --slate-800:#1e293b;
+      /* Paleta de acento (fija en ambos temas) */
       --blue-50:#eff6ff; --blue-100:#dbeafe; --blue-500:#3b82f6; --blue-600:#2563eb; --blue-700:#1d4ed8; --blue-900:#1e3a8a;
       --purple-100:#f3e8ff; --purple-500:#a855f7; --purple-600:#9333ea; --purple-700:#7e22ce; --purple-900:#581c87;
-      --red-50:#fef2f2; --red-100:#fee2e2; --red-500:#ef4444; --red-600:#dc2626; --red-700:#b91c1c;
+      --red-50:#fef2f2; --red-100:#fee2e2; --red-200:#fecaca; --red-500:#ef4444; --red-600:#dc2626; --red-700:#b91c1c;
       --emerald-100:#d1fae5; --emerald-500:#10b981; --emerald-700:#047857;
-      --amber-100:#fef3c7; --amber-500:#f59e0b; --amber-700:#b45309;
+      --amber-100:#fef3c7; --amber-200:#fde68a; --amber-500:#f59e0b; --amber-700:#b45309;
       --indigo-100:#e0e7ff; --indigo-600:#4f46e5;
       --sky-100:#e0f2fe; --sky-600:#0284c7;
       --rose-100:#ffe4e6; --rose-600:#e11d48;
       --lime-100:#ecfccb; --lime-600:#65a30d;
+
+      /* Tokens semánticos — TEMA CLARO */
+      --bg-page:#f0f4f8; --dot-grid:#cbd5e1;
+      --surface:#ffffff; --surface-2:#f8fafc; --surface-3:#f1f5f9;
+      --text-strong:#1e293b; --text:#334155; --text-muted:#64748b; --text-faint:#94a3b8;
+      --border:#e2e8f0; --border-soft:#f1f5f9;
+      --shadow:rgba(0,0,0,0.08); --shadow-lift:rgba(0,0,0,0.22);
     }
+    [data-theme="dark"]{
+      --bg-page:#0b1220; --dot-grid:#1e293b;
+      --surface:#1e293b; --surface-2:#162033; --surface-3:#334155;
+      --text-strong:#f1f5f9; --text:#cbd5e1; --text-muted:#94a3b8; --text-faint:#64748b;
+      --border:#334155; --border-soft:#1e293b;
+      --shadow:rgba(0,0,0,0.5); --shadow-lift:rgba(0,0,0,0.65);
+    }
+
     *{box-sizing:border-box;}
     html,body{margin:0;padding:0;}
     body{
-      background-color:#f0f4f8;
-      background-image:radial-gradient(#cbd5e1 1px, transparent 1px);
+      background-color:var(--bg-page);
+      background-image:radial-gradient(var(--dot-grid) 1px, transparent 1px);
       background-size:24px 24px;
       font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-      color:var(--slate-700);
+      color:var(--text);
       min-height:100vh;
+      transition:background-color .3s, color .3s;
     }
     .hidden{display:none !important;}
 
     /* ---------- LOGIN ---------- */
     .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;}
     .login-glass{
-      background:rgba(255,255,255,0.7);
-      backdrop-filter:blur(20px);
-      border:1px solid rgba(255,255,255,0.5);
+      background:var(--surface);
+      border:1px solid var(--border);
       padding:40px;border-radius:24px;max-width:360px;width:100%;text-align:center;
-      box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);
+      box-shadow:0 25px 50px -12px var(--shadow-lift);
     }
     .login-badge{
       display:inline-flex;padding:16px;background:var(--blue-600);border-radius:16px;color:#fff;margin-bottom:24px;
       box-shadow:0 10px 25px -5px rgba(59,130,246,0.4);
     }
-    .login-glass h1{font-size:24px;font-weight:900;color:var(--slate-800);margin:0 0 8px;}
-    .login-glass p.sub{color:var(--slate-500);font-size:14px;margin:0 0 32px;font-weight:500;}
+    .login-glass h1{font-size:24px;font-weight:900;color:var(--text-strong);margin:0 0 8px;}
+    .login-glass p.sub{color:var(--text-muted);font-size:14px;margin:0 0 32px;font-weight:500;}
     .login-input{
-      width:100%;padding:12px 20px;border-radius:12px;background:rgba(255,255,255,0.5);
-      border:1px solid var(--slate-200);outline:none;font-weight:700;text-align:center;
-      color:var(--slate-700);font-size:15px;transition:all .15s;
+      width:100%;padding:12px 20px;border-radius:12px;background:var(--surface-2);
+      border:1px solid var(--border);outline:none;font-weight:700;text-align:center;
+      color:var(--text);font-size:15px;transition:all .15s;
     }
-    .login-input::placeholder{color:var(--slate-400);}
+    .login-input::placeholder{color:var(--text-faint);}
     .login-input:focus{border-color:var(--blue-500);box-shadow:0 0 0 3px rgba(59,130,246,0.25);}
     .login-btn{
       width:100%;margin-top:16px;background:var(--blue-600);color:#fff;font-weight:700;
@@ -65,29 +79,62 @@
     .dash{min-height:100vh;padding:24px;max-width:1920px;margin:0 auto;}
     @media(min-width:768px){.dash{padding:40px;}}
     .header{
-      margin-bottom:40px;display:flex;flex-direction:column;justify-content:space-between;
+      margin-bottom:24px;display:flex;flex-direction:column;justify-content:space-between;
       align-items:flex-end;gap:16px;
     }
     @media(min-width:768px){.header{flex-direction:row;}}
     .header .titles{width:100%;}
-    .header h1{font-size:44px;font-weight:900;color:var(--slate-800);letter-spacing:-0.03em;margin:0 0 8px;line-height:1;}
+    .header h1{font-size:44px;font-weight:900;color:var(--text-strong);letter-spacing:-0.03em;margin:0 0 8px;line-height:1;}
     .header h1 span{color:var(--blue-600);}
-    .header .tagline{color:var(--slate-500);font-weight:500;margin:0;}
-    .header .tools{display:flex;gap:16px;align-items:center;}
-    .clock{
-      background:#fff;padding:8px 16px;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.05);
-      border:1px solid var(--slate-100);font-size:14px;font-weight:700;color:var(--slate-400);white-space:nowrap;
+    .header .tagline{color:var(--text-muted);font-weight:500;margin:0;}
+    .header .tools{display:flex;gap:12px;align-items:center;}
+    .chip-btn{
+      background:var(--surface);color:var(--text-muted);padding:10px;border:1px solid var(--border);border-radius:12px;
+      cursor:pointer;transition:all .15s;display:flex;box-shadow:0 1px 2px var(--shadow);
     }
+    .chip-btn:hover{color:var(--text-strong);border-color:var(--text-faint);}
+    .clock{
+      background:var(--surface);padding:10px 16px;border-radius:12px;box-shadow:0 1px 2px var(--shadow);
+      border:1px solid var(--border);font-size:13px;font-weight:700;color:var(--text-muted);white-space:nowrap;
+      display:flex;align-items:center;gap:7px;
+    }
+    .clock .live{width:7px;height:7px;border-radius:50%;background:var(--emerald-500);display:inline-block;}
     .logout-btn{
-      background:var(--red-50);color:var(--red-600);padding:8px;border:none;border-radius:12px;
+      background:var(--red-50);color:var(--red-600);padding:10px;border:1px solid transparent;border-radius:12px;
       cursor:pointer;transition:background .15s;display:flex;
     }
     .logout-btn:hover{background:var(--red-100);}
+
+    /* ---------- BARRA RESUMEN ---------- */
+    .summary{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px;}
+    .stat{
+      display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);
+      padding:10px 18px;border-radius:14px;box-shadow:0 1px 2px var(--shadow);
+    }
+    .stat .pip{width:10px;height:10px;border-radius:3px;flex:none;}
+    .stat.rea .pip{background:var(--blue-500);}
+    .stat.ucin .pip{background:var(--purple-500);}
+    .stat .num{font-size:20px;font-weight:900;color:var(--text-strong);line-height:1;}
+    .stat .lbl{font-size:11px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;}
+    .stat.sev{gap:8px;}
+    .stat.sev .num{font-size:18px;}
+    .stat.crit.has{background:var(--red-50);border-color:var(--red-200);}
+    .stat.crit.has .num{color:var(--red-700);}
+    .stat.crit.has .lbl{color:var(--red-600);}
+    .stat.warn.has{background:var(--amber-100);border-color:var(--amber-200);}
+    .stat.warn.has .num{color:var(--amber-700);}
+    .stat.warn.has .lbl{color:var(--amber-700);}
+    .crit-dot,.warn-dot{width:8px;height:8px;border-radius:50%;flex:none;}
+    .crit-dot{background:var(--red-600);}
+    .stat.crit.has .crit-dot{animation:pulse 1.2s ease-in-out infinite;}
+    .warn-dot{background:var(--amber-500);}
 
     .unit-block{margin-bottom:48px;}
     .unit-title{font-size:24px;font-weight:900;margin:0 0 24px;display:flex;align-items:center;gap:8px;}
     .unit-title.rea{color:var(--blue-900);}
     .unit-title.ucin{color:var(--purple-900);}
+    [data-theme="dark"] .unit-title.rea{color:#93c5fd;}
+    [data-theme="dark"] .unit-title.ucin{color:#d8b4fe;}
     .unit-bar{width:8px;height:32px;border-radius:9999px;display:inline-block;}
     .unit-bar.rea{background:var(--blue-500);}
     .unit-bar.ucin{background:var(--purple-500);}
@@ -98,54 +145,79 @@
     @media(min-width:1280px){.grid{grid-template-columns:repeat(4,1fr);}}
     @media(min-width:1536px){.grid{grid-template-columns:repeat(5,1fr);}}
 
-    /* ---------- BED CARD ---------- */
+    /* ---------- TARJETA ---------- */
     .card{
-      position:relative;background:linear-gradient(145deg,#ffffff,#f8fafc);
-      border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,0.05);padding:20px;cursor:pointer;
-      border:1px solid var(--slate-200);border-left-width:4px;transition:all .18s;
+      position:relative;background:linear-gradient(145deg,var(--surface),var(--surface-2));
+      border-radius:12px;box-shadow:0 1px 2px var(--shadow);padding:20px;cursor:pointer;
+      border:1px solid var(--border);border-left-width:4px;transition:box-shadow .18s, transform .18s;
+      animation:fadeUp .4s ease both;
     }
-    .card:hover{box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);transform:translateY(-4px);}
+    .card:hover{box-shadow:0 25px 50px -12px var(--shadow-lift);transform:translateY(-4px);}
     .card.st-critico{border-left-color:var(--red-500);}
     .card.st-estable{border-left-color:var(--emerald-500);}
     .card.st-alerta{border-left-color:var(--amber-500);}
+    .card.is-critico{border-left-width:6px;box-shadow:0 0 0 1px rgba(239,68,68,0.18),0 1px 2px var(--shadow);}
+
+    /* Camas vacías: atenuadas y con borde discontinuo */
+    .card.empty{
+      opacity:0.5;border-style:dashed;border-left-style:dashed;
+      border-color:var(--border);border-left-color:var(--border);
+      background:var(--surface-2);box-shadow:none;
+    }
+    .card.empty:hover{opacity:0.85;transform:none;box-shadow:0 1px 2px var(--shadow);}
+    .card.empty .bed-ico{background:transparent;}
+    .card.empty .card-name{color:var(--text-faint);font-size:18px;font-weight:800;}
 
     .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
     .card-bed{display:flex;align-items:center;gap:12px;}
-    .bed-ico{background:var(--slate-50);padding:8px;border-radius:8px;color:var(--slate-400);display:flex;}
-    .card h3{font-size:20px;font-weight:900;color:var(--slate-800);line-height:1;margin:0;}
+    .bed-ico{background:var(--surface-3);padding:8px;border-radius:8px;color:var(--text-faint);display:flex;}
+    .card h3{font-size:20px;font-weight:900;color:var(--text-strong);line-height:1;margin:0;}
     .unit-badge{font-size:10px;font-weight:900;padding:1px 8px;border-radius:4px;text-transform:uppercase;display:inline-block;margin-top:2px;}
     .unit-badge.rea{background:var(--blue-100);color:var(--blue-700);}
     .unit-badge.ucin{background:var(--purple-100);color:var(--purple-700);}
 
-    .status-badge{padding:4px 8px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;}
+    .status-badge{padding:4px 8px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;display:inline-flex;align-items:center;}
+    .status-badge .crit-dot{margin-right:5px;animation:pulse 1.2s ease-in-out infinite;}
     .status-badge.st-critico{background:var(--red-100);color:var(--red-700);}
     .status-badge.st-estable{background:var(--emerald-100);color:var(--emerald-700);}
     .status-badge.st-alerta{background:var(--amber-100);color:var(--amber-700);}
 
     .card-meta{
-      display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--slate-500);
-      margin-bottom:12px;background:var(--slate-50);padding:6px;border-radius:8px;border:1px solid var(--slate-100);
+      display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--text-muted);
+      margin-bottom:12px;background:var(--surface-2);padding:6px;border-radius:8px;border:1px solid var(--border-soft);
     }
     .card-meta .chip{display:flex;align-items:center;gap:4px;}
-    .card-meta .divider{color:var(--slate-300);}
+    .card-meta .divider{color:var(--text-faint);}
     .card-meta-empty{margin-bottom:12px;height:34px;}
 
-    .card-label{font-size:12px;color:var(--slate-400);font-weight:700;text-transform:uppercase;margin:0;}
-    .card-name{font-size:24px;font-weight:900;color:var(--slate-700);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .card-label{font-size:12px;color:var(--text-faint);font-weight:700;text-transform:uppercase;margin:0;}
+    .card-name{font-size:24px;font-weight:900;color:var(--text);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+    /* Mini-indicadores de sistemas */
+    .sys-dots{display:flex;gap:7px;margin-top:14px;align-items:center;}
+    .sys-dots .dot{width:9px;height:9px;border-radius:50%;background:var(--border);transition:transform .15s;}
+    .sys-dots .dot.on{box-shadow:0 0 0 2px var(--surface), 0 0 0 3px transparent;}
+    .dot.neuro.on{background:var(--indigo-600);}
+    .dot.resp.on{background:var(--sky-600);}
+    .dot.hemo.on{background:var(--rose-600);}
+    .dot.renal.on{background:var(--amber-700);}
+    .dot.infec.on{background:var(--purple-600);}
+    .dot.diges.on{background:var(--lime-600);}
 
     /* ---------- MODAL ---------- */
     .modal-backdrop{
-      position:fixed;inset:0;background-color:rgba(15,23,42,0.8);backdrop-filter:blur(8px);
+      position:fixed;inset:0;background-color:rgba(2,6,23,0.8);backdrop-filter:blur(8px);
       display:flex;align-items:center;justify-content:center;padding:16px;z-index:50;
+      animation:fadeIn .2s ease;
     }
     .modal{
-      background:var(--slate-50);width:100%;max-width:1152px;max-height:95vh;overflow-y:auto;
-      border-radius:24px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.4);
+      background:var(--surface-2);width:100%;max-width:1152px;max-height:95vh;overflow-y:auto;
+      border-radius:24px;box-shadow:0 25px 50px -12px var(--shadow-lift);border:1px solid var(--border);
     }
     .modal-head{
-      background:#fff;padding:24px;border-bottom:1px solid var(--slate-100);display:flex;
+      background:var(--surface);padding:24px;border-bottom:1px solid var(--border);display:flex;
       justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;
-      box-shadow:0 1px 2px rgba(0,0,0,0.05);
+      box-shadow:0 1px 2px var(--shadow);
     }
     .modal-head-left{display:flex;align-items:center;gap:16px;}
     .modal-bednum{
@@ -154,31 +226,31 @@
     }
     .modal-bednum.rea{background:var(--blue-600);}
     .modal-bednum.ucin{background:var(--purple-600);}
-    .modal-head h2{font-size:28px;font-weight:900;color:var(--slate-800);letter-spacing:-0.02em;margin:0;}
-    .modal-head-meta{display:flex;align-items:center;gap:12px;color:var(--slate-500);font-weight:700;font-size:14px;margin-top:4px;}
-    .modal-head-meta .pill{background:var(--slate-100);padding:1px 8px;border-radius:4px;color:var(--slate-600);}
+    .modal-head h2{font-size:28px;font-weight:900;color:var(--text-strong);letter-spacing:-0.02em;margin:0;}
+    .modal-head-meta{display:flex;align-items:center;gap:12px;color:var(--text-muted);font-weight:700;font-size:14px;margin-top:4px;}
+    .modal-head-meta .pill{background:var(--surface-3);padding:1px 8px;border-radius:4px;color:var(--text);}
     .modal-close{
-      padding:10px 20px;background:var(--slate-100);border:none;border-radius:12px;font-weight:700;
-      color:var(--slate-600);cursor:pointer;transition:background .15s;
+      padding:10px 20px;background:var(--surface-3);border:none;border-radius:12px;font-weight:700;
+      color:var(--text-muted);cursor:pointer;transition:background .15s;
     }
-    .modal-close:hover{background:var(--slate-200);}
+    .modal-close:hover{background:var(--border);}
     .modal-body{padding:24px;display:flex;flex-direction:column;gap:24px;}
     @media(min-width:768px){.modal-body{padding:32px;}}
 
-    .ap-box{background:rgba(241,245,249,0.8);padding:20px;border-radius:16px;border:1px solid var(--slate-200);}
-    .ap-box h3{font-size:12px;font-weight:900;color:var(--slate-400);text-transform:uppercase;letter-spacing:0.1em;margin:0 0 8px;}
-    .ap-box p{font-size:16px;font-weight:500;color:var(--slate-700);font-style:italic;margin:0;}
+    .ap-box{background:var(--surface-3);padding:20px;border-radius:16px;border:1px solid var(--border);}
+    .ap-box h3{font-size:12px;font-weight:900;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin:0 0 8px;}
+    .ap-box p{font-size:16px;font-weight:500;color:var(--text);font-style:italic;margin:0;}
 
-    .plan-wrap{padding:4px;border-radius:16px;box-shadow:0 1px 2px rgba(0,0,0,0.05);}
+    .plan-wrap{padding:4px;border-radius:16px;box-shadow:0 1px 2px var(--shadow);}
     .plan-wrap.rea{background:linear-gradient(to right,var(--blue-500),#60a5fa);}
     .plan-wrap.ucin{background:linear-gradient(to right,var(--purple-500),#c084fc);}
-    .plan-inner{background:#fff;padding:20px;border-radius:12px;}
-    .plan-head{display:flex;gap:8px;align-items:center;color:var(--slate-800);margin-bottom:8px;font-weight:900;text-transform:uppercase;letter-spacing:0.02em;}
-    .plan-inner p{font-size:18px;font-weight:500;padding-left:32px;line-height:1.6;color:var(--slate-800);margin:0;}
+    .plan-inner{background:var(--surface);padding:20px;border-radius:12px;}
+    .plan-head{display:flex;gap:8px;align-items:center;color:var(--text-strong);margin-bottom:8px;font-weight:900;text-transform:uppercase;letter-spacing:0.02em;}
+    .plan-inner p{font-size:18px;font-weight:500;padding-left:32px;line-height:1.6;color:var(--text-strong);margin:0;}
 
     .sys-grid{display:grid;grid-template-columns:1fr;gap:20px;}
     @media(min-width:768px){.sys-grid{grid-template-columns:repeat(3,1fr);}}
-    .sys{background:rgba(255,255,255,0.8);padding:16px;border-radius:16px;border:1px solid var(--slate-100);box-shadow:0 1px 2px rgba(0,0,0,0.05);backdrop-filter:blur(4px);}
+    .sys{background:var(--surface);padding:16px;border-radius:16px;border:1px solid var(--border);box-shadow:0 1px 2px var(--shadow);}
     .sys-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
     .sys-ico{padding:8px;border-radius:8px;display:flex;}
     .sys-ico.neuro{background:var(--indigo-100);color:var(--indigo-600);}
@@ -187,14 +259,22 @@
     .sys-ico.renal{background:var(--amber-100);color:var(--amber-700);}
     .sys-ico.infec{background:var(--purple-100);color:var(--purple-600);}
     .sys-ico.diges{background:var(--lime-100);color:var(--lime-600);}
-    .sys h4{font-size:12px;font-weight:700;color:var(--slate-500);text-transform:uppercase;margin:0;}
-    .sys p{font-size:14px;font-weight:500;color:var(--slate-700);padding-left:40px;line-height:1.6;margin:0;}
+    .sys h4{font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin:0;}
+    .sys p{font-size:14px;font-weight:500;color:var(--text);padding-left:40px;line-height:1.6;margin:0;}
 
-    .pulse{animation:pulse 1.5s ease-in-out infinite;}
-    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
+    @media (prefers-reduced-motion: reduce){
+      .card,.modal-backdrop{animation:none;}
+      .crit-dot,.status-badge .crit-dot{animation:none;}
+      .card:hover{transform:none;}
+    }
+
+    :focus-visible{outline:2px solid var(--blue-500);outline-offset:2px;}
     ::-webkit-scrollbar{width:8px;}
-    ::-webkit-scrollbar-thumb{background:var(--slate-400);border-radius:4px;}
+    ::-webkit-scrollbar-thumb{background:var(--text-faint);border-radius:4px;}
   </style>
 </head>
 <body>
@@ -209,21 +289,21 @@
     "id": "rea-1",
     "unidad": "REA",
     "numero_cama": "1",
-    "paciente_id": "Paciente Cama 1",
-    "estado": "Favorable, en fase de alta a planta.",
-    "edad": "63 años",
-    "sexo": "Masculino",
-    "dias_estancia": "8 días",
-    "antecedentes": "No RAM. FRCV: No DM ni HTA. Hábitos tóxicos: Exfumador desde 12/2024. Fumador desde los 15 años de un paqueta diario. Niega alcoholismo. Sospecha de pólipo colónico versus divertículo en ciego. Fractura-aplastamiento de L5. Hernia de hiato intervenida. Carcinoma verrugoso en surco balano-prepucial pT1(1996) intervenido en varias ocasiones y seguimiento por Urología. TBC con ingreso en Neumología en 1995. IQx previas: Herniorrafia inguinal bilateral. Amputación parcial de pene en 1996. Glandectomía en 2017. Hernia de hiato en enero 2025 (cierre de pilares con puntos sueltos de seda y funduplicatura de Nissen). Postoperatorio de cirugía cardiaca programada de anuloplastias mitral + tricuspídea por IM severa e IT.",
-    "plan": "Dada la evolución favorable, sin precisar medidas de soporte adicionales se decide paso a sala de hospitalización de Cirugía Cardiaca para continuar con cuidados y vigilancia postoperatorios. Consensuado con CCA, al no apreciar fuga aérea, se pinza tubo de drenaje torácico y se solicita RX de Control para valorar aparición de neumotórax/neumomediastino y retirada del mismo si no hay incidencias. Sentar en sillón + incentivador. Dentro de las posibilidades movilización.",
+    "paciente_id": "Paciente masculino 63 años",
+    "estado": "Favorable",
+    "edad": "63",
+    "sexo": "masculino",
+    "dias_estancia": "8",
+    "antecedentes": "Exfumador. FRCV: No DM ni HTA. Sospecha de pólipo colónico, fractura-aplastamiento de L5, hernia de hiato intervenida, carcinoma verrugoso, TBC. IQx previas: Herniorrafia inguinal bilateral, amputación parcial de pene, glandectomía, hernia de hiato.",
     "sistemas": {
-      "neurologico": "Consciente, orientado y colaborador, sin focalidad neurológica. GCS: 15 puntos. Dolor controlado con analgesia de primer nivel. Tolera adecuadamente la sedestación al sillón. Continuar con sedestación al sillón.",
-      "respiratorio": "Buena mecánica ventilatoria, sin referir disnea ni presentar taquipnea. Desescalado desde GNAF hasta GN convencionales a 4lpm. Mantiene SpO2 de 95-97%. IR parcial con hipoxemia. No presenta fuga por drenaje torácico derecho (previamente sí, con neumomediastino al pinzar). GSA (GN a 4L): pH: 7.41 pCO2: 40, pO2: 72, HCO3: 25.4, Lact 0.8. AP: MVC, con hipoventilación bibasal de predominio derecho. Rx tórax: calidad limitada, sin neumotórax ni neumomediastino, atelectasia bibasal. ECO pulmonar 26/06: atelectasia basal bilateral, con leve derrame pleural de predominio izquierdo.",
-      "hemodinamico": "Hemodinámicamente estable, sin soporte vasopresor desde hace 5 días (previamente necesidad de NA). Tendencia a la hipertensión arterial en días previos, iniciado bisoprolol 2.5mg v.o. Mantiene cifras de TA de entorno a 128/85 mmHg. En ritmo propio RS a 90lpm. Porta MCP epicárdico de rescate en modo VVI a 40lpm. Lactato 1.5. Relleno capilar <2s. TnI en descenso de 451.5. AC: tonos rítmicos, sin soplos ni roces.",
-      "renal": "Diurésis forzada con Furosemida 40mg v.o en desayuno. 2785cc con BH -961cc. Peso 82.5 kg. Función renal conservada, FG>90, Cr 0.56, urea 23. Ionograma en rango de normalidad.",
-      "infeccioso": "Afebril ayer, sin signos de infección. Leucocitos: 6680/mm3, PCR: 3.03 mg/dl. Sin antibioterapia.",
-      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, peristaltismo audible. Dieta oral blanda. Ayer dos deposiciones (previamente estreñimiento con macrogol). Glucemia 95 sin aportes de insulina regular."
-    }
+      "neurologico": "Consciente, orientado y colaborador, GCS: 15. Dolor controlado. Tolera sedestación.",
+      "respiratorio": "Buena mecánica ventilatoria, sin disnea. Desescalado de GNAF a gafas nasales convencionales (4lpm). SpO2 95-97%, PaO2 72. No fuga por drenaje torácico. RX tórax: atelectasia bibasal. ECO pulmonar: atelectasia basal bilateral, leve derrame pleural izquierdo.",
+      "hemodinamico": "Estable, sin soporte vasopresor hace 5 días. Tratamiento con bisoprolol 2.5mg por HTA/taquicardia. RS 90lpm. MCP epicárdico de rescate en VVI a 40lpm. Lactato 1.5. TnI en descenso.",
+      "renal": "Diuresis forzada (2785cc en 24h, BH -961cc). Función renal conservada (Cr 0.56, FG>90). Ionograma normal.",
+      "infeccioso": "Afebril, sin signos de infección. Leucocitos: 6680, PCR: 3.03. Sin antibioterapia.",
+      "digestivo": "Abdomen blando y depresible, peristaltismo audible. Dieta oral blanda. Glucemia 95."
+    },
+    "plan": "Paso a sala de hospitalización de Cirugía Cardiaca. Pinzar tubo de drenaje torácico y solicitar RX de Control. Sentar en sillón e incentivador. Movilización dentro de las posibilidades."
   },
   {
     "id": "rea-2",
@@ -235,7 +315,6 @@
     "sexo": "",
     "dias_estancia": "",
     "antecedentes": "",
-    "plan": "Vigilancia clínica de rutina. Cama disponible.",
     "sistemas": {
       "neurologico": "",
       "respiratorio": "",
@@ -243,7 +322,8 @@
       "renal": "",
       "infeccioso": "",
       "digestivo": ""
-    }
+    },
+    "plan": "Vigilancia clínica de rutina. Cama disponible."
   },
   {
     "id": "rea-3",
@@ -255,7 +335,6 @@
     "sexo": "",
     "dias_estancia": "",
     "antecedentes": "",
-    "plan": "Vigilancia clínica de rutina. Cama disponible.",
     "sistemas": {
       "neurologico": "",
       "respiratorio": "",
@@ -263,7 +342,8 @@
       "renal": "",
       "infeccioso": "",
       "digestivo": ""
-    }
+    },
+    "plan": "Vigilancia clínica de rutina. Cama disponible."
   },
   {
     "id": "rea-4",
@@ -275,7 +355,6 @@
     "sexo": "",
     "dias_estancia": "",
     "antecedentes": "",
-    "plan": "Vigilancia clínica de rutina. Cama disponible.",
     "sistemas": {
       "neurologico": "",
       "respiratorio": "",
@@ -283,167 +362,168 @@
       "renal": "",
       "infeccioso": "",
       "digestivo": ""
-    }
+    },
+    "plan": "Vigilancia clínica de rutina. Cama disponible."
   },
   {
     "id": "rea-5",
     "unidad": "REA",
     "numero_cama": "5",
-    "paciente_id": "Paciente Cama 5",
-    "estado": "Somnoliento, con encefalopatía hepática. En soporte vasopresor y TRRC por disfunción renal aguda.",
-    "edad": "70 años",
-    "sexo": "Varón",
-    "dias_estancia": "1 día",
-    "antecedentes": "FRCV: Hiperuricemia. No HTA, DLP, DM. Hábitos tóxicos: Hábito enólico de 3 cervezas hasta hace 1 mes. Ex-fumador hasta los 60, consumidor 2 paquetes diarios /15 años, desde los 18 años. Gota. Oligoartritis de ambas rodillas por pirofosfato cálcico en 2020. Cirrosis alcohólica en seguimiento por MDI, última visita en UH el 18/05/2026. Diagnóstico: Fascitis necrotizante MII desde el 22/06. IQx: Fasciotomía 24/06.",
-    "plan": "En seguimiento con MDI. En tratamiento con tiamina y Cianocobalamina. Solicito AS con perfil de coagulación para esta tarde por protocolo de TRRC. Reposicion de K con 60 meq de ClK. Suspendemos perfusión de Seguril. Shaldon femoral derecho. TRRC HDFVVC con heparina. Colocamos SNG. Consenso con COT para posponer Cirugía, valorar cura en reanimación para mañana. AISLAMIENTO POR S. PYOGENES EN LÍQUIDO ARTICULAR.",
+    "paciente_id": "Paciente masculino 70 años",
+    "estado": "Delicado",
+    "edad": "70",
+    "sexo": "masculino",
+    "dias_estancia": "1",
+    "antecedentes": "Hiperuricemia. Hábito enólico, exfumador. Gota. Oligoartritis por pirofosfato cálcico. Cirrosis alcohólica en seguimiento. Dx: Fascitis necrotizante MII. IQx: Fasciotomía.",
     "sistemas": {
-      "neurologico": "Encefalopatía hepática Grado II. Amonio 113. Consciente y orientado en tiempo, persona y espacio. Claramente somnoliento. Fuerza reducida pero sin paresias. Flapping tremor. RASS: -1. GCS: 14 puntos. En tratamiento con clometiazol 384 mg cada 8 horas. Dolor controlado con analgesia de primer escalón.",
-      "respiratorio": "SatO2: 98% con GN 4 lpm. GSA: pH: 7.26 pCO2: 47 mmHg, pO2: 133 mmHg, HCO3: 21.1 mmol/l, EB: -5.9 mmol/l, láctico: 1.4 mmol/l. AP: murmullo vesicular conservado. Hipoventilación en base derecha. Rx Tórax: SCF izquierdo pinzado. Ecografía pulmonar 25/06: sin líneas B. Leve derrame pleural izquierdo.",
-      "hemodinamico": "TA 105/50mmHg. FC: 85/min, en RS. Con terlipresina 2 mg cada 24h y noradrenalina 2 ml/h. AC: tonos rítmicos, sin soplos ni roces. COAGULACIÓN/HEMOSTASIA: Hgb: 10.6 g/dl. Sin tromboprofilaxis. APTTr 1.51 INR 1.31 IQ 65%. En tratamiento con Vit K 10 mg cada 24h. TEG: R y K elevados, ángulo alfa disminuido.",
-      "renal": "Urea: 101 mg/dl, Creatinina: 2.03 mg/dl. Diuresis 10-20 ml/h. Oliguria <0,5 ml/kg/h con perfusión de seguril 4 ml/h. Balance: + 1900 cc ayer. Sodio: 137, Potasio: 3, Cloro: 105, Magnesio: 2.34, Calcio: 8.9, fosfato: 4.8. Con edemas en zonas declives, sin fóvea. Shaldon femoral derecho. TRRC HDFVVC con heparina.",
-      "infeccioso": "Afebril ayer, con una temperatura máxima de 37ºC. Leucocitos: 44.000/mm3, PCR: 18.60 mg/dl. En tratamiento con Piperacilina-Tazobactam 4 g cada 6 horas y Clindamicina 600 mg cada 6h. AISLAMIENTO POR S. PYOGENES EN LÍQUIDO ARTICULAR.",
-      "digestivo": "Abdomen blando y depresible, con peristaltismo, distendido, con ascitis. Bilirrubina total: 3.29, Bilirrubina directa: 2.94, GOT: 72, GPT: 23. En tratamiento con terlipresina 2 mg cada 24h. Glucemia alrededor de 150 mg/dl, con 4U de insulina regular. Dieta absoluta."
-    }
+      "neurologico": "Encefalopatía hepática Grado II (Amonio 113). Somnoliento, flapping tremor. RASS: -1, GCS: 14. Tratamiento con clometiazol. Dolor controlado.",
+      "respiratorio": "SatO2: 98% con GN 4lpm. GSA: pH 7.26, pCO2 47, pO2 133. Murmullo vesicular conservado, hipoventilación en base derecha. Leve derrame pleural izquierdo.",
+      "hemodinamico": "TA 105/50mmHg, FC: 85/min en RS. Con terlipresina y noradrenalina. AC rítmicos.",
+      "renal": "Urea: 101, Creatinina: 2.03. Oliguria (10-20 ml/h, <0.5 ml/kg/h). Balance: +1900cc. Edemas. Hipopotasemia. Shaldon femoral derecho. TRRC HDFVVC con heparina iniciada.",
+      "infeccioso": "Afebril, Tmax 37ºC. Leucocitos: 44.000, PCR: 18.60. Tratamiento con Piperacilina-Tazobactam y Clindamicina. Aislamiento por S. pyogenes en líquido articular.",
+      "digestivo": "Abdomen blando y depresible, distendido, con ascitis. Bilirrubina total: 3.29. Glucemia 150 mg/dl con insulina. Dieta absoluta."
+    },
+    "plan": "Seguimiento con MDI. Tratamiento con tiamina y Cianocobalamina. Reposición de K. Suspender perfusión de Seguril. Solicitar AS con perfil de coagulación. Realizar TEG. Consenso con COT para posponer Cirugía. Colocar SNG."
   },
   {
     "id": "rea-6",
     "unidad": "REA",
     "numero_cama": "6",
-    "paciente_id": "Paciente Cama 6",
-    "estado": "Postoperatorio inmediato de hepatectomía, estable con soporte de noradrenalina a dosis bajas.",
-    "edad": "71 años",
-    "sexo": "Varón",
-    "dias_estancia": "1 día",
-    "antecedentes": "No RAM. HTA con bisoprolol Olmesartan. Dislipemia con Ezetrol. ACXFA que revirtió farmacológicamente a ritmo sinusal, anticoagulado durante 1 año con NACO que ya no toma. Ca de próstata 2022 Prostatectomía radical. Colecistectomizado. Trombosis hemorroidal. Diverticulitis. Colitis ulcerosa en tratamiento con mesalazina. Colangitis esclerosante primaria en seguimiento. Biopsia hepática 9/06/26. IQx: Hepatectomía derecha por colangiocarcinoma del LHD.",
-    "plan": "Traslado a la UCIQ con noradrenalina a 0,1 mcgr/Kg/min, TA 120/60 mmHg, FC 76 lpm, SatpO2 98% sin incidencias. Control postoperatorio en UCIQ.",
+    "paciente_id": "Paciente masculino 71 años",
+    "estado": "Estable",
+    "edad": "71",
+    "sexo": "masculino",
+    "dias_estancia": "1",
+    "antecedentes": "HTA, Dislipemia. ACXFA que revirtió. Ca de próstata (prostatectomía radical), colecistectomizado, trombosis hemorroidal, diverticulitis, colitis ulcerosa, colangitis esclerosante primaria. IQx: Hepatectomía derecha por colangiocarcinoma.",
     "sistemas": {
-      "neurologico": "Llega a Quirófano consciente y orientado. GCS 15. Extubación en Quirófano sin incidencias tras reversión de bloqueo neuromuscular.",
-      "respiratorio": "IOT sin incidencias. TET nº 8. Cormack-Lehane II. Ventilación Han II. Extubación en Quirófano sin incidencias.",
-      "hemodinamico": "Preoperatorio: TA: 124 /65 mmHg. FC: 63 lpm en RS. SatO2 97% con aire ambiente. Intraoperatorio: Anestesia raquídea intradural con Morfina 100 mcg. Inducción con Fentanilo, Propofol, Rocuronio. Inestabilidad hemodinámica con movilización hepática precisando noradrenalina iv (máximo 0.84 mcgr/kg/min). Tras resección se transfunden 2CH autólogas. Administrados 2400 cc cristaloides. Sangrado aproximado 200 cc. Administrada 1 amp gluconato cálcico iv. Salida de quirófano: Noradrenalina a 0,1 mcgr/Kg/min, TA 120/60 mmHg, FC 76 lpm.",
-      "renal": "Diuresis horaria monitorizada durante la cirugía.",
-      "infeccioso": "Profilaxis ATB: cefazolina 2gr. 2ª dosis 13 h de 1 gr iv.",
-      "digestivo": "Hepatectomía derecha por colangiocarcinoma del LHD."
-    }
+      "neurologico": "Llega a quirófano consciente y orientado. Anestesia raquídea intradural con Morfina. Extubación en quirófano sin incidencias.",
+      "respiratorio": "Preoxigenación 100% SpO2. Intubación orotraqueal sin incidencias. Extubación en quirófano sin incidencias. SpO2 98% con aire ambiente.",
+      "hemodinamico": "Inestabilidad hemodinámica intraoperatoria con movilización hepática (noradrenalina hasta 0.84 mcgr/kg/min). Salida de CEC con noradrenalina 0.1 mcgr/Kg/min. TA 120/60 mmHg, FC 76 lpm en RS. Transfusión de 2 unidades autólogas.",
+      "renal": "Diuresis conservada intraoperatoriamente.",
+      "infeccioso": "Profilaxis ATB: cefazolina.",
+      "digestivo": ""
+    },
+    "plan": "Continuar control postoperatorio en UCIQ con noradrenalina."
   },
   {
     "id": "rea-7",
     "unidad": "REA",
     "numero_cama": "7",
-    "paciente_id": "Paciente Cama 7",
-    "estado": "Estable, con hipertensión controlada y buena función respiratoria post-neumonectomía.",
-    "edad": "73 años",
-    "sexo": "Mujer",
-    "dias_estancia": "1 día",
-    "antecedentes": "Carcinoma escamoso en LII T3N2. IQx: Neumonectomía izquierda el 25.06.2026.",
-    "plan": "Control HTA, se sube dosis de Candesartan a 16mg, y se mantiene doxazosina 2mg SP. Bajar GN a 2lpm, manteniendo SatO2 en rango. Ajustar Furosemida para balance equilibrado. NO CONECTAR NUNCA PLEUREVAC A ASPIRACIÓN. Control glucemias cada 6h.",
+    "paciente_id": "Paciente femenino 73 años",
+    "estado": "Estable",
+    "edad": "73",
+    "sexo": "femenino",
+    "dias_estancia": "1",
+    "antecedentes": "Carcinoma escamoso en LII T3N2. IQx: Neumonectomía izquierda.",
     "sistemas": {
-      "neurologico": "Consciente, orientada y colaboradora, sin focalidad neurológica. RASS: 0. GCS: 15 puntos. Realizado bloqueo intercostal al inicio y al finalizar la cirugía. Actualmente, con dolor controlado con analgesia de primer escalón.",
-      "respiratorio": "FR: 21/min, SatO2: 100% con GN a 4lpm. GSA: pH: 7,35 pCO2: 49 mmHg, pO2: 198 mmHg, HCO3: 27,1 mmol/l, EB: 0,8 mmol/l, láctico: 1,5 mmol/l. AP: murmullo vesicular conservado en hemitórax derecho, sin estertores patológicos. Rx Tórax: pulmón derecho expandido y sin infiltrados patológicos. Hemitórax izquierdo con cavidad de aire, sin derrame basal. Desplazamiento de mediastino hacia este lado. Drenaje normoposicionado apical.",
-      "hemodinamico": "TA 177/71 mmHg (administrado Amlodipino 5mg+ candesartan 8mg). FC: 69/min, en RS. Sin aminas. Relleno capilar conservado. Láctico: 1.5. AC: tonos rítmicos, sin soplos ni roces. Ausencia de débito por tubos de drenaje torácicos. Oscilación en sello de agua. Hgb: 11,8 g/dL, HCT: 36,2 %, plaquetas: 158.000. Coagulación convencional en rango. Tromboprofilaxis de TVP: medias compresión neumática intermitente + Enoxaparina 60mg/24h.",
-      "renal": "Función renal conservada. Urea: 27 mg/dl, Creatinina: 0,51 mg/dl. Diuresis: 1135 cc ayer, Balance: 1171cc ayer. Sodio: 136, Potasio: 3,5, Cloro: 103, Calcio: 8,7. Con tratamiento diurético (furosemida 20 mg). Sin edemas en zonas declives.",
-      "infeccioso": "Afebril ayer, con una temperatura máxima de 36,4ºC. Marcadores de infección: Leucocitos: 9,12 x10³/µL, PCR: 4,57 mg/dl. Vías: VVC subclavia izquierda: 1 día. Arteria radial derecha: 1 día.",
-      "digestivo": "Abdomen blando y depresible, sin masas ni visceromegalias, RHA conservados. GOT: 48 UI/l, GPT: 27 UI/L. Glucemia alrededor de 151mg/dl, con aporte de U de insulina regular. Proteínas totales: 6,4 g/dL. Tolerancia oral favorable desde anoche."
-    }
+      "neurologico": "Consciente, orientada y colaboradora. GCS: 15. Dolor controlado con analgesia de primer escalón. Bloqueo intercostal realizado.",
+      "respiratorio": "FR: 21/min, SatO2: 100% con GN a 4lpm. GSA: pH 7.35, pCO2 49, pO2 198. Murmullo vesicular conservado en hemitórax derecho. Rx Tórax: pulmón derecho expandido, hemitórax izquierdo con cavidad de aire. Drenaje normoposicionado apical.",
+      "hemodinamico": "TA 177/71 mmHg (HTA controlada con Amlodipino+Candesartan). FC: 69/min, en RS. Sin aminas. Lactico: 1.5. Ausencia de débito por tubos de drenaje torácicos.",
+      "renal": "Función renal conservada (Urea 27, Creatinina 0.51). Diuresis: 1135cc, Balance: 1171cc. Tratamiento diurético (furosemida 20 mg). Iones en rango.",
+      "infeccioso": "Afebril, Tmax 36.4ºC. Leucocitos: 9.12x10³/µL, PCR: 4.57. VVC subclavia izquierda (1 día).",
+      "digestivo": "Abdomen blando y depresible, RHA conservados. GOT: 48, GPT: 27. Glucemia 151 mg/dl con insulina. Tolerancia oral favorable."
+    },
+    "plan": "NO conectar pleurevac a aspiración. Control HTA: subir dosis de Candesartan a 16mg y dejar doxazosina 2mg SP. Bajar GN a 2lpm. Ajustar Furosemida para balance equilibrado. Control glucemias cada 6h."
   },
   {
     "id": "rea-8",
     "unidad": "REA",
     "numero_cama": "8",
-    "paciente_id": "Paciente Cama 8",
-    "estado": "Consciente pero desanimado, con FA paroxística, anemización progresiva, y dificultad respiratoria que alterna BIPAP/GNAF. Requiere drenaje de DP izquierdo. Aislamiento por infecciones multirresistentes.",
-    "edad": "71 años",
-    "sexo": "Varón",
-    "dias_estancia": "16 días",
-    "antecedentes": "No RAMc. Exfumador desde hace 4 años (previamente de medio paquete/día durante 15 años). En seguimiento por urología por prostatitis bacteriana y HBP, con 3 biopsias prostáticas previas normales. Episodios previos de impactación alimentaria. Nódulo pulmonar estable. IQx: Doble Bypasss Ao-Co. Reintervenido por dehiscencia de esternotomía el 19/06. Problemas actuales: FA paroxística con RVR de difícil control. Tendencia a anemización. Colapso espiratorio y malacia de los bronquios segmentarios del LII, LID y LSD. Empeoramiento radiológico con opacidades bilaterales y DP izquierdo moderado/severo.",
-    "plan": "Iniciado tratamiento con clonidina 150mcg/12h. Suspendemos PC landiolol. Mantenemos bisoprolol 5mg/12h. Vigilancia anemización progresiva y parámetros de coagulación. Administramos 2CH. No administrar dosis de enoxaparina 60mg de las 6:00h del 26/06 para drenaje DP. Periodos de descanso de BiPAP con GNAF, con controles gasométricos. Se realiza IC a Rx intervencionista para drenaje percutáneo de DP izquierdo. Vigilancia Rx torácica. Objetivo BH NEGATIVO. Restricción hídrica. Aumentamos furosemida 20mg/6h. Vigilancia parámetros infecciosos y del exudado esternotomía. Añadimos levofloxacino 500mg cada 24h. Suspendemos meropenem y linezolid. Añadimos ceftazidima-avibactam 2500mg/8h para cubrir K.pneumonia con carbapenemasas y Haemophilus influenzae. Tolerancia a líquidos durante los descansos de BiPAP.",
+    "paciente_id": "Paciente masculino 71 años",
+    "estado": "Delicado",
+    "edad": "71",
+    "sexo": "masculino",
+    "dias_estancia": "16",
+    "antecedentes": "Exfumador. Prostatitis bacteriana, HBP. Episodios previos de impactación alimentaria. Nódulo pulmonar estable. IQx: Doble Bypass Ao-Co. Reintervenido por dehiscencia de esternotomía.",
     "sistemas": {
-      "neurologico": "Paciente extubado desde el domingo. Consciente, orientado y colaborador. Desanimado. Sin focalidad neurológica. Presenta episodios de agitación y alucinosis. Mejor descanso nocturno con PC dexdor a 10ml/h y trazodona 100mg VO. Buen control analgésico con PC morfina a 0,3ml/h y analgesia convencional.",
-      "respiratorio": "Desde extubación (21/06), se mantuvo con GNAF, alternando con BiPAP (15/10) por mucosidad abundante, disnea y agobio. Fibro de limpieza 22/06: Tráquea en desfiladero, inflamación crónica, colapso espiratorio y malacia de bronquios segmentarios LII, LID y LSD. AP: hipoventilación bibasal. GSA correcta: pH 7.43, pO2 120, pCO2 44, HCO3 29.2, lactato 1.1. RX TÓRAX: empeoramiento radiológico con ensanchamiento mediastínico, opacidades bilaterales, derrame cisural izquierdo con atelectasia asociada. ECO PULMONAR: derrame pleural izquierdo moderado-severo. DRENAJE TORÁCICO DCHO S/ASP: débito de 20ml serohemático.",
-      "hemodinamico": "TAM 75-80mmHg, sin aminas. FA rápida durante el ingreso, con mal control de frecuencia (reaparece a 120lpm al retirar landiolol). Actualmente, en RS a 60lpm, con PC landiolol a 2ml/h, PC amiodarona a 4ml/h y bisoprolol VO 5mg/12h. Lactato 1,1. Relleno capilar: <2.5s. Ecocardioscopia 16/06: Buena contractilidad de visu, con contractilidad levemente disminuida en septo (postquirúrgico) y en segmentos apicales de VI. VCI no colapsable. Hb 8 (8.3 <-- 8.8), última transfusión el 21/06. Plaquetas: 298000. Parámetros de coagulación alterados (TP 17.1, INR 1.54, IQ 52%). En tratamiento con enoxaparina 60mg/12h y AAS 100mg/24h. Perfil férrico: Fe 26, Ferritina 327, Transferrina 142, Sat de hierro 14,65%. Administrado 1 gr de Ferinyect.",
-      "renal": "Función renal conservada con Cr 0.46, urea 36 y FG>90. Ionograma dentro de límites de normalidad excepto hipopotasemia 3,3. Diurésis conservada con pauta de furosemida 20mg/8h. 2735cc en las últimas 24h con BH positivo de +915cc. Edema leve en manos y pies bilateral. Aumento de 8 kg aproximadamente durante el ingreso.",
-      "infeccioso": "Afebril. Leucocitos 12110. PCR en ascenso 17.86 (15.40 <-- 11.83). Procalcitonina 0.17. En tratamiento con Linezolid 600mg/12h + Meropenem 2g/8h. Exudado de herida de esternotomía recurrente, serohemático y no purulento. AISLADO. Cultivos: esputo H.influenzae (16/06), BAS S.maltophilia (21/06), exudado herida S.epidermidis (18/06), frotis rectal K. pneumoniae con carbapenemasas NDM (23/06). Vías: CVC Yugular izquierda: 6d. Arteria femoral derecha: 7d. VVP: 3d.",
-      "digestivo": "Blando y depresible, no doloroso a la palpación. Proteínas totales 5,4g/dL. Glucemia 155 mg/dL con pauta de insulina móvil. En tratamiento con azitromicina 250mg/8h y macrogol. NPT 60ml/h. Tolerancia a líquidos durante los descansos de BiPAP."
-    }
+      "neurologico": "Extubado. Consciente, orientado y colaborador. Desanimado. Episodios de agitación y alucinosis (con dexdor, trazodona, clonidina). Buen control analgésico (morfina y convencional).",
+      "respiratorio": "Alterna BIPAP (15/10) / GNAF. Mucosidad abundante, disnea, agobio. Colapso espiratorio y malacia de bronquios segmentarios LII, LID y LSD. GSA correcta con BIPAP. RX tórax: empeoramiento radiológico con opacidades bilaterales, DP izquierdo moderado/severo.",
+      "hemodinamico": "TAM 75-80mmHg, sin aminas. RS 60lpm con PC landiolol y amiodarona, bisoprolol VO 5mg/12h. Lactato 1.1. FA rápida previa. Eco: Buena contractilidad de visu, levemente disminuida en septo y segmentos apicales VI. VCI no colapsable.",
+      "renal": "Función renal conservada (Cr 0.46). Hipopotasemia 3.3. Diuresis 2735cc, BH +915cc. Edema leve en manos y pies. Aumento de peso 8kg.",
+      "infeccioso": "Afebril. Leucocitos 12110. PCR en ascenso 17.86. PCT 0.17. Multibacteriano: H.influenzae (esputo), S.maltophilia (BAS), S.epidermidis (exudado herida). Tratamiento con levofloxacino y ceftazidima-avibactam. Aislado. K.pneumoniae con carbapenemasas en frotis rectal.",
+      "digestivo": "Abdomen blando y depresible. Proteínas totales 5.4g/dL. Glucemia 155 mg/dL con insulina móvil. NPT 60ml/h. Tolerancia a líquidos en descansos de BiPAP."
+    },
+    "plan": "Vigilancia anemización progresiva y parámetros de coagulación. Administrar 2CH. Suspender PC landiolol, mantener bisoprolol. Periodos de descanso de BiPAP con GNAF. IC a RX intervencionista para drenaje percutáneo de DP izquierdo (no administrar enoxaparina de las 6am). Objetivo BH NEGATIVO, restricción hídrica, aumentar furosemida 20mg/6h. Vigilancia parámetros infecciosos y del exudado esternotomía. Vigilancia rx torácica."
   },
   {
     "id": "rea-9",
     "unidad": "REA",
     "numero_cama": "9",
-    "paciente_id": "Paciente Cama 9",
-    "estado": "Estable, con buen control del dolor, en recuperación post-hemicolectomía y con tratamiento antibiótico.",
-    "edad": "46 años",
-    "sexo": "Varón",
-    "dias_estancia": "7 días",
-    "antecedentes": "Diagnóstico reciente de adenocarcinoma de colon estenosante estadio IV (metástasis hepáticas). Ingresa desde quirófano de urgencias por Hemicolectomía derecha y anastomosis L-L (cirugía abierta) en contexto de perforación intestinal con apendicitis en paciente oncológico.",
-    "plan": "IC a Neumología de cara al alta para estudio de apneas y CPAP nocturna. Transfundiremos 1 CH hoy 26/05. Nuevos niveles de vancomicina 29/06. Progresamos a dieta líquida, manteniendo NPT para el fin de semana.",
+    "paciente_id": "Paciente masculino 46 años",
+    "estado": "En recuperación",
+    "edad": "46",
+    "sexo": "masculino",
+    "dias_estancia": "7",
+    "antecedentes": "Adenocarcinoma de colon estenosante estadio IV (metástasis hepáticas). IQx: Hemicolectomía derecha y anstomosis L-L (cirugía abierta) por perforación intestinal con apendicitis.",
     "sistemas": {
-      "neurologico": "Consciente, orientado y colaborador. Tranquilo. Sin focalidad neurológica. Colocación 22/06 de catéter epidural por mal control del dolor con morfina, con buen control álgico. Ayer se inicia parche fentanilo 25 mcg/h.",
-      "respiratorio": "Eupneico y con buena mecánica ventilatoria. SatO2 99% con GN a 3 lpm. Utiliza incentivador respiratorio. Pendiente IC Fisio respiratoria. Permanece en sillón la mayor parte del día. En días previos precisó GNAF, incluso CPAP. AP: Hipoventilación en ambas bases, de predominio derecho. GSA pH 7,39 pCO2 35 pO2 92 HCO3 21. Rx tórax: seno costofrénico derecho pinzado. Elevación de ambos hemidiafragmas. Ecografía torácica (23/06) impresiona de atelectasias en ambas bases, predominante en base izquierda y líneas B también en base izquierda.",
-      "hemodinamico": "Inicialmente precisó PC noradrenalina a dosis bajas (suspendida 22/06). Posteriormente tendencia a la hipertensión, por lo que precisó PC de clevidipino hasta la reintroducción de antihipertensivos orales habituales amlodipino 10 mg/d + losartan 100 mg/d. TAM 100 mmHg. RS 78 lpm. AC rítmica sin soplos. Pulsos periféricos presentes y simétricos. Anemización ligera Hb 8.1 (8.5). Última transfusión de 1 CH 23/06. Láctico 1.1. Plaquetas y coagulación dentro de la normalidad. Iniciada profilaxis antitrombótica con enoxaparina 80 mg/d sc + medias de compresión. Pendiente de perfil férrico.",
-      "renal": "Función renal conservada. Crea 0.65, U 45. Iones en rango salvo hipofosfatemia que precisa reposiciones. Diuresis espontáneas conservadas, ayer 2.210 ml con balance + 415 ml. Sin edemas. Niega sensación de sed.",
-      "infeccioso": "Afebril. RFA: Leucocitos 9.900 (10.300), PCR 16 (13), procalcitonina ayer 1. Antibioterapia con meropenem 2g/8h + vancomicina 1.200 mg/8h (ajuste según niveles) + anídulofungina 100 mg/24h (inicio 20/06). Cultivo de colección purulenta (21.06): Enterococcus faecium S vanco y linezolid. Hemocultivo (20.06): negativo. Urocultivo (19.06): negativo.",
-      "digestivo": "Abdomen blando y depresible, no doloroso. No ausculto RHA pero ha defecado. Herida quirúrgica limpia. Portador de SNG cerrada con débito bilioso de 300 mL en 24h. Pautados procinéticos. Drenaje Marti Palanca pasivo con lavados cada 8 h. Nutrición parenteral a 98 mL/h. Iniciada tolerancia a agua con buena tolerancia. Progresamos a dieta líquida. Hipoproteinemia 5.3 mg/dl."
-    }
+      "neurologico": "Consciente, orientado y colaborador. Buen control del dolor con catéter epidural y parche de fentanilo 25 mcg/h.",
+      "respiratorio": "Eupneico, buena mecánica ventilatoria. SatO2 99% con GN a 3 lpm. Incentivador respiratorio. Hipoventilación bibasal de predominio derecho. Seno costofrénico derecho pinzado. Atelectasias en ambas bases.",
+      "hemodinamico": "TAM 100 mmHg, RS 78 lpm. Sin noradrenalina (suspendida el 22/06). Tendencia a la hipertensión. Hb 8.1 (trasfusión de 1 CH hoy). Lactico 1.1.",
+      "renal": "Función renal conservada (Crea 0.65, U 45). Diuresis espontáneas 2.210 ml, balance +415 ml. Hipofosfatemia (precisa reposiciones).",
+      "infeccioso": "Afebril. Leucocitos 9.900, PCR 16, procalcitonina 1. Tratamiento con meropenem, vancomicina y anídulofungina. Cultivo colección purulenta: Enterococcus faecium.",
+      "digestivo": "Abdomen blando y depresible. SNG cerrada con débito bilioso de 300 mL. Drenaje Marti Palanca pasivo. NPT 98 mL/h. Iniciada tolerancia a agua, progresando a dieta líquida. Hipoproteinemia 5.3 mg/dl."
+    },
+    "plan": "Trasfundir 1 CH. Pte de perfil férrico. IC a Fisio respiratoria. IC a Neumología para estudio de CPAP nocturna. Nuevos niveles de vancomicina. Progresar a dieta líquida, mantener NPT para el fin de semana."
   },
   {
     "id": "rea-10",
     "unidad": "REA",
     "numero_cama": "10",
-    "paciente_id": "Paciente Cama 10",
-    "estado": "Postoperatorio inmediato de triple bypass, hemodinámicamente estable con MCP epicárdico y noradrenalina a dosis bajas.",
-    "edad": "57 años",
-    "sexo": "Masculino",
-    "dias_estancia": "1 día",
-    "antecedentes": "No RAMc. Niega hábitos tóxicos. FRCV: HTA, DM tipo 1 y DLP. CRU con litiasis renoureteral izquierda (2014). Dispepsia. Tratamiento habitual: Dafiro hct, Fiasp, Tresiba, Cialis, Crestor, Sensores sistema de monitorización de glucosa trimestral dexcom one +, Hidroferol, Adiro, Trinispray. Ingresa en UCIQ tras triple by-pass Ao-Co por enfermedad coronaria de 3 vasos.",
-    "plan": "Traslado a la Unidad de Reanimación para recuperación postoperatoria.",
+    "paciente_id": "Paciente masculino 57 años",
+    "estado": "Estable",
+    "edad": "57",
+    "sexo": "masculino",
+    "dias_estancia": "1",
+    "antecedentes": "HTA, DM tipo 1 y DLP. CRU con litiasis renoureteral, dispepsia. Enfermedad coronaria de 3 vasos, angina inestable. IQx: Triple by-pass Ao-Co.",
     "sistemas": {
-      "neurologico": "Llega C y O a quirófano. Extubación en Quirófano sin incidencias.",
-      "respiratorio": "Preoxigenación. Intubación orotraqueal sin incidencias. TET: 7.5mm. Laringoscopia: Cormack II con BURP. Mantenimiento: O2/Aire, sevofluorano, rocuronio y levobupivacaína epidural. Extubación en Quirófano sin incidencias.",
-      "hemodinamico": "Preoperatorio: TA: 190/100mmHg. FC: 60 lpm. SpO2: 97%. Catéter epidural T1-T2. Catéter arterial: ARI. Catéter venoso: VCYID. Monitorización hemodinámica: PVC, ETE, Tª central, PAI, diuresis horaria, BIS. Heparinización: 250 mg. Entrada en CEC sin incidencias. TCEC: 72 min. TISQ:40 min. Salida deCEC en RS a 55 lpm. Se conecta a MCP epicardico en VVI a 80 lpm para optimizar GC. Protamina: 350 mg. Aminas: Noradrenalina desde intra-CEC. No hemoderivados.",
-      "renal": "Diuresis horaria monitorizada.",
-      "infeccioso": "No se mencionan hallazgos infecciosos. No RAMc.",
-      "digestivo": "Dispepsia (antecedente). No se mencionan hallazgos digestivos postoperatorios."
-    }
+      "neurologico": "Consciente y orientado pre-operatorio. Catéter epidural T1-T2. Extubación en quirófano sin incidencias.",
+      "respiratorio": "Preoxigenación. Intubación orotraqueal sin incidencias. Extubación en quirófano. SpO2 97%.",
+      "hemodinamico": "TA: 190/100mmHg pre-op. Salida de CEC en RS a 55 lpm, con MCP epicárdico en VVI a 80 lpm. Noradrenalina desde intra-CEC.",
+      "renal": "Diuresis horaria conservada intraoperatoriamente.",
+      "infeccioso": "",
+      "digestivo": ""
+    },
+    "plan": "Continuar control postoperatorio en Unidad de Reanimación."
   },
   {
     "id": "rea-11",
     "unidad": "REA",
     "numero_cama": "11",
-    "paciente_id": "Paciente Cama 11",
-    "estado": "Sedoanalgesiado, en resolución de shock distributivo e infección respiratoria. Requiere VMI y drenaje pleural.",
-    "edad": "68 años",
-    "sexo": "Varón",
-    "dias_estancia": "9 días",
-    "antecedentes": "No RAMc. DM, HTA, DLP. Exfumador (unos 15 años). En estudio por Neumología de un cuadro con tos, sibilancias y espectoración. Litiasis vesical + HBP intervenida. Antecedentes de cólico renal. Infarto macular en OI, con pérdida de visión residual por trombosis arteria central de la retina (Nov-25). ODX: EAo severa. IQX: SVAo biológica. Problemas en Reanimación: Taponamiento cardiaco drenado en qx la madrugada del 20 al 21/06/2026. Infección respiratoria con insuficiencia grave y episodios de broncoespasmo y obstrucción por secreciones. Shock distributivo.",
-    "plan": "Destete de noradrenalina en función de cifras de TA. Retiramos catéter Swan-Ganz. Se decide pasar a PS: PEEP 9 y PS 8 con FiO2 50%, consiguiendo Vt entorno a 500cc y complianzas de 55. GA de control. Fibrobroncoscopias de limpieza y reclutamiento a demanda. Furosemida a 0.2ml/h para balance negativo. Aumentamos NE a 40ml/h. Mantenemos de momento NTP, y si progresión con NE, retirar. Vigilancia de RFA.",
+    "paciente_id": "Paciente masculino 68 años",
+    "estado": "Delicado con mejoría",
+    "edad": "68",
+    "sexo": "masculino",
+    "dias_estancia": "9",
+    "antecedentes": "DM, HTA, DLP, exfumador. En estudio por Neumología. Litiasis vesical + HBP. Infarto macular OI. Dx: EAo severa. IQx: SVAo biológica. Problemas en reanimación: Taponamiento cardiaco drenado, infección respiratoria, shock distributivo.",
     "sistemas": {
-      "neurologico": "Actualmente sedoanalgesiado con PC de Propofol a 12 ml/h, con BIS en torno a 65-70. Rass -3. Pupilas isocóricas normorreactivas. Retirada PC de Nimbex. Reactivo, responde a estímulos. Analgesia de primer escalón. Sin morfina.",
-      "respiratorio": "Proceso de infección respiratoria que requiere reIOT el pasado 21/06 y que inicialmente requiere de VMI con FiO2 de hasta 100%, con abundantes secreciones. Muy dependiente de fibrobroncoscopias y reclutamiento. Ha presentado dos episodios de broncoespasmo y obstrucción bronquial por secreciones. ECO de ayer confirma derrame pleural bilateral de moderada cuantía con atelectasias asociadas, por lo que se realiza evacuación (Pig tail dcho: 1130cc; Pig tail izq: 700cc). Actualmente, IOT modo A/C PRVC: FiO2: 50%; Vt: 550; FR: 12 rpm; PEEP: 8. Bien adaptado al respirador. Complianzas entorno a 40. GA: pH 7.47, pCO2 45, pO2 140, HCO3 32.8, Lact 1.3. AP: disminución de los roncus dispersos en ambos hemitórax. Hipoventilación basal derecha. Rx tórax: ensanchamiento mediastínico, con ICT >0.5, mejoría de los infiltrados. Pigtails en senos. Persiste pinzamiento de SCF derecho. Probable atelectasia basal derecha asociada. En tratamiento con nebulizaciones de salbutamol.",
-      "hemodinamico": "Shock distributivo en resolución (precisó soporte con NA, vasopresina y dobutamina a dosis elevadas). Actualmente suspendidas las PC de vasopresina y dobutamina. Noradrenalina a 0-4 ml/h, con necesidad de aumento hasta 7-8 en momentos de FBO y reclutamiento alveolar. TA: 130/75 mmHg. En RS a 80 lpm, con MCP epicárdico normofuncionante VVI a 50 lpm. PC de amiodarona suspendida ante deterioro de la función hepática. Swan Ganz: IC 3.8, SVO2 73%. Hb: 8.9 (8,8)g/dL (última transfusión de 1 CH el 21/06). Plaquetas: 248000. Coagulación: TP: 14.3; INR: 1,28; I Quick: 70 %. Sin focos de sangrado aparentes. Antiagregado con 100 mg/d y con tromboprofilaxis con enoxaparina 40 mg/d.",
-      "renal": "Función renal conservada y en mejoría. Urea: 141, Cr: 0.99, FG: 78, Na: 148, K: 3.4, Cl: 105, Ca: 8.7, P 3.2, Mg 2.59. Diuresis ayer: 1960 cc, forzada con PC de furosemida a 1ml/h. Balance ayer: -3299 cc (drenajes pleurales). Balance positivo acumulado durante el ingreso: peso inicial 84,5 Kg y peso actual: 98,5 Kg. Edemas en extremidades inferiores, flancos y manos.",
-      "infeccioso": "Ayer episodio de febrícula 37.5ºC, aunque en tratamiento paracetamol y metamizol, que se retira. Se extraen HC. Desde entonces, no ha realizado fiebre. Leucocitos en descenso: 9.92 (11.500) y PCR en descenso: 13.56 (20,56). Procalcitonia 0,35. En tratamiento antibiótico empírico con meropenem y linezolid desde el 20/06, que ayer se desescala a Pipertazo según antibiograma. Cultivos: 21/06 BAS: PCR --> E. Coli (10.000 copias/ml) + Klebsiella pneumoniae (1.000.000 copias/ml). Sensible a Pipertazo. Vías: Femoral derecha: 4 días. Radial izquierda: 9 días.",
-      "digestivo": "Abdomen menos distendido, depresible. No signos de peritonismo. Ruidos hidroaéreos presentes. Ayer varias deposiciones. Se ha administrado gastrpgrafin en dos ocasiones. PIAs llegaron a 20, actualmente 14. Br: 0.63; Transaminasas en franca mejoría. GOT: 54 GPT: 257 GGT: 108; Proteínas 5,6. En tratamiento con procinéticos. NPT por vía central. Ayer se inició NE a dosis tróficas 10ml/h, con deposiciones."
-    }
+      "neurologico": "Sedoanalgesiado con Propofol (BIS 65-70, Rass -3). Reactivo a estímulos. Sin morfina.",
+      "respiratorio": "ReIOT el 21/06. VMI (A/C PRVC, FiO2 50%, PEEP 8). Abundantes secreciones, episodios de broncoespasmo y obstrucción. Derrame pleural bilateral drenado (pigtails). Complianzas 40. GSA: pH 7.47, pCO2 45, pO2 140. Rx tórax: ensanchamiento mediastínico, mejoría de infiltrados. Pigtails en senos.",
+      "hemodinamico": "Shock distributivo en resolución. Noradrenalina 0-4 ml/h (con picos hasta 7-8). Vasopresina y dobutamina suspendidas. TA: 130/75 mmHg. RS 80 lpm, MCP epicárdico VVI 50 lpm. Swan Ganz: IC 3.8, SVO2 73%.",
+      "renal": "Función renal en mejoría. Urea: 141, Cr: 0.99. Diuresis ayer: 1960 cc, forzada con PC de furosemida. Balance acumulado positivo. Edemas en extremidades inferiores, flancos y manos.",
+      "infeccioso": "Ayer episodio de febrícula. Leucocitos en descenso: 9.92, PCR en descenso: 13.56. PCT 0.35. Tratamiento antibiótico con Pipertazo. Cultivos: E. Coli, Klebsiella pneumoniae (BAS).",
+      "digestivo": "Abdomen menos distendido, depresible. RHA presentes. PIAs actualmente 14. Br: 0.63, transaminasas en franca mejoría. NPT por vía central. NE a dosis tróficas (10ml/h)."
+    },
+    "plan": "Destete de noradrenalina. Retirar catéter Swan-Ganz. Pasar a PS (PEEP 9 y PS 8 con FiO2 50%). GA de control. Fibrobroncoscopias de limpieza y reclutamiento a demanda. Furosemida a 0.2ml/h para balance negativo. Aumentar NE a 40ml/h, retirar NPT si progresión. Vigilancia de RFA."
   },
   {
     "id": "rea-12",
     "unidad": "REA",
     "numero_cama": "12",
-    "paciente_id": "Paciente Cama 12",
-    "estado": "Postoperatorio inmediato de craneotomía, estable.",
-    "edad": "73 años",
-    "sexo": "Mujer",
-    "dias_estancia": "1 día",
-    "antecedentes": "No RAM conocidas. Ex fumadora. FRCV: No DM. No HTA. No DLP. Dermatitis psoriásica plantar recurrente. Gastritis crónica. SAOS grave tto con cPAP. Isquemia crónica grado III recanalizada mediante arteriografía en 2019, con trombectomía farmacomecánica + stent iliaco en 2021. Evolución complicada con EAP. ICC Leve con FEVI conservada. IRC. Historia Oncológica: Adenocarcinoma broncopulmonar estadio inicial T2N1M0 (2015). Metástasis cerebrales parietal izda única (diagnosticada 2025). Intervención quirúrgica de metástasis cerebral parietal izquierda (10/4/2025). Tto RT posterior. IQx: Craneotomía + exéresis mtx parietal izda (recidiva LOE cerebral).",
-    "plan": "Traslado a la Unidad de Cuidados Críticos Quirúrgicos sin incidencias para recuperación postoperatoria.",
+    "paciente_id": "Paciente femenino 73 años",
+    "estado": "Estable",
+    "edad": "73",
+    "sexo": "femenino",
+    "dias_estancia": "1",
+    "antecedentes": "Exfumadora. Dermatitis psoriasica. Gastritis crónica. SAOS grave con cPAP. Isquemia crónica grado III (trombectomía farmacomecánica + stent iliaco). Adenocarcinoma broncopulmonar (lobectomía, QT). Metastasis cerebrales parietal izda única (intervenida). Dx: Recidiva LOE cerebral. IQx: Craneotomía + exéresis.",
     "sistemas": {
-      "neurologico": "Llega a Quirófano estable. Intubación orotraqueal sin incidencias. Extubación en Quirófano sin incidencias tras reversión de bloqueo neuromuscular.",
-      "respiratorio": "Intubación orotraqueal sin incidencias. TET nº 6.5 flexometálico. Cormack-Lehane I + BURP. Ventilación Han 0. Extubación en Quirófano sin incidencias tras reversión de bloqueo neuromuscular.",
-      "hemodinamico": "Llega a Quirófano estable. TA: 180/80 mmHg. FC: 64 lpm. SatO2 99%. Estables durante la intervención. VVC Yugular interna dcha ecoguiada. VVP 20G MSD. Catéter arterial radial dcho.",
-      "renal": "Diuresis conservada 0'5-1 ml/kg/h durante la cirugía.",
-      "infeccioso": "No se mencionan hallazgos infecciosos. No RAM conocidas.",
-      "digestivo": "Gastritis crónica (antecedente). No se mencionan hallazgos digestivos postoperatorios."
-    }
+      "neurologico": "Llega a quirófano estable. Intubación orotraqueal, inducción con Fentanilo, Propofol y Rocuronio. Mantenimiento con TCI Propofol y Remifentanilo. Extubación en quirófano sin incidencias tras reversión de bloqueo neuromuscular.",
+      "respiratorio": "Intubación orotraqueal sin incidencias. Extubación en quirófano. SatO2 99%.",
+      "hemodinamico": "TA: 180/80 mmHg, FC: 64 lpm pre-op. Estable durante la intervención.",
+      "renal": "Diuresis conservada intra-op (0.5-1 ml/kg/h).",
+      "infeccioso": "",
+      "digestivo": ""
+    },
+    "plan": "Continuar vigilancia en Unidad de Cuidados Críticos Quirúrgicos post-neurocirugía."
   },
   {
     "id": "ucin-1",
@@ -455,7 +535,6 @@
     "sexo": "",
     "dias_estancia": "",
     "antecedentes": "",
-    "plan": "Vigilancia clínica de rutina. Cama disponible.",
     "sistemas": {
       "neurologico": "",
       "respiratorio": "",
@@ -463,7 +542,8 @@
       "renal": "",
       "infeccioso": "",
       "digestivo": ""
-    }
+    },
+    "plan": "Vigilancia clínica de rutina. Cama disponible."
   },
   {
     "id": "ucin-2",
@@ -475,7 +555,6 @@
     "sexo": "",
     "dias_estancia": "",
     "antecedentes": "",
-    "plan": "Vigilancia clínica de rutina. Cama disponible.",
     "sistemas": {
       "neurologico": "",
       "respiratorio": "",
@@ -483,7 +562,8 @@
       "renal": "",
       "infeccioso": "",
       "digestivo": ""
-    }
+    },
+    "plan": "Vigilancia clínica de rutina. Cama disponible."
   },
   {
     "id": "ucin-3",
@@ -495,7 +575,6 @@
     "sexo": "",
     "dias_estancia": "",
     "antecedentes": "",
-    "plan": "Vigilancia clínica de rutina. Cama disponible.",
     "sistemas": {
       "neurologico": "",
       "respiratorio": "",
@@ -503,7 +582,8 @@
       "renal": "",
       "infeccioso": "",
       "digestivo": ""
-    }
+    },
+    "plan": "Vigilancia clínica de rutina. Cama disponible."
   },
   {
     "id": "ucin-4",
@@ -515,7 +595,6 @@
     "sexo": "",
     "dias_estancia": "",
     "antecedentes": "",
-    "plan": "Vigilancia clínica de rutina. Cama disponible.",
     "sistemas": {
       "neurologico": "",
       "respiratorio": "",
@@ -523,7 +602,8 @@
       "renal": "",
       "infeccioso": "",
       "digestivo": ""
-    }
+    },
+    "plan": "Vigilancia clínica de rutina. Cama disponible."
   },
   {
     "id": "ucin-5",
@@ -535,7 +615,6 @@
     "sexo": "",
     "dias_estancia": "",
     "antecedentes": "",
-    "plan": "Vigilancia clínica de rutina. Cama disponible.",
     "sistemas": {
       "neurologico": "",
       "respiratorio": "",
@@ -543,7 +622,8 @@
       "renal": "",
       "infeccioso": "",
       "digestivo": ""
-    }
+    },
+    "plan": "Vigilancia clínica de rutina. Cama disponible."
   },
   {
     "id": "ucin-6",
@@ -555,7 +635,6 @@
     "sexo": "",
     "dias_estancia": "",
     "antecedentes": "",
-    "plan": "Vigilancia clínica de rutina. Cama disponible.",
     "sistemas": {
       "neurologico": "",
       "respiratorio": "",
@@ -563,10 +642,24 @@
       "renal": "",
       "infeccioso": "",
       "digestivo": ""
-    }
+    },
+    "plan": "Vigilancia clínica de rutina. Cama disponible."
   }
 ];
     const PASSWORD_CORRECTA = "misbalare2720";
+    const GENERADO = 1782470317092;
+
+    // ---------- TEMA (claro / oscuro) ----------
+    function getTheme(){ try{ return sessionStorage.getItem('uci_theme') === 'dark' ? 'dark' : 'light'; }catch(e){ return 'light'; } }
+    function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); }
+    applyTheme(getTheme());
+    function toggleTheme(){
+      const nuevo = getTheme() === 'dark' ? 'light' : 'dark';
+      try{ sessionStorage.setItem('uci_theme', nuevo); }catch(e){}
+      applyTheme(nuevo);
+      const btn = document.getElementById('themebtn');
+      if(btn) btn.innerHTML = icon(nuevo === 'dark' ? 'Sun' : 'Moon', 22);
+    }
 
     // ---------- ICONOS (SVG) ----------
     const ICONS = {
@@ -581,7 +674,9 @@
       Clipboard:'<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/>',
       User:'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
       Logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
-      Lock:'<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>'
+      Lock:'<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>',
+      Sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+      Moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>'
     };
     function icon(name, w){
       const size = w || 24;
@@ -599,9 +694,39 @@
       if(estado === 'Alerta')  return 'st-alerta';
       return 'st-estable';
     }
-    function nombreMostrar(p){
-      return p.paciente_id === 'Cama Vacía' ? 'Cama Vacía' : 'Cama Ocupada';
+    function estaOcupada(p){ return p.paciente_id !== 'Cama Vacía'; }
+    function nombreMostrar(p){ return estaOcupada(p) ? 'Cama Ocupada' : 'Cama Vacía'; }
+
+    const SISTEMAS = [
+      {key:'neurologico', cls:'neuro', label:'Neurológico'},
+      {key:'respiratorio', cls:'resp', label:'Respiratorio'},
+      {key:'hemodinamico', cls:'hemo', label:'Hemodinámico'},
+      {key:'renal', cls:'renal', label:'Renal'},
+      {key:'infeccioso', cls:'infec', label:'Infeccioso'},
+      {key:'digestivo', cls:'diges', label:'Digestivo'}
+    ];
+    function sysDotsHTML(p){
+      const s = p.sistemas || {};
+      let dots = '';
+      for(let i=0;i<SISTEMAS.length;i++){
+        const sy = SISTEMAS[i];
+        const val = s[sy.key];
+        const on = val && String(val).trim() !== '';
+        const tip = sy.label + (on ? ': ' + String(val) : ': sin datos');
+        dots += '<span class="dot '+sy.cls+(on?' on':'')+'" title="'+esc(tip)+'"></span>';
+      }
+      return '<div class="sys-dots">'+dots+'</div>';
     }
+
+    function desdeTexto(ts){
+      const min = Math.floor((Date.now() - ts) / 60000);
+      if(min < 1) return 'actualizado hace un momento';
+      if(min === 1) return 'actualizado hace 1 min';
+      if(min < 60) return 'actualizado hace ' + min + ' min';
+      const h = Math.floor(min/60);
+      return 'actualizado hace ' + h + ' h';
+    }
+
     const root = document.getElementById('root');
 
     // ---------- RENDER: LOGIN ----------
@@ -635,25 +760,54 @@
     }
 
     // ---------- RENDER: TARJETA ----------
-    function cardHTML(p){
+    function cardHTML(p, idx){
       const sc = statusClass(p.estado);
       const unitLow = p.unidad === 'UCIN' ? 'ucin' : 'rea';
-      const ocupada = p.paciente_id !== 'Cama Vacía';
+      const ocupada = estaOcupada(p);
+      const critico = p.estado === 'Crítico';
+      const delay = Math.min(idx * 0.03, 0.5);
       const meta = ocupada
         ? '<div class="card-meta"><span class="chip">'+icon('User',12)+' '+esc(p.edad)+' años</span><span class="divider">|</span><span>Día '+esc(p.dias_estancia)+'</span></div>'
         : '<div class="card-meta-empty"></div>';
+      const dots = ocupada ? sysDotsHTML(p) : '';
+      const critDot = critico ? '<span class="crit-dot"></span>' : '';
       const alerta = p.alertas
-        ? '<div style="margin-top:12px;display:flex;align-items:center;gap:8px;color:var(--red-600);background:var(--red-50);padding:4px 8px;border-radius:6px;"><span class="pulse" style="display:flex;">'+icon('Alert',16)+'</span><span style="font-size:12px;font-weight:700;">ATENCIÓN</span></div>'
+        ? '<div style="margin-top:12px;display:flex;align-items:center;gap:8px;color:var(--red-600);background:var(--red-50);padding:4px 8px;border-radius:6px;"><span class="crit-dot" style="margin:0;"></span><span style="font-size:12px;font-weight:700;">ATENCIÓN</span></div>'
         : '';
-      return '<div class="card '+sc+'" data-id="'+esc(p.id)+'">'+
+      return '<div class="card '+sc+(ocupada?'':' empty')+(critico?' is-critico':'')+'" data-id="'+esc(p.id)+'" style="animation-delay:'+delay+'s">'+
         '<div class="card-top">'+
           '<div class="card-bed"><div class="bed-ico">'+icon('Bed',24)+'</div>'+
             '<div><h3>Cama '+esc(p.numero_cama)+'</h3><span class="unit-badge '+unitLow+'">'+esc(p.unidad)+'</span></div></div>'+
-          '<span class="status-badge '+sc+'">'+esc(p.estado)+'</span>'+
+          '<span class="status-badge '+sc+'">'+critDot+esc(p.estado)+'</span>'+
         '</div>'+
         meta+
         '<div><p class="card-label">Paciente</p><p class="card-name">'+esc(nombreMostrar(p))+'</p></div>'+
+        dots+
         alerta+
+      '</div>';
+    }
+
+    // ---------- RENDER: BARRA RESUMEN ----------
+    function statOcup(unitLow, label, ocup, total){
+      return '<div class="stat '+unitLow+'"><span class="pip"></span>'+
+        '<span class="num">'+ocup+'/'+total+'</span>'+
+        '<span class="lbl">'+esc(label)+'<br>ocupadas</span></div>';
+    }
+    function statSev(tipo, n, label){
+      const has = n > 0 ? ' has' : '';
+      const dot = tipo === 'crit' ? '<span class="crit-dot"></span>' : '<span class="warn-dot"></span>';
+      return '<div class="stat sev '+tipo+has+'">'+dot+
+        '<span class="num">'+n+'</span><span class="lbl">'+esc(label)+'</span></div>';
+    }
+    function summaryHTML(reas, ucins){
+      const ocup = function(list){ return list.filter(estaOcupada).length; };
+      const criticos = PATIENTS.filter(function(p){ return p.estado === 'Crítico'; }).length;
+      const alertas  = PATIENTS.filter(function(p){ return p.estado === 'Alerta'; }).length;
+      return '<div class="summary">'+
+        statOcup('rea','REA', ocup(reas), reas.length)+
+        statOcup('ucin','UCIN', ocup(ucins), ucins.length)+
+        statSev('crit', criticos, criticos === 1 ? 'crítico' : 'críticos')+
+        statSev('warn', alertas, alertas === 1 ? 'alerta' : 'alertas')+
       '</div>';
     }
 
@@ -661,26 +815,31 @@
     function renderDashboard(){
       const reas  = PATIENTS.filter(function(p){ return p.unidad === 'REA'; });
       const ucins = PATIENTS.filter(function(p){ return p.unidad === 'UCIN'; });
-      const hora = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
 
       let html = '<div class="dash"><header class="header">'+
         '<div class="titles"><h1>UCI Quirúrgica <span>Dashboard</span></h1>'+
         '<p class="tagline">Vista clínica en tiempo real • REA + UCIN</p></div>'+
-        '<div class="tools"><div class="clock">Act: '+esc(hora)+'</div>'+
-        '<button id="logout" class="logout-btn" title="Cerrar sesión">'+icon('Logout',24)+'</button></div>'+
+        '<div class="tools">'+
+          '<button id="themebtn" class="chip-btn" title="Cambiar tema">'+icon(getTheme()==='dark'?'Sun':'Moon',22)+'</button>'+
+          '<div class="clock"><span class="live"></span><span id="freshness">'+esc(desdeTexto(GENERADO))+'</span></div>'+
+          '<button id="logout" class="logout-btn" title="Cerrar sesión">'+icon('Logout',24)+'</button>'+
+        '</div>'+
       '</header>';
+
+      html += summaryHTML(reas, ucins);
 
       if(reas.length > 0){
         html += '<div class="unit-block"><h2 class="unit-title rea"><span class="unit-bar rea"></span>REA</h2>'+
-          '<div class="grid">'+reas.map(cardHTML).join('')+'</div></div>';
+          '<div class="grid">'+reas.map(function(p,i){ return cardHTML(p,i); }).join('')+'</div></div>';
       }
       if(ucins.length > 0){
         html += '<div class="unit-block"><h2 class="unit-title ucin"><span class="unit-bar ucin"></span>UCIN</h2>'+
-          '<div class="grid">'+ucins.map(cardHTML).join('')+'</div></div>';
+          '<div class="grid">'+ucins.map(function(p,i){ return cardHTML(p,i); }).join('')+'</div></div>';
       }
       html += '</div>';
       root.innerHTML = html;
 
+      document.getElementById('themebtn').addEventListener('click', toggleTheme);
       document.getElementById('logout').addEventListener('click', function(){
         try{ sessionStorage.removeItem('uci_auth'); }catch(e){}
         renderLogin();
@@ -714,7 +873,7 @@
             '<div class="modal-bednum '+unitLow+'">'+esc(p.numero_cama)+'</div>'+
             '<div><h2>'+esc(nombreMostrar(p))+'</h2><div class="modal-head-meta">'+
               '<span class="pill">'+esc(p.sexo)+'</span><span>'+esc(p.edad)+' años</span>'+
-              '<span style="color:var(--slate-300);">•</span><span>Estancia: Día '+esc(p.dias_estancia)+'</span>'+
+              '<span style="color:var(--text-faint);">•</span><span>Estancia: Día '+esc(p.dias_estancia)+'</span>'+
             '</div></div></div>'+
             '<button class="modal-close">Cerrar</button>'+
           '</div>'+
@@ -733,12 +892,23 @@
             '</div>'+
           '</div>'+
         '</div>';
-      function close(){ if(modal.parentNode) modal.parentNode.removeChild(modal); }
+      function close(){
+        if(modal.parentNode) modal.parentNode.removeChild(modal);
+        document.removeEventListener('keydown', onKey);
+      }
+      function onKey(e){ if(e.key === 'Escape') close(); }
       modal.addEventListener('click', close);
       modal.querySelector('.modal').addEventListener('click', function(e){ e.stopPropagation(); });
       modal.querySelector('.modal-close').addEventListener('click', close);
+      document.addEventListener('keydown', onKey);
       document.body.appendChild(modal);
     }
+
+    // ---------- ACTUALIZAR "hace X min" cada 30 s ----------
+    setInterval(function(){
+      const el = document.getElementById('freshness');
+      if(el) el.textContent = desdeTexto(GENERADO);
+    }, 30000);
 
     // ---------- ARRANQUE ----------
     let logged = false;
