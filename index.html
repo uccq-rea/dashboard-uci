@@ -27,287 +27,287 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
     const PATIENTS = [
-  {
-    "id": "rea-1",
-    "unidad": "REA",
-    "numero_cama": "1",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "rea-2",
-    "unidad": "REA",
-    "numero_cama": "2",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "rea-3",
-    "unidad": "REA",
-    "numero_cama": "3",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "rea-4",
-    "unidad": "REA",
-    "numero_cama": "4",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "rea-9",
-    "unidad": "REA",
-    "numero_cama": "9",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "rea-10",
-    "unidad": "REA",
-    "numero_cama": "10",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "rea-11",
-    "unidad": "REA",
-    "numero_cama": "11",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "rea-12",
-    "unidad": "REA",
-    "numero_cama": "12",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "ucin-1",
-    "unidad": "UCIN",
-    "numero_cama": "1",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "ucin-2",
-    "unidad": "UCIN",
-    "numero_cama": "2",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "ucin-3",
-    "unidad": "UCIN",
-    "numero_cama": "3",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "ucin-4",
-    "unidad": "UCIN",
-    "numero_cama": "4",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "ucin-5",
-    "unidad": "UCIN",
-    "numero_cama": "5",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  },
-  {
-    "id": "ucin-6",
-    "unidad": "UCIN",
-    "numero_cama": "6",
-    "paciente_id": "Cama Vacía",
-    "estado": "Estable",
-    "edad": "",
-    "sexo": "",
-    "dias_estancia": "",
-    "antecedentes": "",
-    "sistemas": {
-      "neurologico": "",
-      "respiratorio": "",
-      "hemodinamico": "",
-      "renal": "",
-      "infeccioso": "",
-      "digestivo": ""
-    },
-    "plan": "Vigilancia clínica de rutina. Cama disponible."
-  }
-];
+      {
+        "id": "rea-1",
+        "unidad": "REA",
+        "numero_cama": "1",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "rea-2",
+        "unidad": "REA",
+        "numero_cama": "2",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "rea-3",
+        "unidad": "REA",
+        "numero_cama": "3",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "rea-4",
+        "unidad": "REA",
+        "numero_cama": "4",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "rea-9",
+        "unidad": "REA",
+        "numero_cama": "9",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "rea-10",
+        "unidad": "REA",
+        "numero_cama": "10",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "rea-11",
+        "unidad": "REA",
+        "numero_cama": "11",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "rea-12",
+        "unidad": "REA",
+        "numero_cama": "12",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "ucin-1",
+        "unidad": "UCIN",
+        "numero_cama": "1",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "ucin-2",
+        "unidad": "UCIN",
+        "numero_cama": "2",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "ucin-3",
+        "unidad": "UCIN",
+        "numero_cama": "3",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "ucin-4",
+        "unidad": "UCIN",
+        "numero_cama": "4",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "ucin-5",
+        "unidad": "UCIN",
+        "numero_cama": "5",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      },
+      {
+        "id": "ucin-6",
+        "unidad": "UCIN",
+        "numero_cama": "6",
+        "paciente_id": "Cama Vacía",
+        "estado": "Estable",
+        "edad": "",
+        "sexo": "",
+        "dias_estancia": "",
+        "antecedentes": "",
+        "sistemas": {
+          "neurologico": "",
+          "respiratorio": "",
+          "hemodinamico": "",
+          "renal": "",
+          "infeccioso": "",
+          "digestivo": ""
+        },
+        "plan": "Vigilancia clínica de rutina. Cama disponible."
+      }
+    ];
     const PASSWORD_CORRECTA = "misbalare2720";
 
     // --- COMPONENTE DE LOGIN ---
@@ -424,7 +424,7 @@
                     </div>
                  </div>
                </div>
-               <button onClick={onClose} className="px-5 py-2.5 bg-slate-100 rounded-xl font-bold text-slate-600 hover:bg-slate-200 transition-colors">Esc Cerrar</button>
+               <button onClick={onClose} className="px-5 py-2.5 bg-slate-100 rounded-xl font-bold text-slate-600 hover:bg-slate-200 transition-colors">Cerrar</button>
             </div>
             <div className="p-6 md:p-8 space-y-6">
                {p.antecedentes && p.antecedentes !== "?" && <div className="bg-slate-100/80 p-5 rounded-2xl border border-slate-200"><h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Antecedentes Personales (AP)</h3><p className="text-base font-medium text-slate-700 italic">{p.antecedentes}</p></div>}
